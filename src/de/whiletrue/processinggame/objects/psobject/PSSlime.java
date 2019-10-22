@@ -12,7 +12,7 @@ public class PSSlime extends PSEntity{
 		super(game,renderer);
 
 		//Loads the hitbox
-		this.hitbox = new Hitbox(20, 32, 2);
+		this.hitbox = new Hitbox(16, 16, 2);
 		
 		//Loads the physics
 		this.physics.init(this.hitbox,x, y,.05,.2);
@@ -20,8 +20,8 @@ public class PSSlime extends PSEntity{
 		
 		//Load the skin
 		this.skin.init(game,renderer,this.hitbox, "idle", 14);
-		this.skin.loadAnimations("idle", "rsc/slime/idle.png", 3);
-		this.skin.loadAnimations("falling", "rsc/slime/falling.png", 3);
+		this.skin.loadAnimations("idle", "rsc/slime/idle.png");
+		this.skin.loadAnimations("falling", "rsc/slime/falling.png");
 		this.skin.start();
 		
 	}

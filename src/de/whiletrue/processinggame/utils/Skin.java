@@ -41,8 +41,8 @@ public class Skin {
 	/*
 	 * Loads some animations
 	 * */
-	public void loadAnimations(String name,String path,int pixels) {
-		this.animations.put(name,this.renderer.loadImagesSeperatedBy(this.hitbox,path,pixels));
+	public void loadAnimations(String name,String path) {
+		this.animations.put(name,this.renderer.loadImagesSeperatedBy(this.hitbox,path));
 	}
 	
 	/*
@@ -58,8 +58,10 @@ public class Skin {
 	public void renderAt(int x,int y) {
 		
 		//Gets the width and height
-		int w = (int) (this.hitbox.getFixedX());
-		int h = (int) (this.hitbox.getFixedY());
+		int w = (int) (this.currentImage.width*this.hitbox.getScale());
+		int h = (int) (this.currentImage.height*this.hitbox.getScale());
+//		int w = (int) (this.hitbox.getFixedX());
+//		int h = (int) (this.hitbox.getFixedY());
 		
 		//Opens the matrix
 		this.renderer.push();
@@ -88,6 +90,9 @@ public class Skin {
 				
 				//Renders the outline
 				this.renderer.renderOutline(x-w/2, y-h, w, h, Color.red.getRGB(),1);
+				
+				//Renders the hitbox
+				this.renderer.renderOutline(x-this.hitbox.getFixedX()/2, y-this.hitbox.getFixedY(), this.hitbox.getFixedX(), this.hitbox.getFixedY(), Color.blue.getRGB(), 1);
 			}
 			//Closes the debug matrix
 			this.renderer.pop();

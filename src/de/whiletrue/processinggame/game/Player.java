@@ -19,18 +19,17 @@ public class Player extends PSEntity{
 		this.keyhandler = keyhandler;
 
 		//Loades the hitbox
-		this.hitbox = new Hitbox(36, 48, 2);
+		this.hitbox = new Hitbox(25, 30, 2);
 		
 		//Loads the physics
 		this.physics.init(hitbox,game.getWidth()/2, game.getHeight()/2,.2,.2);
 		
 		//Loads the skin
 		this.skin.init(game,renderer,this.hitbox,"idle",10);
-		this.skin.loadAnimations("idle", "rsc/player/idle.png", 11);
-		this.skin.loadAnimations("walk", "rsc/player/walk.png", 13);
-		this.skin.loadAnimations("attack", "rsc/player/attack.png", 18);
+		this.skin.loadAnimations("idle", "rsc/player/idle.png");
+		this.skin.loadAnimations("walk", "rsc/player/walk.png");
+		this.skin.loadAnimations("attack", "rsc/player/attack.png");
 		this.skin.start();
-		
 	}
 
 	@Override
