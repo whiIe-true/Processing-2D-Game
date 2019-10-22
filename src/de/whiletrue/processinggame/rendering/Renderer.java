@@ -1,5 +1,6 @@
 package de.whiletrue.processinggame.rendering;
 
+import de.whiletrue.processinggame.utils.Hitbox;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
@@ -15,21 +16,25 @@ public class Renderer {
 	/*
 	 * Loads subimages from one image
 	 * */
-	public PImage[] loadImagesSeperatedBy(int pixels,String path) {
+	public PImage[] loadImagesSeperatedBy(Hitbox hitbox,String path,int images) {
+		
 		//Loades the full image
 		PImage img = this.window.loadImage(path);
-		//Gets the rest that will be cut if the image wont fit perfectly
-		int cut = img.width%pixels;
-		
-		//Gets how many subimages will be returned
-		int imageLength = (img.width-cut)/pixels;
+
+		//Calculates the width of every frame
+		int imageLength = img.width/images;
 		
 		//Creates the array with all subimages
-		PImage[] subimages = new PImage[imageLength];
+		PImage[] subimages = new PImage[images];
 		
 		//Goes through every subimage
-		for(int i = 0; i < imageLength; i++) {
-			subimages[i] = img.get(i*pixels, 0, pixels, img.height);
+		for(int i = 0; i < images; i++) {
+			//Cutes the subimage
+			PImage clone = img.get(i*imageLength, 0, imageLength, img.height);
+			//Resizes the image to hit the hitbox
+			clone.resize(hitbox.getRawX(), hitbox.getRawY());
+			//Adds the image
+			subimages[i] = clone;
 		}
 		return subimages;
 	}

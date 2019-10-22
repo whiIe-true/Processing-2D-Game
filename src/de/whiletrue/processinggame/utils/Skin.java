@@ -13,6 +13,7 @@ public class Skin {
 
 	private Settings settings;
 	private Renderer renderer;
+	private Hitbox hitbox;
 	
 	private Map<String, PImage[]> animations = new HashMap<>();
 	private int animationframe,animationticks,maxanimationticks;
@@ -25,25 +26,23 @@ public class Skin {
 	private int ticks;
 	private EnumSkinDirection direction;
 	
-	private double size;
-	
 	/*
 	 * Mainly the constructor
 	 * */
-	public final void init(Game game,Renderer renderer,String idleanimation,int idleticks,double size) {
+	public final void init(Game game,Renderer renderer,Hitbox hitbox,String idleanimation,int idleticks) {
 		this.renderer = renderer;
 		this.idleanimation = idleanimation.toLowerCase();
 		this.idleticksmax = idleticks;
 		this.direction = EnumSkinDirection.RIGHT;
-		this.size = size;
 		this.settings = game.getSettings();
+		this.hitbox = hitbox;
 	}
 	
 	/*
 	 * Loads some animations
 	 * */
 	public void loadAnimations(String name,String path,int pixels) {
-		this.animations.put(name,this.renderer.loadImagesSeperatedBy(pixels, path));
+		this.animations.put(name,this.renderer.loadImagesSeperatedBy(this.hitbox,path,pixels));
 	}
 	
 	/*
@@ -59,8 +58,8 @@ public class Skin {
 	public void renderAt(int x,int y) {
 		
 		//Gets the width and height
-		int w = (int) (this.getWidth());
-		int h = (int) (this.getHeight());
+		int w = (int) (this.hitbox.getFixedX());
+		int h = (int) (this.hitbox.getFixedY());
 		
 		//Opens the matrix
 		this.renderer.push();
@@ -155,26 +154,26 @@ public class Skin {
 		return true;
 	}
 	
-	/*
-	 * Returns the skin height
-	 * */
-	public int getHeight() {
-		return (int) (this.asImage().height*this.size);
-	}
-	
-	/*
-	 * Returns the skin weight
-	 * */
-	public int getWidth() {
-		return (int) (this.asImage().width*this.size);
-	}
-	
-	/*
-	 * Returns the current skin
-	 * */
-	public PImage asImage() {
-		return this.currentImage;
-	}
+//	/*
+//	 * Returns the skin height
+//	 * */
+//	public int getHeight() {
+//		return (int) (this.asImage().height*this.size);
+//	}
+//	
+//	/*
+//	 * Returns the skin weight
+//	 * */
+//	public int getWidth() {
+//		return (int) (this.asImage().width*this.size);
+//	}
+//	
+//	/*
+//	 * Returns the current skin
+//	 * */
+//	public PImage asImage() {
+//		return this.currentImage;
+//	}
 	
 	/*
 	 * Returns if the current animation is complet
@@ -218,19 +217,19 @@ public class Skin {
 		return this.direction;
 	}
 
-	/**
-	 * @return the size
-	 */
-	public final double getSize() {
-		return size;
-	}
-
-	/**
-	 * @param size the size to set
-	 */
-	public final void setSize(double size) {
-		this.size = size;
-	}
+//	/**
+//	 * @return the size
+//	 */
+//	public final double getSize() {
+//		return size;
+//	}
+//
+//	/**
+//	 * @param size the size to set
+//	 */
+//	public final void setSize(double size) {
+//		this.size = size;
+//	}
 
 	public enum EnumSkinDirection{
 		RIGHT,LEFT;

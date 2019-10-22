@@ -3,22 +3,27 @@ package de.whiletrue.processinggame.objects.psobject;
 import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.rendering.Renderer;
+import de.whiletrue.processinggame.utils.Hitbox;
 import de.whiletrue.processinggame.utils.Skin.EnumSkinDirection;
 
 public class PSSlime extends PSEntity{
 
 	public PSSlime(Game game, Renderer renderer, int x, int y) {
 		super(game,renderer);
-		
-		//Load the skin
-		this.skin.init(game,renderer, "idle", 14,3);
-		this.skin.loadAnimations("idle", "rsc/slime/idle.png", 16);
-		this.skin.loadAnimations("falling", "rsc/slime/falling.png", 16);
-		this.skin.start();
+
+		//Loads the hitbox
+		this.hitbox = new Hitbox(20, 32, 2);
 		
 		//Loads the physics
-		this.physics.init(this.skin, x, y,.05,.2);
+		this.physics.init(this.hitbox,x, y,.05,.2);
 		this.physics.randomMotion();
+		
+		//Load the skin
+		this.skin.init(game,renderer,this.hitbox, "idle", 14);
+		this.skin.loadAnimations("idle", "rsc/slime/idle.png", 3);
+		this.skin.loadAnimations("falling", "rsc/slime/falling.png", 3);
+		this.skin.start();
+		
 	}
 	
 	@Override

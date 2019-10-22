@@ -10,20 +10,21 @@ public class Physics {
 	
 	private int x,y;
 	private double motionX,motionY,pushX,pushY;
-	private Skin skin;
 	private boolean onground;
+	
+	private Hitbox hitbox;
 	
 	private Random random = new Random();
 	
 	/*
 	 * Mainly the constructor  
 	 */
-	public final void init(Skin skin,int x,int y,double pushX,double pushY) {
+	public final void init(Hitbox hitbox,int x,int y,double pushX,double pushY) {
 		this.x = x;
 		this.y = y;
 		this.pushX=pushX;
 		this.pushY=pushY;
-		this.skin = skin;
+		this.hitbox = hitbox;
 	}
 	
 	/*
@@ -43,8 +44,8 @@ public class Physics {
 		.map(i->(PSWall)i)
 		.filter(i->i.getY()-2<this.y)
 		.filter(i->i.getY()+20>this.y)
-		.filter(i->i.getX()<this.x+this.skin.getWidth()/2)
-		.filter(i->i.getX()+i.getWidth()>this.x-this.skin.getWidth()/2)
+		.filter(i->i.getX()<this.x+this.hitbox.getFixedX()/2)
+		.filter(i->i.getX()+i.getWidth()>this.x-this.hitbox.getFixedX()/2)
 		.findAny();
 		
 		//Checks if the player is in or on the platform
@@ -165,5 +166,4 @@ public class Physics {
 		this.motionX+=this.random.nextInt(5)-2.5;
 		this.motionY+=this.random.nextInt(5)-2.5;
 	}
-	
 }

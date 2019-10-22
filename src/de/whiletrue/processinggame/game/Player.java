@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.rendering.Renderer;
+import de.whiletrue.processinggame.utils.Hitbox;
 import de.whiletrue.processinggame.utils.Skin.EnumSkinDirection;
 
 public class Player extends PSEntity{
@@ -16,16 +17,20 @@ public class Player extends PSEntity{
 		super(game,renderer);
 		
 		this.keyhandler = keyhandler;
-		
-		//Loads the skin
-		this.skin.init(game,renderer,"idle",10,game.getSettings().size);
-		this.skin.loadAnimations("idle", "rsc/player/idle.png", 24);
-		this.skin.loadAnimations("walk", "rsc/player/walk.png", 22);
-		this.skin.loadAnimations("attack", "rsc/player/attack.png", 43);
-		this.skin.start();
+
+		//Loades the hitbox
+		this.hitbox = new Hitbox(36, 48, 2);
 		
 		//Loads the physics
-		this.physics.init(this.skin, game.getWidth()/2, game.getHeight()/2,.2,.2);
+		this.physics.init(hitbox,game.getWidth()/2, game.getHeight()/2,.2,.2);
+		
+		//Loads the skin
+		this.skin.init(game,renderer,this.hitbox,"idle",10);
+		this.skin.loadAnimations("idle", "rsc/player/idle.png", 11);
+		this.skin.loadAnimations("walk", "rsc/player/walk.png", 13);
+		this.skin.loadAnimations("attack", "rsc/player/attack.png", 18);
+		this.skin.start();
+		
 	}
 
 	@Override
@@ -35,7 +40,7 @@ public class Player extends PSEntity{
 		this.updateAttack();
 		
 		//Updates the size propery from the settings
-		this.skin.setSize(this.game.getSettings().size);
+		this.hitbox.setScale(this.game.getSettings().size);
 		
 		//Checks if the key for forward is pressed and if the player can move
 		if(this.keyhandler.keyPressed(68/*Key D*/)){

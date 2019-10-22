@@ -1,5 +1,5 @@
 # Processing 2D Game
-This is a private projekt to test some things using the processing libery
+This is a private projekt to test some things using the processing librarier
 
 ## Require
 * Processing(https://processing.org/download/)
