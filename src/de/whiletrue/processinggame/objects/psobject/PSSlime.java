@@ -4,7 +4,7 @@ import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.rendering.Renderer;
 import de.whiletrue.processinggame.utils.Hitbox;
-import de.whiletrue.processinggame.utils.Skin.EnumSkinDirection;
+import de.whiletrue.processinggame.utils.Animation.EnumSkinDirection;
 
 public class PSSlime extends PSEntity{
 
@@ -12,17 +12,17 @@ public class PSSlime extends PSEntity{
 		super(game,renderer);
 
 		//Loads the hitbox
-		this.hitbox = new Hitbox(16, 16, 2);
+		this.hitbox = new Hitbox(16, 16, 2.5);
 		
 		//Loads the physics
 		this.physics.init(this.hitbox,x, y,.05,.2);
 		this.physics.randomMotion();
 		
 		//Load the skin
-		this.skin.init(game,renderer,this.hitbox, "idle", 14);
-		this.skin.loadAnimations("idle", "rsc/slime/idle.png");
-		this.skin.loadAnimations("falling", "rsc/slime/falling.png");
-		this.skin.start();
+		this.animations.init(renderer, "idle", 14);
+		this.animations.loadAnimations("idle", "rsc/slime/idle.png");
+		this.animations.loadAnimations("falling", "rsc/slime/falling.png");
+		this.animations.start();
 		
 	}
 	
@@ -30,10 +30,10 @@ public class PSSlime extends PSEntity{
 	public void handleTick() {
 		String anim = this.physics.isOnground()?"idle":"falling";
 		//Checks if the new animation is diffrent
-		if(!anim.equals(this.skin.getIdleAnimation())) {
+		if(!anim.equals(this.animations.getIdleAnimation())) {
 			//Sets the new animation and resets the ticks
-			this.skin.setIdleAnimation(anim);
-			this.skin.resetIdleticks();
+			this.animations.setIdleAnimation(anim);
+			this.animations.resetIdleticks();
 		}
 		
 		//Checks if the slime is onground
@@ -43,7 +43,7 @@ public class PSSlime extends PSEntity{
 			this.physics.pushY(-2);
 		}
 		//Sets the direction facing
-		this.skin.setSkinDirection(this.game.getPlayer().getPhysics().getX()>this.physics.getX()?EnumSkinDirection.LEFT:EnumSkinDirection.RIGHT);
+		this.animations.setSkinDirection(this.game.getPlayer().getPhysics().getX()>this.physics.getX()?EnumSkinDirection.LEFT:EnumSkinDirection.RIGHT);
 		
 		//Calls the fallback
 		super.handleTick();

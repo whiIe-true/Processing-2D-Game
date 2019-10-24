@@ -12,6 +12,8 @@ public class Settings {
 	public int range = 2;
 	
 	//Shows some debugging rendering
-	public boolean debugrendering = false;
+	public boolean showHitboxes = false;
+	//Renders the overlay
+	public boolean renderOverlay = false;
 	
 }

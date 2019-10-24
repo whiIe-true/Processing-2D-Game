@@ -54,13 +54,18 @@ public class GuiPause extends DefaultGui{
 				this.game.addObject(new PSSlime(this.game,this.renderer, this.game.getPlayer().getPhysics().getX(), this.game.getPlayer().getPhysics().getY()));
 			return "Spawn Slime";
 		});
-		
-		CompoundCheckbox debugrender = new CompoundCheckbox(this.game,this.renderer, this.game.getWidth()/2+20, this.game.getHeight()/8+10+(20+40)*1, 40,40, this.game.getSettings().debugrendering, i->{
-			this.game.getSettings().debugrendering=i;
-			return "DebugRendering";
+
+		CompoundCheckbox showHitboxes = new CompoundCheckbox(this.game,this.renderer, this.game.getWidth()/2+20, this.game.getHeight()/8+10+(20+40)*1, 40,40, this.game.getSettings().showHitboxes, i->{
+			this.game.getSettings().showHitboxes=i;
+			return "Show Hitboxes";
 		});
 		
-		return new GuiComponent[] {close,jumpheight,speed,size,range,spawnSlime,debugrender};
+		CompoundCheckbox showOverlay = new CompoundCheckbox(this.game,this.renderer, this.game.getWidth()/2+20, this.game.getHeight()/8+10+(20+40)*2, 40,40, this.game.getSettings().renderOverlay, i->{
+			this.game.getSettings().renderOverlay=i;
+			return "Show Overlay";
+		});
+		
+		return new GuiComponent[] {close,jumpheight,speed,size,range,spawnSlime,showHitboxes,showOverlay};
 	}
 	
 	@Override

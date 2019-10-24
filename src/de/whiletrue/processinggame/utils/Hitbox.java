@@ -1,5 +1,9 @@
 package de.whiletrue.processinggame.utils;
 
+import java.awt.Color;
+
+import de.whiletrue.processinggame.rendering.Renderer;
+
 public class Hitbox {
 
 	private final int sizeX,sizeY;
@@ -11,6 +15,14 @@ public class Hitbox {
 		this.scale = scale;
 	}
 
+	/*
+	 * Renders the hitbox
+	 * */
+	public final void renderHitbox(Renderer renderer,int x,int y) {
+		//Renders the hitbox
+		renderer.renderOutline(x-this.getFixedX()/2, y-this.getFixedY(), this.getFixedX(), this.getFixedY(), Color.blue.getRGB(), 1);
+	}
+	
 	/**
 	 * @return the sizeX
 	 */

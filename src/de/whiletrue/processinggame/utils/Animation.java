@@ -4,16 +4,12 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.whiletrue.processinggame.game.Game;
-import de.whiletrue.processinggame.game.Settings;
 import de.whiletrue.processinggame.rendering.Renderer;
 import processing.core.PImage;
 
-public class Skin {
+public class Animation {
 
-	private Settings settings;
 	private Renderer renderer;
-	private Hitbox hitbox;
 	
 	private Map<String, PImage[]> animations = new HashMap<>();
 	private int animationframe,animationticks,maxanimationticks;
@@ -29,20 +25,18 @@ public class Skin {
 	/*
 	 * Mainly the constructor
 	 * */
-	public final void init(Game game,Renderer renderer,Hitbox hitbox,String idleanimation,int idleticks) {
+	public final void init(Renderer renderer,String idleanimation,int idleticks) {
 		this.renderer = renderer;
 		this.idleanimation = idleanimation.toLowerCase();
 		this.idleticksmax = idleticks;
 		this.direction = EnumSkinDirection.RIGHT;
-		this.settings = game.getSettings();
-		this.hitbox = hitbox;
 	}
 	
 	/*
 	 * Loads some animations
 	 * */
 	public void loadAnimations(String name,String path) {
-		this.animations.put(name,this.renderer.loadImagesSeperatedBy(this.hitbox,path));
+		this.animations.put(name,this.renderer.loadImagesSeperatedBy(path));
 	}
 	
 	/*
@@ -55,13 +49,11 @@ public class Skin {
 	/*
 	 * Renders the skin on the applet
 	 * */
-	public void renderAt(int x,int y) {
+	public void renderAt(int x,int y,double scale) {
 		
 		//Gets the width and height
-		int w = (int) (this.currentImage.width*this.hitbox.getScale());
-		int h = (int) (this.currentImage.height*this.hitbox.getScale());
-//		int w = (int) (this.hitbox.getFixedX());
-//		int h = (int) (this.hitbox.getFixedY());
+		int w = (int) (this.currentImage.width*scale);
+		int h = (int) (this.currentImage.height*scale);
 		
 		//Opens the matrix
 		this.renderer.push();
@@ -81,29 +73,25 @@ public class Skin {
 		//Closes the matrix
 		this.renderer.pop();
 		
-		if(this.settings.debugrendering) {
-			//Opens the debug matrix
-			this.renderer.push();
-			{				
-				//Renders the cirle
-				this.renderer.renderCirle(x, y, 5, Color.red.getRGB());
-				
-				//Renders the outline
-				this.renderer.renderOutline(x-w/2, y-h, w, h, Color.red.getRGB(),1);
-				
-				//Renders the hitbox
-				this.renderer.renderOutline(x-this.hitbox.getFixedX()/2, y-this.hitbox.getFixedY(), this.hitbox.getFixedX(), this.hitbox.getFixedY(), Color.blue.getRGB(), 1);
-			}
-			//Closes the debug matrix
-			this.renderer.pop();
-		}
-		
-		//Checks if debug rendering is enabled
-		if(this.settings.debugrendering) {
-			//Renders the exact x/y cordinate
-			this.renderer.window.fill(Color.red.getRGB());
-			this.renderer.window.circle(x, y, 5);
-		}
+		//Old image debug outline rendering
+//		//Opens the debug matrix
+//		this.renderer.push();
+//		{				
+//			//Renders the cirle
+//			this.renderer.renderCirle(x, y, 5, Color.red.getRGB());
+//			
+//			//Renders the outline
+//			this.renderer.renderOutline(x-w/2, y-h, w, h, Color.red.getRGB(),1);
+//		}
+//		//Closes the debug matrix
+//		this.renderer.pop();
+//		
+//		//Checks if debug rendering is enabled
+//		if(this.settings.debugrendering) {
+//			//Renders the exact x/y cordinate
+//			this.renderer.window.fill(Color.red.getRGB());
+//			this.renderer.window.circle(x, y, 5);
+//		}
 	}
 	
 	/*

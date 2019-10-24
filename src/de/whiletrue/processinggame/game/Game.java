@@ -84,9 +84,11 @@ public class Game {
 		
 		//Draws the player
 		this.player.handleRender(mx, my, mp);
-	
-		//Renders the overlay
-		this.gameoverlay.handleRender(mx, my, mp);
+
+		//Checks if overlay rendering is enabled
+		if(this.settings.renderOverlay)
+			//Renders the overlay
+			this.gameoverlay.handleRender(mx, my, mp);
 		
 		//Checks if a gui is open
 		if(!this.isGameRunning())

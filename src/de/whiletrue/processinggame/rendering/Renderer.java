@@ -1,6 +1,7 @@
 package de.whiletrue.processinggame.rendering;
 
-import de.whiletrue.processinggame.utils.Hitbox;
+import java.awt.Color;
+
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
@@ -16,7 +17,7 @@ public class Renderer {
 	/*
 	 * Loads subimages from one image
 	 * */
-	public PImage[] loadImagesSeperatedBy(Hitbox hitbox,String path) {
+	public PImage[] loadImagesSeperatedBy(String path) {
 		
 		//Loades the full image
 		PImage img = this.window.loadImage(path);
@@ -36,8 +37,6 @@ public class Renderer {
 		for(int i = 0; i < imageLength; i++) {
 			//Cutes the subimage
 			PImage clone = img.get(i*width, 0, width, img.height);
-			//Resizes the image to fit the 32x32 law
-//			clone.resize(32, 32);
 			//Adds the image
 			subimages[i] = clone;
 		}
@@ -75,6 +74,33 @@ public class Renderer {
 		this.window.strokeWeight(strokesize);
 		this.window.fill(color);
 		this.window.circle(x, y, radius);
+	}
+	
+	/*
+	 * Renders the given text on the screen with a shadow
+	 * */
+	public void renderTextWithShadow(String text,float x,float y,float size,PFont font,int color) {
+
+		//Defines the dark color of the text
+		final int textdarking = 100;
+		
+		//Gets the actual colors
+		int r = Math.max(0,((color&0xFF0000)>>>16)-textdarking);
+		int g = Math.max(0,((color&0x00FF00)>>>8)-textdarking);
+		int b = Math.max(0,((color&0x0000FF))-textdarking);
+		
+		//Gets the darker color
+		Color darker = new Color(r,g,b);
+		
+		//Prepares
+		this.window.textAlign(PApplet.LEFT,PApplet.TOP);
+		this.window.textSize(size);
+		//Sets the color
+		this.window.fill(darker.getRGB());
+		//Renders the shadow text
+		this.window.text(text,x+2,y+2);
+		//Renders the real text
+		this.renderText(text, x, y, size, font, color);
 	}
 	
 	/*
