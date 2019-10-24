@@ -20,7 +20,7 @@ public class Animation {
 	
 	private PImage currentImage;
 	private int ticks;
-	private EnumSkinDirection direction;
+	private boolean reverse;
 	
 	/*
 	 * Mainly the constructor
@@ -29,7 +29,7 @@ public class Animation {
 		this.renderer = renderer;
 		this.idleanimation = idleanimation.toLowerCase();
 		this.idleticksmax = idleticks;
-		this.direction = EnumSkinDirection.RIGHT;
+		this.reverse = false;
 	}
 	
 	/*
@@ -60,38 +60,19 @@ public class Animation {
 		{
 			this.renderer.window.fill(Color.DARK_GRAY.getRGB());
 			//Checks the render direction
-			if(this.direction.equals(EnumSkinDirection.RIGHT)) {
-				//Renders normal
-				this.renderer.window.image(this.currentImage,x-w/2,y-h,w,h);
-			}else {
+			if(this.reverse) {
 				//Renders reverse
 				this.renderer.window.translate(w, 0);
 				this.renderer.window.scale(-1,1);
 				this.renderer.window.image(this.currentImage,-x+w/2,y-h,w,h);
+			}else {
+				//Renders normal
+				this.renderer.window.image(this.currentImage,x-w/2,y-h,w,h);
 			}
 		}
 		//Closes the matrix
 		this.renderer.pop();
 		
-		//Old image debug outline rendering
-//		//Opens the debug matrix
-//		this.renderer.push();
-//		{				
-//			//Renders the cirle
-//			this.renderer.renderCirle(x, y, 5, Color.red.getRGB());
-//			
-//			//Renders the outline
-//			this.renderer.renderOutline(x-w/2, y-h, w, h, Color.red.getRGB(),1);
-//		}
-//		//Closes the debug matrix
-//		this.renderer.pop();
-//		
-//		//Checks if debug rendering is enabled
-//		if(this.settings.debugrendering) {
-//			//Renders the exact x/y cordinate
-//			this.renderer.window.fill(Color.red.getRGB());
-//			this.renderer.window.circle(x, y, 5);
-//		}
 	}
 	
 	/*
@@ -147,27 +128,6 @@ public class Animation {
 		return true;
 	}
 	
-//	/*
-//	 * Returns the skin height
-//	 * */
-//	public int getHeight() {
-//		return (int) (this.asImage().height*this.size);
-//	}
-//	
-//	/*
-//	 * Returns the skin weight
-//	 * */
-//	public int getWidth() {
-//		return (int) (this.asImage().width*this.size);
-//	}
-//	
-//	/*
-//	 * Returns the current skin
-//	 * */
-//	public PImage asImage() {
-//		return this.currentImage;
-//	}
-	
 	/*
 	 * Returns if the current animation is complet
 	 * */
@@ -199,32 +159,14 @@ public class Animation {
 	/**
 	 * @param direction the direction to set
 	 */
-	public final void setSkinDirection(EnumSkinDirection direction) {
-		this.direction = direction;
+	public final void setReverse(boolean reverse) {
+		this.reverse = reverse;
 	}
 	
-	/*
-	 * Returns the direction facing
+	/**
+	 * @returns if the rendering is flipped
 	 * */
-	public EnumSkinDirection getSkinDirection() {
-		return this.direction;
-	}
-
-//	/**
-//	 * @return the size
-//	 */
-//	public final double getSize() {
-//		return size;
-//	}
-//
-//	/**
-//	 * @param size the size to set
-//	 */
-//	public final void setSize(double size) {
-//		this.size = size;
-//	}
-
-	public enum EnumSkinDirection{
-		RIGHT,LEFT;
+	public boolean isReverse() {
+		return this.reverse;
 	}
 }

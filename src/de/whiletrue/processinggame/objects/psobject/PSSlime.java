@@ -4,7 +4,6 @@ import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.rendering.Renderer;
 import de.whiletrue.processinggame.utils.Hitbox;
-import de.whiletrue.processinggame.utils.Animation.EnumSkinDirection;
 
 public class PSSlime extends PSEntity{
 
@@ -43,7 +42,7 @@ public class PSSlime extends PSEntity{
 			this.physics.pushY(-2);
 		}
 		//Sets the direction facing
-		this.animations.setSkinDirection(this.game.getPlayer().getPhysics().getX()>this.physics.getX()?EnumSkinDirection.LEFT:EnumSkinDirection.RIGHT);
+		this.animations.setReverse(this.game.getPlayer().getPhysics().getX()>this.physics.getX());
 		
 		//Calls the fallback
 		super.handleTick();

@@ -7,6 +7,10 @@ import processing.event.MouseEvent;
 
 public class Main extends PApplet{
 
+	/*
+	 * Application startup
+	 * */
+	
 	public static void main(String[] args) {
 		//Starts the processing application
 		PApplet.main(Main.class);

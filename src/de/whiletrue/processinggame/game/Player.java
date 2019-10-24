@@ -5,7 +5,6 @@ import java.util.Optional;
 import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.rendering.Renderer;
 import de.whiletrue.processinggame.utils.Hitbox;
-import de.whiletrue.processinggame.utils.Animation.EnumSkinDirection;
 
 public class Player extends PSEntity{
 
@@ -44,7 +43,7 @@ public class Player extends PSEntity{
 		//Checks if the key for forward is pressed and if the player can move
 		if(this.keyhandler.keyPressed(68/*Key D*/)){
 			//Sets the skin direction
-			this.animations.setSkinDirection(EnumSkinDirection.RIGHT);
+			this.animations.setReverse(false);
 			//Sets the motion
 			this.physics.addX(this.game.getSettings().speed);
 		}
@@ -52,7 +51,7 @@ public class Player extends PSEntity{
 		//Checks if the key for backward is pressed and if the player can move
 		if(this.keyhandler.keyPressed(65/*Key A*/)){
 			//Sets the skin direction
-			this.animations.setSkinDirection(EnumSkinDirection.LEFT);
+			this.animations.setReverse(true);
 			//Sets the motion
 			this.physics.addX(-this.game.getSettings().speed);
 		}
@@ -118,10 +117,10 @@ public class Player extends PSEntity{
 				//Filters the range x
 				.filter(
 						i->
-						(this.animations.getSkinDirection().equals(EnumSkinDirection.RIGHT)&&
+						(!this.animations.isReverse()&&
 						i.getPhysics().getX()>this.physics.getX()&&
 						i.getPhysics().getX()-this.physics.getX()<this.game.getSettings().range*40)||
-						(this.animations.getSkinDirection().equals(EnumSkinDirection.LEFT)&&
+						(this.animations.isReverse()&&
 						i.getPhysics().getX()<this.physics.getX()&&
 						this.physics.getX()-i.getPhysics().getX()<this.game.getSettings().range*40))
 				//Returns the match

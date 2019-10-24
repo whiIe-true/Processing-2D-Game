@@ -102,49 +102,49 @@ public class CompoundSlider extends GuiComponent{
 	 * @return the x
 	 */
 	public final int getX() {
-		return x;
+		return this.x;
 	}
 
 	/**
 	 * @return the y
 	 */
 	public final int getY() {
-		return y;
+		return this.y;
 	}
 
 	/**
 	 * @return the width
 	 */
 	public final int getWidth() {
-		return width;
+		return this.width;
 	}
 
 	/**
 	 * @return the height
 	 */
 	public final int getHeight() {
-		return height;
+		return this.height;
 	}
 
 	/**
 	 * @return the min
 	 */
 	public final int getMin() {
-		return min;
+		return this.min;
 	}
 
 	/**
 	 * @return the max
 	 */
 	public final int getMax() {
-		return max;
+		return this.max;
 	}
 
 	/**
 	 * @return the currentValue
 	 */
 	public final int getValue() {
-		return currentValue;
+		return this.currentValue;
 	}
 
 	/**
