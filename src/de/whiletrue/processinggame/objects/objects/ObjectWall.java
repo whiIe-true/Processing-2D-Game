@@ -1,4 +1,4 @@
-package de.whiletrue.processinggame.objects.psobject;
+package de.whiletrue.processinggame.objects.objects;
 
 import java.awt.Color;
 
@@ -6,11 +6,11 @@ import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.objects.PSObject;
 import de.whiletrue.processinggame.rendering.Renderer;
 
-public class PSWall extends PSObject{
+public class ObjectWall extends PSObject{
 	
 	private int x,y,width;
 	
-	public PSWall(Game game,Renderer renderer,int x,int y,int width) {
+	public ObjectWall(Game game,Renderer renderer,int x,int y,int width) {
 		super(game,renderer);
 		this.game = game;
 		this.x = x;

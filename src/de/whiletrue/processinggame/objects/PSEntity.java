@@ -6,12 +6,11 @@ import de.whiletrue.processinggame.utils.Hitbox;
 import de.whiletrue.processinggame.utils.Physics;
 import de.whiletrue.processinggame.utils.Animation;
 
-public class PSEntity extends PSObject{
+public abstract class PSEntity extends PSObject{
 
 	protected Animation animations;
 	protected Physics physics;
 	protected Hitbox hitbox;
-	protected boolean dead = false;
 	
 	public PSEntity(Game game,Renderer renderer) {
 		super(game,renderer);
@@ -37,25 +36,25 @@ public class PSEntity extends PSObject{
 		this.animations.onTick();
 	}
 
+	/*
+	 * Returns if the entity is colliding with another entity
+	 * */
+	public boolean isEntityColliding(PSEntity entity) {
+		return this.hitbox.areBoxesColliding(this.physics.getX(), this.physics.getY(), entity.physics.getX(), entity.physics.getY(), entity.hitbox);
+	}
+	
 	/**
 	 * @return the physics
 	 */
 	public final Physics getPhysics() {
 		return this.physics;
 	}
-
+	
 	/**
-	 * @return the dead
-	 */
-	public final boolean isDead() {
-		return dead;
-	}
-
-	/**
-	 * @param dead the dead to set
-	 */
-	public final void kill() {
-		this.dead = true;
+	 * @returns the hitbox
+	 * */
+	public Hitbox getHitbox() {
+		return this.hitbox;
 	}
 
 }

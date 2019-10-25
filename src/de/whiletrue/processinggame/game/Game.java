@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.whiletrue.processinggame.objects.PSEntity;
+import de.whiletrue.processinggame.objects.PSEntityLiving;
 import de.whiletrue.processinggame.objects.PSObject;
-import de.whiletrue.processinggame.objects.psobject.PSSlime;
-import de.whiletrue.processinggame.objects.psobject.PSWall;
+import de.whiletrue.processinggame.objects.entitys.items.ItemKey;
+import de.whiletrue.processinggame.objects.entitys.living.EntitySlime;
+import de.whiletrue.processinggame.objects.objects.ObjectWall;
 import de.whiletrue.processinggame.rendering.Fonts;
 import de.whiletrue.processinggame.rendering.Overlay;
 import de.whiletrue.processinggame.rendering.Renderer;
@@ -61,11 +62,14 @@ public class Game {
 		this.player = new Player(this,this.renderer,this.keyhandler);
 		
 		//Adds the objects
-		this.objects.add(new PSWall(this,this.renderer, 100, 400, 300));
-		this.objects.add(new PSWall(this,this.renderer, 0, this.window.height-10, this.window.width));
+		this.objects.add(new ObjectWall(this,this.renderer, 100, 400, 300));
+		this.objects.add(new ObjectWall(this,this.renderer, 0, this.window.height-10, this.window.width));
 		
 		//Adds the entitys
-		this.objects.add(new PSSlime(this,this.renderer, 200, 380));
+		this.objects.add(new EntitySlime(this,this.renderer, 200, 380));
+		
+		//Adds the items
+		this.objects.add(new ItemKey(this, this.renderer, 500, 400));
 	}
 	
 	public void handleRender() {
@@ -97,8 +101,8 @@ public class Game {
 	}
 
 	public void onTick() {
-		//Removes dead entitys
-		this.objects = this.objects.stream().filter(i->!(i instanceof PSEntity)||!((PSEntity)i).isDead()).collect(Collectors.toList());
+		//Removes dead livingentitys
+		this.objects = this.objects.stream().filter(i->!(i instanceof PSEntityLiving)||!((PSEntityLiving)i).isDead()).collect(Collectors.toList());
 		
 		//Checks if the game is running
 		if(this.isGameRunning()) {

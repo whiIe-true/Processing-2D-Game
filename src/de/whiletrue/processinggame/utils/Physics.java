@@ -4,13 +4,13 @@ import java.util.Optional;
 import java.util.Random;
 
 import de.whiletrue.processinggame.game.Game;
-import de.whiletrue.processinggame.objects.psobject.PSWall;
+import de.whiletrue.processinggame.objects.objects.ObjectWall;
 
 public class Physics {
 	
 	private int x,y;
 	private double motionX,motionY,pushX,pushY;
-	private boolean onground;
+	private boolean onground,gravity = true;
 	
 	private Hitbox hitbox;
 	
@@ -39,9 +39,9 @@ public class Physics {
 		this.x+=this.motionX;
 		
 		//Checks if the player is colliding with any object
-		Optional<PSWall> obj = Game.getInstance().getObjects().stream()
-		.filter(i->i instanceof PSWall)
-		.map(i->(PSWall)i)
+		Optional<ObjectWall> obj = Game.getInstance().getObjects().stream()
+		.filter(i->i instanceof ObjectWall)
+		.map(i->(ObjectWall)i)
 		.filter(i->i.getY()-2<this.y)
 		.filter(i->i.getY()+20>this.y)
 		.filter(i->i.getX()<this.x+this.hitbox.getFixedX()/2)
@@ -70,43 +70,56 @@ public class Physics {
 				this.onground = true;
 		}
 		
+		//Checks if the gravity is enabled
+		if(!this.gravity)
+			//Sets the motion for Y to 0
+			this.motionY=0;
+		
 		//Adds the motion y to the position y
 		this.y+=this.motionY;
 	}
 
+	/*
+	 * Adds a random motion to the entity
+	 * */
+	public void randomMotion(int strenght) {
+		this.motionX+=this.random.nextInt(strenght)-strenght/2;
+		this.motionY+=this.random.nextInt(strenght)-strenght/2;
+	}
+	
 	/**
 	 * @return the x
 	 */
 	public final int getX() {
-		return x;
+		return this.x;
 	}
 
 	/**
 	 * @return the y
 	 */
 	public final int getY() {
-		return y;
+		return this.y;
 	}
 
 	/**
 	 * @return the motionX
 	 */
 	public final double getMotionX() {
-		return motionX;
+		return this.motionX;
 	}
 
 	/**
 	 * @return the motionY
 	 */
 	public final double getMotionY() {
-		return motionY;
+		return this.motionY;
 	}
 
 	/**
 	 * @return the onground
 	 */
 	public final boolean isOnground() {
-		return onground;
+		return this.onground;
 	}
 
 	/**
@@ -159,11 +172,17 @@ public class Physics {
 		this.motionY+=motionY;
 	}
 
-	/*
-	 * Adds a random motion to the entity
-	 * */
-	public void randomMotion() {
-		this.motionX+=this.random.nextInt(5)-2.5;
-		this.motionY+=this.random.nextInt(5)-2.5;
+	/**
+	 * @return the gravity
+	 */
+	public final boolean hasGravity() {
+		return this.gravity;
+	}
+
+	/**
+	 * @param gravity the gravity to set
+	 */
+	public final void setGravity(boolean gravity) {
+		this.gravity = gravity;
 	}
 }

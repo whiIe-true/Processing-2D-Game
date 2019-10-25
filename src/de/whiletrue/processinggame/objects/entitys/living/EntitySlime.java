@@ -1,13 +1,13 @@
-package de.whiletrue.processinggame.objects.psobject;
+package de.whiletrue.processinggame.objects.entitys.living;
 
 import de.whiletrue.processinggame.game.Game;
-import de.whiletrue.processinggame.objects.PSEntity;
+import de.whiletrue.processinggame.objects.PSEntityLiving;
 import de.whiletrue.processinggame.rendering.Renderer;
 import de.whiletrue.processinggame.utils.Hitbox;
 
-public class PSSlime extends PSEntity{
+public class EntitySlime extends PSEntityLiving{
 
-	public PSSlime(Game game, Renderer renderer, int x, int y) {
+	public EntitySlime(Game game, Renderer renderer, int x, int y) {
 		super(game,renderer);
 
 		//Loads the hitbox
@@ -15,7 +15,7 @@ public class PSSlime extends PSEntity{
 		
 		//Loads the physics
 		this.physics.init(this.hitbox,x, y,.05,.2);
-		this.physics.randomMotion();
+		this.physics.randomMotion(4);
 		
 		//Load the skin
 		this.animations.init(renderer, "idle", 14);

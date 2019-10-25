@@ -23,6 +23,24 @@ public class Hitbox {
 		renderer.renderOutline(x-this.getFixedX()/2, y-this.getFixedY(), this.getFixedX(), this.getFixedY(), Color.blue.getRGB(), 1);
 	}
 	
+	
+	public final boolean areBoxesColliding(int x1,int y1,int x2,int y2,Hitbox box2) {
+		//Checks if the boxes are colliding on the x achses
+		boolean x = (
+					x1+this.getFixedX()/2>=x2-box2.getFixedX()/2&&
+					x1-this.getFixedX()/2<=x2+box2.getFixedX()/2
+				);
+		
+		//Checks if the boxes are colliding on the y achses
+		boolean y = (
+					y1<=y2+box2.getFixedY()&&
+					y1+this.getFixedY()>=y2
+				);
+		
+		//Returns if both collid
+		return x&&y;
+	}
+	
 	/**
 	 * @return the sizeX
 	 */

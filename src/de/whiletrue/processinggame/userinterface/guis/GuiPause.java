@@ -2,7 +2,7 @@ package de.whiletrue.processinggame.userinterface.guis;
 
 import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.game.Settings;
-import de.whiletrue.processinggame.objects.psobject.PSSlime;
+import de.whiletrue.processinggame.objects.entitys.living.EntitySlime;
 import de.whiletrue.processinggame.rendering.Renderer;
 import de.whiletrue.processinggame.userinterface.DefaultGui;
 import de.whiletrue.processinggame.userinterface.GuiComponent;
@@ -51,7 +51,7 @@ public class GuiPause extends DefaultGui{
 		
 		CompoundButton spawnSlime = new CompoundButton(this.game,this.renderer, this.game.getWidth()/2+20, this.game.getHeight()/8+10+(20+40)*0, 300, 40, i->{
 			if(i!=-1)
-				this.game.addObject(new PSSlime(this.game,this.renderer, this.game.getPlayer().getPhysics().getX(), this.game.getPlayer().getPhysics().getY()));
+				this.game.addObject(new EntitySlime(this.game,this.renderer, this.game.getPlayer().getPhysics().getX(), this.game.getPlayer().getPhysics().getY()));
 			return "Spawn Slime";
 		});
 
