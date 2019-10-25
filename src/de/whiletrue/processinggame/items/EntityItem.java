@@ -1,29 +1,43 @@
-package de.whiletrue.processinggame.objects;
+package de.whiletrue.processinggame.items;
 
 import de.whiletrue.processinggame.game.Game;
+import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.rendering.Renderer;
-import de.whiletrue.processinggame.utils.Animation;
 import de.whiletrue.processinggame.utils.Hitbox;
-import de.whiletrue.processinggame.utils.Physics;
 
-public abstract class PSItem extends PSEntity{
+public class EntityItem extends PSEntity{
 
+	private Item item;
+	
 	private double hoverTicks;
 	private boolean hoverDirection;
 	private int pickupdelay;
 	
-	public PSItem(Game game, Renderer renderer,int width,int height,double scale) {
+	public EntityItem(Game game, Renderer renderer,Item item,int x,int y) {
 		super(game, renderer);
-		this.physics = new Physics();
-		this.animations = new Animation();
-		this.hitbox = new Hitbox(width, height, scale);
+		
+		//Loads the items texture
+		this.animations.init(renderer, "item", 0);
+		this.animations.loadAnimations("item", item.getPath());
+		this.animations.start();
+		
+		//Loads the items hitbox
+		this.hitbox = new Hitbox(20, 20, 2);
+		
+		//Loads the items physics
+		this.physics.init(this.hitbox, x, y, .1, .2);
+		this.physics.randomMotion(10);
 	}
 	
 	@Override
 	public void handleRender(int mouseX, int mouseY, boolean mousePressed) {
-		int x = this.physics.getX(),y = this.physics.getY();
 		
+		//Gets the items location
+		int x = this.physics.getX(),y = this.physics.getY();
+
+		//Renders the item
 		this.animations.renderAt(x, (int) (y+this.hoverTicks), this.hitbox.getScale());
+		
 		//Checks if debugrendering is enabled
 		if(this.game.getSettings().showHitboxes)
 			this.hitbox.renderHitbox(this.renderer, x, y);
@@ -61,5 +75,19 @@ public abstract class PSItem extends PSEntity{
 	public boolean canBePickuped() {
 		return this.pickupdelay<=0;
 	}
-	
+
+	/**
+	 * @return the item
+	 */
+	public final Item getItem() {
+		return item;
+	}
+
+	/**
+	 * @param item the item to set
+	 */
+	public final void setItem(Item item) {
+		this.item = item;
+	}
+
 }

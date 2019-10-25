@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.whiletrue.processinggame.items.EntityItem;
+import de.whiletrue.processinggame.items.Items;
 import de.whiletrue.processinggame.objects.PSEntityLiving;
 import de.whiletrue.processinggame.objects.PSObject;
-import de.whiletrue.processinggame.objects.entitys.items.ItemKey;
 import de.whiletrue.processinggame.objects.entitys.living.EntitySlime;
 import de.whiletrue.processinggame.objects.objects.ObjectWall;
 import de.whiletrue.processinggame.rendering.Fonts;
@@ -69,7 +70,7 @@ public class Game {
 		this.objects.add(new EntitySlime(this,this.renderer, 200, 380));
 		
 		//Adds the items
-		this.objects.add(new ItemKey(this, this.renderer, 500, 400));
+		this.objects.add(new EntityItem(this, this.renderer, Items.key, 200, 200));
 	}
 	
 	public void handleRender() {

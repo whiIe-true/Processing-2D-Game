@@ -2,8 +2,8 @@ package de.whiletrue.processinggame.game;
 
 import java.util.Optional;
 
+import de.whiletrue.processinggame.items.EntityItem;
 import de.whiletrue.processinggame.objects.PSEntityLiving;
-import de.whiletrue.processinggame.objects.PSItem;
 import de.whiletrue.processinggame.rendering.Renderer;
 import de.whiletrue.processinggame.utils.Hitbox;
 
@@ -13,7 +13,7 @@ public class Player extends PSEntityLiving{
 	
 	private int swingticks;
 	
-	private PSItem carryingItem;
+	private EntityItem carryingItem;
 	
 	public Player(Game game,Renderer renderer,KeyHandler keyhandler) {
 		super(game,renderer);
@@ -107,10 +107,10 @@ public class Player extends PSEntityLiving{
 		}
 		
 		//Iterates over all items to find a item that the player can pickup
-		Optional<PSItem> pickup = this.game.getObjects().stream()
+		Optional<EntityItem> pickup = this.game.getObjects().stream()
 		//Gets all items
-		.filter(i->i instanceof PSItem)
-		.map(i->(PSItem)i)
+		.filter(i->i instanceof EntityItem)
+		.map(i->(EntityItem)i)
 		//Checks that the player isnot carrying the item
 		.filter(i->i!=this.carryingItem)
 		//Checks if the items can be pickedup
