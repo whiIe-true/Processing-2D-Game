@@ -16,10 +16,10 @@ public class EntityItem extends PSEntity{
 	
 	public EntityItem(Game game, Renderer renderer,Item item,int x,int y) {
 		super(game, renderer);
+		this.item = item;
 		
 		//Loads the items texture
-		this.animations.init(renderer, "item", 0);
-		this.animations.loadAnimations("item", item.getPath(),1);
+		this.animations = item.getAnimation();
 		
 		//Loads the items hitbox
 		this.hitbox = new Hitbox(20, 20, 2);
@@ -80,7 +80,7 @@ public class EntityItem extends PSEntity{
 	 * @return the item
 	 */
 	public final Item getItem() {
-		return item;
+		return this.item;
 	}
 
 	/**

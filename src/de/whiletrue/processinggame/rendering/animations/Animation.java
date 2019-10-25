@@ -20,7 +20,7 @@ public class Animation {
 	/*
 	 * Mainly the constructor
 	 * */
-	public final void init(Renderer renderer,String idleanimation,int idleticks) {
+	public final void init(Renderer renderer,String idleanimation) {
 		this.renderer = renderer;
 		this.idleanimation = idleanimation.toLowerCase();
 		this.reverse = false;

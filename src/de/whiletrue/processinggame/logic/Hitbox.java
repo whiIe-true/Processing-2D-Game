@@ -33,8 +33,8 @@ public class Hitbox {
 		
 		//Checks if the boxes are colliding on the y achses
 		boolean y = (
-					y1<=y2+box2.getFixedY()&&
-					y1+this.getFixedY()>=y2
+					y1>=y2-box2.getFixedY()&&
+					y1-this.getFixedY()<=y2
 				);
 		
 		//Returns if both collid

@@ -7,6 +7,7 @@ import de.whiletrue.processinggame.logic.Hitbox;
 import de.whiletrue.processinggame.objects.PSEntityLiving;
 import de.whiletrue.processinggame.objects.entitys.EntityItem;
 import de.whiletrue.processinggame.rendering.Renderer;
+import de.whiletrue.processinggame.utils.Item;
 import de.whiletrue.processinggame.utils.KeyHandler;
 
 public class Player extends PSEntityLiving{
@@ -15,7 +16,8 @@ public class Player extends PSEntityLiving{
 	
 	private int swingticks;
 	
-	private EntityItem carryingItem;
+	private Item itemHolding;
+	private int dropTicks;
 	
 	public Player(Game game,Renderer renderer,KeyHandler keyhandler) {
 		super(game,renderer);
@@ -29,7 +31,7 @@ public class Player extends PSEntityLiving{
 		this.physics.init(hitbox,game.getWidth()/2, game.getHeight()/2,.2,.2);
 		
 		//Loads the skin
-		this.animations.init(renderer,"idle",10);
+		this.animations.init(renderer,"idle");
 		this.animations.loadAnimations("idle", "rsc/player/idle.png",15);
 		this.animations.loadAnimations("walk", "rsc/player/walk.png",10);
 		this.animations.loadAnimations("attack", "rsc/player/attack.png",3);
@@ -101,19 +103,19 @@ public class Player extends PSEntityLiving{
 	 * */
 	private void updateItem() {
 		
-		//Updates the current carrying item if it exists
-		if(this.carryingItem!=null) {
-			this.carryingItem.getPhysics().setX(this.physics.getX());
-			this.carryingItem.getPhysics().setY(this.physics.getY()-this.getHitbox().getFixedY());
-		}
+		//Updates the dropticks
+		if(this.dropTicks>0)
+			this.dropTicks--;
+		
+		//Checks if the player is holding any item
+		if(this.itemHolding!=null)
+			return;
 		
 		//Iterates over all items to find a item that the player can pickup
 		Optional<EntityItem> pickup = this.game.getObjects().stream()
 		//Gets all items
 		.filter(i->i instanceof EntityItem)
 		.map(i->(EntityItem)i)
-		//Checks that the player isnot carrying the item
-		.filter(i->i!=this.carryingItem)
 		//Checks if the items can be pickedup
 		.filter(i->i.canBePickuped())
 		//Checks if the player is colliding with that item
@@ -124,31 +126,46 @@ public class Player extends PSEntityLiving{
 		if(!pickup.isPresent())
 			return;
 		
-		//Drops the old item
-		this.dropItem();
+		EntityItem entitm = pickup.get();
 		
 		//Sets the new item
-		this.carryingItem=pickup.get();
-		//Removes any gravity
-		this.carryingItem.getPhysics().setGravity(false);
+		this.itemHolding=entitm.getItem();
+		
+		//Removes the item from the world
+		this.game.removeObject(entitm);
 	}
 	
 	/*
 	 * Drops the item if the player has any
 	 * */
 	public void dropItem() {
-		//Removes the current item if the player is carrying any
-		if(this.carryingItem==null)
+		
+		//Checks if the player can drop something
+		if(this.dropTicks>0)
 			return;
-		//Adds the gravity
-		this.carryingItem.getPhysics().setGravity(true);
-		//Sets a new pickup delay
-		this.carryingItem.setPickUpDelay();
-		//Adds the throw motion
-		this.carryingItem.getPhysics().setMotionX(5*(this.animations.isReverse()?-1:1));
-		this.carryingItem.getPhysics().setMotionY(-2);
+		
+		//Removes the current item if the player is carrying any
+		if(this.itemHolding==null)
+			return;
+		
+		//Creates the new entity
+		EntityItem thro = new EntityItem(this.game, this.renderer, this.itemHolding, this.physics.getX(), this.physics.getY());
+		{
+			//Sets a new pickup delay
+			thro.setPickUpDelay();
+			//Adds the throw motion
+			thro.getPhysics().setMotionX(5*(this.animations.isReverse()?-1:1));
+			thro.getPhysics().setMotionY(-2);
+		}
+		
+		//Adds the item to the world
+		this.game.addObject(thro);
+		
 		//Removes the item
-		this.carryingItem=null;
+		this.itemHolding=null;
+		
+		//Resets the drop ticks
+		this.dropTicks=10;
 	}
 	
 	/*
@@ -202,5 +219,12 @@ public class Player extends PSEntityLiving{
 						this.physics.getX()-i.getPhysics().getX()<this.game.getSettings().range*40))
 				//Returns the match
 				.findAny();
+	}
+
+	/**
+	 * @return the itemHolding
+	 */
+	public final Item getItemHolding() {
+		return itemHolding;
 	}
 }

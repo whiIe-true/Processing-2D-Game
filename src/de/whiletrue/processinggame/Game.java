@@ -57,12 +57,12 @@ public class Game {
 		
 		//Creates the renderer
 		this.renderer = new Renderer(this.window);
-
-		//Creates the overlay
-		this.gameoverlay = new Overlay(this.renderer);
 		
 		//Creates the player object
 		this.player = new Player(this,this.renderer,this.keyhandler);
+
+		//Creates the overlay
+		this.gameoverlay = new Overlay(this.renderer);
 		
 		//Adds the objects
 		this.objects.add(new ObjectWall(this,this.renderer, 100, 400, 300));
@@ -73,6 +73,7 @@ public class Game {
 		
 		//Adds the items
 		this.objects.add(new EntityItem(this, this.renderer, Items.key, 200, 200));
+		this.objects.add(new EntityItem(this, this.renderer, Items.ring, 400, 200));
 	}
 	
 	public void handleRender() {
@@ -286,5 +287,9 @@ public class Game {
 	 */
 	public static Game getInstance() {
 		return instance;
+	}
+
+	public Renderer getRenderer() {
+		return this.renderer;
 	}
 }
