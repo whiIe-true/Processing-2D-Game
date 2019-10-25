@@ -1,14 +1,14 @@
-package de.whiletrue.processinggame.userinterface.guis;
+package de.whiletrue.processinggame.rendering.userinterface.guis;
 
-import de.whiletrue.processinggame.game.Game;
-import de.whiletrue.processinggame.game.Settings;
+import de.whiletrue.processinggame.Game;
+import de.whiletrue.processinggame.Settings;
 import de.whiletrue.processinggame.objects.entitys.living.EntitySlime;
 import de.whiletrue.processinggame.rendering.Renderer;
-import de.whiletrue.processinggame.userinterface.DefaultGui;
-import de.whiletrue.processinggame.userinterface.GuiComponent;
-import de.whiletrue.processinggame.userinterface.components.CompoundButton;
-import de.whiletrue.processinggame.userinterface.components.CompoundCheckbox;
-import de.whiletrue.processinggame.userinterface.components.CompoundSlider;
+import de.whiletrue.processinggame.rendering.userinterface.DefaultGui;
+import de.whiletrue.processinggame.rendering.userinterface.GuiComponent;
+import de.whiletrue.processinggame.rendering.userinterface.components.CompoundButton;
+import de.whiletrue.processinggame.rendering.userinterface.components.CompoundCheckbox;
+import de.whiletrue.processinggame.rendering.userinterface.components.CompoundSlider;
 
 public class GuiPause extends DefaultGui{
 
@@ -60,12 +60,7 @@ public class GuiPause extends DefaultGui{
 			return "Show Hitboxes";
 		});
 		
-		CompoundCheckbox showOverlay = new CompoundCheckbox(this.game,this.renderer, this.game.getWidth()/2+20, this.game.getHeight()/8+10+(20+40)*2, 40,40, this.game.getSettings().renderOverlay, i->{
-			this.game.getSettings().renderOverlay=i;
-			return "Show Overlay";
-		});
-		
-		return new GuiComponent[] {close,jumpheight,speed,size,range,spawnSlime,showHitboxes,showOverlay};
+		return new GuiComponent[] {close,jumpheight,speed,size,range,spawnSlime,showHitboxes};
 	}
 	
 	@Override

@@ -1,9 +1,9 @@
 package de.whiletrue.processinggame.objects.entitys.living;
 
-import de.whiletrue.processinggame.game.Game;
+import de.whiletrue.processinggame.Game;
+import de.whiletrue.processinggame.logic.Hitbox;
 import de.whiletrue.processinggame.objects.PSEntityLiving;
 import de.whiletrue.processinggame.rendering.Renderer;
-import de.whiletrue.processinggame.utils.Hitbox;
 
 public class EntitySlime extends PSEntityLiving{
 
@@ -19,9 +19,8 @@ public class EntitySlime extends PSEntityLiving{
 		
 		//Load the skin
 		this.animations.init(renderer, "idle", 14);
-		this.animations.loadAnimations("idle", "rsc/slime/idle.png");
-		this.animations.loadAnimations("falling", "rsc/slime/falling.png");
-		this.animations.start();
+		this.animations.loadAnimations("idle", "rsc/slime/idle.png",20);
+		this.animations.loadAnimations("falling", "rsc/slime/falling.png",20);
 		
 	}
 	

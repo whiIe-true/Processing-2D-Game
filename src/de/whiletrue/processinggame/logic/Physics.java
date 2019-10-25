@@ -1,9 +1,9 @@
-package de.whiletrue.processinggame.utils;
+package de.whiletrue.processinggame.logic;
 
 import java.util.Optional;
 import java.util.Random;
 
-import de.whiletrue.processinggame.game.Game;
+import de.whiletrue.processinggame.Game;
 import de.whiletrue.processinggame.objects.objects.ObjectWall;
 
 public class Physics {

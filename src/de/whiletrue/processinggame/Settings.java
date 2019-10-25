@@ -1,4 +1,4 @@
-package de.whiletrue.processinggame.game;
+package de.whiletrue.processinggame;
 
 public class Settings {
 	
@@ -13,7 +13,5 @@ public class Settings {
 	
 	//Shows some debugging rendering
 	public boolean showHitboxes = false;
-	//Renders the overlay
-	public boolean renderOverlay = false;
 	
 }

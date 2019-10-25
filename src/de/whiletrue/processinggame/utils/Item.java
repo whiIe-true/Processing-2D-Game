@@ -1,4 +1,4 @@
-package de.whiletrue.processinggame.items;
+package de.whiletrue.processinggame.utils;
 
 public abstract class Item {
 

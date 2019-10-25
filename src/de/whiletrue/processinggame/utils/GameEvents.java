@@ -2,7 +2,7 @@ package de.whiletrue.processinggame.utils;
 
 import processing.event.MouseEvent;
 
-public interface GameObject {
+public interface GameEvents {
 
 	public default void handleMouseClicked(MouseEvent event) {}
 	public default void handleMouseDragged(MouseEvent event) {}

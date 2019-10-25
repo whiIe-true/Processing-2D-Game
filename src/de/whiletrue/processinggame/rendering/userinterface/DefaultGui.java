@@ -1,15 +1,15 @@
-package de.whiletrue.processinggame.userinterface;
+package de.whiletrue.processinggame.rendering.userinterface;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import de.whiletrue.processinggame.game.Game;
+import de.whiletrue.processinggame.Game;
 import de.whiletrue.processinggame.rendering.Renderer;
-import de.whiletrue.processinggame.utils.GameObject;
+import de.whiletrue.processinggame.utils.GameEvents;
 import processing.event.MouseEvent;
 
-public abstract class DefaultGui implements GameObject{
+public abstract class DefaultGui implements GameEvents{
 
 	private List<GuiComponent> components = new ArrayList<>();
 	protected Game game;

@@ -1,9 +1,10 @@
-package de.whiletrue.processinggame.items;
+package de.whiletrue.processinggame.objects.entitys;
 
-import de.whiletrue.processinggame.game.Game;
+import de.whiletrue.processinggame.Game;
+import de.whiletrue.processinggame.logic.Hitbox;
 import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.rendering.Renderer;
-import de.whiletrue.processinggame.utils.Hitbox;
+import de.whiletrue.processinggame.utils.Item;
 
 public class EntityItem extends PSEntity{
 
@@ -18,8 +19,7 @@ public class EntityItem extends PSEntity{
 		
 		//Loads the items texture
 		this.animations.init(renderer, "item", 0);
-		this.animations.loadAnimations("item", item.getPath());
-		this.animations.start();
+		this.animations.loadAnimations("item", item.getPath(),1);
 		
 		//Loads the items hitbox
 		this.hitbox = new Hitbox(20, 20, 2);

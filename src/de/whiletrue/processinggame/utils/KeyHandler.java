@@ -1,4 +1,4 @@
-package de.whiletrue.processinggame.game;
+package de.whiletrue.processinggame.utils;
 
 import java.util.Set;
 import java.util.TreeSet;

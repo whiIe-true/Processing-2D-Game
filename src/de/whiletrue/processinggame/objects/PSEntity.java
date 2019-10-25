@@ -1,10 +1,10 @@
 package de.whiletrue.processinggame.objects;
 
-import de.whiletrue.processinggame.game.Game;
+import de.whiletrue.processinggame.Game;
+import de.whiletrue.processinggame.logic.Hitbox;
+import de.whiletrue.processinggame.logic.Physics;
 import de.whiletrue.processinggame.rendering.Renderer;
-import de.whiletrue.processinggame.utils.Hitbox;
-import de.whiletrue.processinggame.utils.Physics;
-import de.whiletrue.processinggame.utils.Animation;
+import de.whiletrue.processinggame.rendering.animations.Animation;
 
 public abstract class PSEntity extends PSObject{
 

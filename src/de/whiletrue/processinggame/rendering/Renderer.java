@@ -1,7 +1,12 @@
 package de.whiletrue.processinggame.rendering;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.imageio.ImageIO;
+
+import de.whiletrue.processinggame.rendering.animations.AnimationFrame;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
@@ -15,32 +20,44 @@ public class Renderer {
 	}
 	
 	/*
+	 * Loads a given image
+	 * */
+	public BufferedImage loadImage(String path) {
+		try {
+			return ImageIO.read(new File(path));
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	/*
 	 * Loads subimages from one image
 	 * */
-	public PImage[] loadImagesSeperatedBy(String path) {
+	public AnimationFrame[] loadImagesSeperatedBy(String path) {
 		
 		//Loades the full image
-		PImage img = this.window.loadImage(path);
+		BufferedImage img = this.loadImage(path);
 
-		int width = img.height;
+		int width = img.getHeight();
 		
 		//Gets the rest that will be cut if the image wont fit perfectly
-		int cut = img.width%width;
+		int cut = img.getWidth()%width;
 		
 		//Gets how many subimages will be returned
-		int imageLength = (img.width-cut)/width;
+		int imageLength = (img.getWidth()-cut)/width;
 		
 		//Creates the array with all subimages
-		PImage[] subimages = new PImage[imageLength];
+		AnimationFrame[] frames = new AnimationFrame[imageLength];
 		
 		//Goes through every subimage
 		for(int i = 0; i < imageLength; i++) {
-			//Cutes the subimage
-			PImage clone = img.get(i*width, 0, width, img.height);
-			//Adds the image
-			subimages[i] = clone;
+			//Cutes the subimage and resize it to the given size
+			BufferedImage clone = img.getSubimage(i*width, 0, width, img.getHeight());
+			
+			//Adds the frame
+			frames[i] = new AnimationFrame(clone);
 		}
-		return subimages;
+		return frames;
 	}
 	
 	/*
@@ -55,6 +72,13 @@ public class Renderer {
 	 * */
 	public void pop() {
 		this.window.popMatrix();
+	}
+	
+	/*
+	 * Renders the given image
+	 * */
+	public void renderImage(PImage frame,int x,int y) {
+		this.window.image(frame, x, y);
 	}
 	
 	/*

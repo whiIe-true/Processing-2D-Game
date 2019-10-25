@@ -2,7 +2,7 @@ package de.whiletrue.processinggame.objects.objects;
 
 import java.awt.Color;
 
-import de.whiletrue.processinggame.game.Game;
+import de.whiletrue.processinggame.Game;
 import de.whiletrue.processinggame.objects.PSObject;
 import de.whiletrue.processinggame.rendering.Renderer;
 

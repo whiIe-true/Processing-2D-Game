@@ -1,4 +1,4 @@
-package de.whiletrue.processinggame.game;
+package de.whiletrue.processinggame;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -7,17 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.whiletrue.processinggame.items.EntityItem;
-import de.whiletrue.processinggame.items.Items;
 import de.whiletrue.processinggame.objects.PSEntityLiving;
 import de.whiletrue.processinggame.objects.PSObject;
+import de.whiletrue.processinggame.objects.entitys.EntityItem;
 import de.whiletrue.processinggame.objects.entitys.living.EntitySlime;
+import de.whiletrue.processinggame.objects.entitys.living.Player;
 import de.whiletrue.processinggame.objects.objects.ObjectWall;
 import de.whiletrue.processinggame.rendering.Fonts;
 import de.whiletrue.processinggame.rendering.Overlay;
 import de.whiletrue.processinggame.rendering.Renderer;
-import de.whiletrue.processinggame.userinterface.DefaultGui;
-import de.whiletrue.processinggame.userinterface.guis.GuiPause;
+import de.whiletrue.processinggame.rendering.userinterface.DefaultGui;
+import de.whiletrue.processinggame.rendering.userinterface.guis.GuiPause;
+import de.whiletrue.processinggame.utils.Items;
+import de.whiletrue.processinggame.utils.KeyHandler;
 import processing.core.PApplet;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
@@ -90,10 +92,8 @@ public class Game {
 		//Draws the player
 		this.player.handleRender(mx, my, mp);
 
-		//Checks if overlay rendering is enabled
-		if(this.settings.renderOverlay)
-			//Renders the overlay
-			this.gameoverlay.handleRender(mx, my, mp);
+		//Renders the overlay
+		this.gameoverlay.handleRender(mx, my, mp);
 		
 		//Checks if a gui is open
 		if(!this.isGameRunning())

@@ -1,6 +1,6 @@
 package de.whiletrue.processinggame.objects;
 
-import de.whiletrue.processinggame.game.Game;
+import de.whiletrue.processinggame.Game;
 import de.whiletrue.processinggame.rendering.Renderer;
 
 public abstract class PSEntityLiving extends PSEntity{

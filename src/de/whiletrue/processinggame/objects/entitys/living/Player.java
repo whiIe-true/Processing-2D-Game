@@ -1,11 +1,13 @@
-package de.whiletrue.processinggame.game;
+package de.whiletrue.processinggame.objects.entitys.living;
 
 import java.util.Optional;
 
-import de.whiletrue.processinggame.items.EntityItem;
+import de.whiletrue.processinggame.Game;
+import de.whiletrue.processinggame.logic.Hitbox;
 import de.whiletrue.processinggame.objects.PSEntityLiving;
+import de.whiletrue.processinggame.objects.entitys.EntityItem;
 import de.whiletrue.processinggame.rendering.Renderer;
-import de.whiletrue.processinggame.utils.Hitbox;
+import de.whiletrue.processinggame.utils.KeyHandler;
 
 public class Player extends PSEntityLiving{
 
@@ -28,10 +30,9 @@ public class Player extends PSEntityLiving{
 		
 		//Loads the skin
 		this.animations.init(renderer,"idle",10);
-		this.animations.loadAnimations("idle", "rsc/player/idle.png");
-		this.animations.loadAnimations("walk", "rsc/player/walk.png");
-		this.animations.loadAnimations("attack", "rsc/player/attack.png");
-		this.animations.start();
+		this.animations.loadAnimations("idle", "rsc/player/idle.png",15);
+		this.animations.loadAnimations("walk", "rsc/player/walk.png",10);
+		this.animations.loadAnimations("attack", "rsc/player/attack.png",3);
 	}
 
 	@Override
@@ -84,9 +85,9 @@ public class Player extends PSEntityLiving{
 		
 		//Checks if the key for attack is pressed and no attack is going and if the player can move
 		if(this.keyhandler.keyPressed(87/*Key W*/)&&this.animations.isAnimationComplet()) {
-//			//Starts the attack
+			//Starts the attack
 			this.swingticks=0;
-			this.animations.startAnimation("attack",3);
+			this.animations.startAnimation("attack");
 		}
 		
 		if(this.keyhandler.keyPressed(70/*F*/)) {

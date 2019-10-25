@@ -1,4 +1,4 @@
-package de.whiletrue.processinggame.utils;
+package de.whiletrue.processinggame.logic;
 
 import java.awt.Color;
 

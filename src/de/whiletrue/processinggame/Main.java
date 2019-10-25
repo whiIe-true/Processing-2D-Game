@@ -1,6 +1,5 @@
 package de.whiletrue.processinggame;
 
-import de.whiletrue.processinggame.game.Game;
 import processing.core.PApplet;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;

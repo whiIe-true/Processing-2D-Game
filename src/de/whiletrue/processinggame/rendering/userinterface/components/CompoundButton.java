@@ -1,11 +1,11 @@
-package de.whiletrue.processinggame.userinterface.components;
+package de.whiletrue.processinggame.rendering.userinterface.components;
 
 import java.awt.Color;
 import java.util.function.Function;
 
-import de.whiletrue.processinggame.game.Game;
+import de.whiletrue.processinggame.Game;
 import de.whiletrue.processinggame.rendering.Renderer;
-import de.whiletrue.processinggame.userinterface.GuiComponent;
+import de.whiletrue.processinggame.rendering.userinterface.GuiComponent;
 import processing.event.MouseEvent;
 
 public class CompoundButton extends GuiComponent{
