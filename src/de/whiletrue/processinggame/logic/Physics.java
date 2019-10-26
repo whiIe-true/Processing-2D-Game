@@ -156,6 +156,20 @@ public class Physics {
 	public final void setMotionY(double motionY) {
 		this.motionY = motionY;
 	}
+	
+	/**
+	 * @param motionX add to motionX
+	 */
+	public final void addMotionX(double motionX) {
+		this.motionX += motionX;
+	}
+
+	/**
+	 * @param motionY add to motionY
+	 */
+	public final void addMotionY(double motionY) {
+		this.motionY += motionY;
+	}
 
 	/**
 	 * @param onground the onground to set

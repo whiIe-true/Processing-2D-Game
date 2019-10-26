@@ -7,6 +7,7 @@ import de.whiletrue.processinggame.logic.Hitbox;
 import de.whiletrue.processinggame.objects.PSEntityLiving;
 import de.whiletrue.processinggame.objects.entitys.EntityItem;
 import de.whiletrue.processinggame.utils.Item;
+import de.whiletrue.processinggame.utils.Items;
 import de.whiletrue.processinggame.utils.KeyHandler;
 
 public class Player extends PSEntityLiving{
@@ -30,9 +31,9 @@ public class Player extends PSEntityLiving{
 		this.physics.init(hitbox,game.getWidth()/2, game.getHeight()/2,.2,.2);
 		
 		//Loads the skin
-		this.animations.init(renderer,"idle");
+		this.animations.init("idle");
 		this.animations.loadAnimations("idle", "rsc/player/idle.png",15);
-		this.animations.loadAnimations("walk", "rsc/player/walk.png",10);
+		this.animations.loadAnimations("walk", "rsc/player/walk.png",5);
 		this.animations.loadAnimations("attack", "rsc/player/attack.png",3);
 	}
 
@@ -72,6 +73,12 @@ public class Player extends PSEntityLiving{
 	 * Handles all key pressing stuff
 	 * */
 	public void updateKeyPresses() {
+		
+		//Checks if the key for shift is pressed and if the ring is currently hold
+		if(this.keyhandler.keyPressed(/*Shift*/16)&&this.itemHolding==Items.ring_of_flying)
+			//Lets the player fly
+			this.physics.setMotionY(-2);
+		
 		//Checks if the key for forward is pressed and if the player can move
 		if(this.keyhandler.keyPressed(68/*Key D*/)){
 			//Sets the skin direction

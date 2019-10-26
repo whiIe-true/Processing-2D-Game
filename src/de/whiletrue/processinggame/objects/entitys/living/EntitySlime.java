@@ -15,7 +15,7 @@ public class EntitySlime extends PSEntityLiving{
 		this.physics.randomMotion(4);
 		
 		//Load the skin
-		this.animations.init(renderer, "idle");
+		this.animations.init("idle");
 		this.animations.loadAnimations("idle", "rsc/slime/idle.png",20);
 		this.animations.loadAnimations("falling", "rsc/slime/falling.png",20);
 		

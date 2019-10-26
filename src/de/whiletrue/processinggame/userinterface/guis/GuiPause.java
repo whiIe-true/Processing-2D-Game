@@ -68,7 +68,7 @@ public class GuiPause extends DefaultGui{
 				spawn = new EntityItem(Items.key, this.game.getPlayer().getPhysics().getX(), this.game.getPlayer().getPhysics().getY());
 				break;
 			case 2:
-				spawn = new EntityItem(Items.ring, this.game.getPlayer().getPhysics().getX(), this.game.getPlayer().getPhysics().getY());
+				spawn = new EntityItem(Items.ring_of_flying, this.game.getPlayer().getPhysics().getX(), this.game.getPlayer().getPhysics().getY());
 				break;
 			}
 			//Checks if a entity is given

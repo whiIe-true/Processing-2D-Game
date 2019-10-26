@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.whiletrue.processinggame.Game;
 import de.whiletrue.processinggame.rendering.Renderer;
 import processing.core.PImage;
 
@@ -20,8 +21,8 @@ public class Animation {
 	/*
 	 * Mainly the constructor
 	 * */
-	public final void init(Renderer renderer,String idleanimation) {
-		this.renderer = renderer;
+	public final void init(String idleanimation) {
+		this.renderer = Game.getInstance().getRenderer();
 		this.idleanimation = idleanimation.toLowerCase();
 		this.reverse = false;
 	}
