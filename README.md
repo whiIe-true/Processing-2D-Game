@@ -1,9 +1,9 @@
 # Processing 2D Game
-This is a private projekt to test some things using the processing librarier
+This is a private project to test some things using the processing library
 
-## Require
-* Processing(https://processing.org/download/)
+## Required
+* [Processing](https://processing.org/download/)
 
 ## Credits
-Skeleton-player(https://jesse-m.itch.io/skeleton-pack)
-Slime(https://henrysoftware.itch.io/free-pixel-mob)
+* [Skeleton-player](https://jesse-m.itch.io/skeleton-pack)
+* [Slime](https://henrysoftware.itch.io/free-pixel-mob)
