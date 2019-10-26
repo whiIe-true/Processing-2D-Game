@@ -1,11 +1,9 @@
-package de.whiletrue.processinggame.rendering.userinterface.components;
+package de.whiletrue.processinggame.userinterface.components;
 
 import java.awt.Color;
 import java.util.function.Function;
 
-import de.whiletrue.processinggame.Game;
-import de.whiletrue.processinggame.rendering.Renderer;
-import de.whiletrue.processinggame.rendering.userinterface.GuiComponent;
+import de.whiletrue.processinggame.userinterface.GuiComponent;
 import processing.event.MouseEvent;
 
 public class CompoundCheckbox extends GuiComponent{
@@ -15,12 +13,11 @@ public class CompoundCheckbox extends GuiComponent{
 	private boolean checked;
 	private String text;
 	
-	public CompoundCheckbox(Game game,Renderer renderer,int x,int y,boolean checked,Function<Boolean,String> onclick) {
-		this(game,renderer,x,y,50,50,checked,onclick);
+	public CompoundCheckbox(int x,int y,boolean checked,Function<Boolean,String> onclick) {
+		this(x,y,50,50,checked,onclick);
 	}
 	
-	public CompoundCheckbox(Game game,Renderer renderer,int x,int y,int width,int height,boolean checked,Function<Boolean,String> onclick) {
-		super(game,renderer);
+	public CompoundCheckbox(int x,int y,int width,int height,boolean checked,Function<Boolean,String> onclick) {
 		this.x = x;
 		this.y = y;
 		this.width = width;

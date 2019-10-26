@@ -1,9 +1,7 @@
 package de.whiletrue.processinggame.objects;
 
-import de.whiletrue.processinggame.Game;
 import de.whiletrue.processinggame.logic.Hitbox;
 import de.whiletrue.processinggame.logic.Physics;
-import de.whiletrue.processinggame.rendering.Renderer;
 import de.whiletrue.processinggame.rendering.animations.Animation;
 
 public abstract class PSEntity extends PSObject{
@@ -12,8 +10,7 @@ public abstract class PSEntity extends PSObject{
 	protected Physics physics;
 	protected Hitbox hitbox;
 	
-	public PSEntity(Game game,Renderer renderer) {
-		super(game,renderer);
+	public PSEntity() {
 		this.animations = new Animation();
 		this.physics = new Physics();
 	}

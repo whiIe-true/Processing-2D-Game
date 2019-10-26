@@ -1,11 +1,9 @@
-package de.whiletrue.processinggame.rendering.userinterface.components;
+package de.whiletrue.processinggame.userinterface.components;
 
 import java.awt.Color;
 import java.util.function.Function;
 
-import de.whiletrue.processinggame.Game;
-import de.whiletrue.processinggame.rendering.Renderer;
-import de.whiletrue.processinggame.rendering.userinterface.GuiComponent;
+import de.whiletrue.processinggame.userinterface.GuiComponent;
 import processing.event.MouseEvent;
 
 public class CompoundSlider extends GuiComponent{
@@ -17,8 +15,7 @@ public class CompoundSlider extends GuiComponent{
 	
 	private boolean draged = false;
 	
-	public CompoundSlider(Game game,Renderer renderer,int x,int y,int width,int height,int min,int max,int value,Function<Integer,String> onchange) {
-		super(game,renderer);
+	public CompoundSlider(int x,int y,int width,int height,int min,int max,int value,Function<Integer,String> onchange) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -32,8 +29,8 @@ public class CompoundSlider extends GuiComponent{
 		this.text = this.onchange.apply(this.currentValue);
 	}
 	
-	public CompoundSlider(Game game,Renderer renderer,int x,int y,int min,int max,int state,Function<Integer,String> onchange) {
-		this(game,renderer,x,y,200,40,min,max,state,onchange);
+	public CompoundSlider(int x,int y,int min,int max,int state,Function<Integer,String> onchange) {
+		this(x,y,200,40,min,max,state,onchange);
 	}
 	
 	@Override

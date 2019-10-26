@@ -1,9 +1,7 @@
 package de.whiletrue.processinggame.objects.entitys;
 
-import de.whiletrue.processinggame.Game;
 import de.whiletrue.processinggame.logic.Hitbox;
 import de.whiletrue.processinggame.objects.PSEntity;
-import de.whiletrue.processinggame.rendering.Renderer;
 import de.whiletrue.processinggame.utils.Item;
 
 public class EntityItem extends PSEntity{
@@ -14,8 +12,7 @@ public class EntityItem extends PSEntity{
 	private boolean hoverDirection;
 	private int pickupdelay;
 	
-	public EntityItem(Game game, Renderer renderer,Item item,int x,int y) {
-		super(game, renderer);
+	public EntityItem(Item item,int x,int y) {
 		this.item = item;
 		
 		//Loads the items texture

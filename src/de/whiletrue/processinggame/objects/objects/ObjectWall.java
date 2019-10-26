@@ -2,17 +2,13 @@ package de.whiletrue.processinggame.objects.objects;
 
 import java.awt.Color;
 
-import de.whiletrue.processinggame.Game;
 import de.whiletrue.processinggame.objects.PSObject;
-import de.whiletrue.processinggame.rendering.Renderer;
 
 public class ObjectWall extends PSObject{
 	
 	private int x,y,width;
 	
-	public ObjectWall(Game game,Renderer renderer,int x,int y,int width) {
-		super(game,renderer);
-		this.game = game;
+	public ObjectWall(int x,int y,int width) {
 		this.x = x;
 		this.y = y;
 		this.width = width;

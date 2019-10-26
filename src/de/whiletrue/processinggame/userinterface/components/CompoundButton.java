@@ -1,11 +1,9 @@
-package de.whiletrue.processinggame.rendering.userinterface.components;
+package de.whiletrue.processinggame.userinterface.components;
 
 import java.awt.Color;
 import java.util.function.Function;
 
-import de.whiletrue.processinggame.Game;
-import de.whiletrue.processinggame.rendering.Renderer;
-import de.whiletrue.processinggame.rendering.userinterface.GuiComponent;
+import de.whiletrue.processinggame.userinterface.GuiComponent;
 import processing.event.MouseEvent;
 
 public class CompoundButton extends GuiComponent{
@@ -14,8 +12,7 @@ public class CompoundButton extends GuiComponent{
 	private String text;
 	private Function<Integer,String> onclick;
 	
-	public CompoundButton(Game game,Renderer renderer,int x,int y,int width,int height,Function<Integer,String> onclick) {
-		super(game,renderer);
+	public CompoundButton(int x,int y,int width,int height,Function<Integer,String> onclick) {
 		this.x = x;
 		this.y = y;
 		this.width = width;

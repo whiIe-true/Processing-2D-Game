@@ -9,9 +9,9 @@ public abstract class PSObject implements GameEvents{
 	protected Game game;
 	protected Renderer renderer;
 	
-	public PSObject(Game game,Renderer renderer) {
-		this.game = game;
-		this.renderer = renderer;
+	public PSObject() {
+		this.game = Game.getInstance();
+		this.renderer = this.game.getRenderer();
 	}
 	
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.objects.PSEntityLiving;
 import de.whiletrue.processinggame.objects.PSObject;
 import de.whiletrue.processinggame.objects.entitys.EntityItem;
@@ -16,8 +17,8 @@ import de.whiletrue.processinggame.objects.objects.ObjectWall;
 import de.whiletrue.processinggame.rendering.Fonts;
 import de.whiletrue.processinggame.rendering.Overlay;
 import de.whiletrue.processinggame.rendering.Renderer;
-import de.whiletrue.processinggame.rendering.userinterface.DefaultGui;
-import de.whiletrue.processinggame.rendering.userinterface.guis.GuiPause;
+import de.whiletrue.processinggame.userinterface.DefaultGui;
+import de.whiletrue.processinggame.userinterface.guis.GuiPause;
 import de.whiletrue.processinggame.utils.Items;
 import de.whiletrue.processinggame.utils.KeyHandler;
 import processing.core.PApplet;
@@ -26,9 +27,12 @@ import processing.event.MouseEvent;
 
 public class Game {
 	
+	private final int killHeight = 1000;
+	
 	private static Game instance;
 	private PApplet window;
 	
+	private Camera camera;
 	private KeyHandler keyhandler = new KeyHandler();
 	private Settings settings = new Settings();
 	private DefaultGui openGui = null;
@@ -52,6 +56,9 @@ public class Game {
 		//Sets the max frame rate
 		this.window.frameRate(60);
 		
+		//Creates the camera
+		this.camera = new Camera();
+		
 		//Loads the fonts
 		Fonts.init(this.window);
 		
@@ -59,24 +66,28 @@ public class Game {
 		this.renderer = new Renderer(this.window);
 		
 		//Creates the player object
-		this.player = new Player(this,this.renderer,this.keyhandler);
+		this.player = new Player(this.camera,this.keyhandler);
 
 		//Creates the overlay
-		this.gameoverlay = new Overlay(this.renderer);
+		this.gameoverlay = new Overlay();
 		
 		//Adds the objects
-		this.objects.add(new ObjectWall(this,this.renderer, 100, 400, 300));
-		this.objects.add(new ObjectWall(this,this.renderer, 0, this.window.height-10, this.window.width));
+		this.objects.add(new ObjectWall(100, 400, 300));
+		this.objects.add(new ObjectWall(400, 600, 500));
+		this.objects.add(new ObjectWall(1300, 500, 100));
+		this.objects.add(new ObjectWall(1500, 250, 100));
+		this.objects.add(new ObjectWall(1050, 0, 150));
 		
 		//Adds the entitys
-		this.objects.add(new EntitySlime(this,this.renderer, 200, 380));
+		this.objects.add(new EntitySlime(200, 380));
 		
 		//Adds the items
-		this.objects.add(new EntityItem(this, this.renderer, Items.key, 200, 200));
-		this.objects.add(new EntityItem(this, this.renderer, Items.ring, 400, 200));
+		this.objects.add(new EntityItem(Items.key, 200, 200));
+		this.objects.add(new EntityItem(Items.ring, 400, 200));
 	}
 	
 	public void handleRender() {
+
 		//Gets the mouse stuff
 		int mx = this.window.mouseX,my = this.window.mouseY;
 		boolean mp = this.window.mousePressed;
@@ -87,24 +98,49 @@ public class Game {
 		//Draws a default background
 		this.window.background(Color.gray.getRGB());
 		
-		//Draws the objects
-		this.objects.forEach(i->i.handleRender(mx, my, mp));
+		//Renders the game
+		this.renderer.push();
+		{
+			//Handles the camera
+			this.camera.doRender(this.window);
+			
+			//Draws the objects
+			this.objects.forEach(i->i.handleRender(mx, my, mp));
+			
+			//Draws the player
+			this.player.handleRender(mx, my, mp);
+		}
+		this.renderer.pop();
 		
-		//Draws the player
-		this.player.handleRender(mx, my, mp);
-
-		//Renders the overlay
-		this.gameoverlay.handleRender(mx, my, mp);
+		//Renders the overlay and gui
+		this.renderer.push();
+		{
+			//Renders the overlay
+			this.gameoverlay.handleRender(mx, my, mp);
+			
+			//Checks if a gui is open
+			if(!this.isGameRunning())
+				//Draws the gui
+				this.openGui.handleRender(mx, my, mp);
+		}
+		this.renderer.pop();
 		
-		//Checks if a gui is open
-		if(!this.isGameRunning())
-			//Draws the gui
-			this.openGui.handleRender(mx, my, mp);
 	}
 
 	public void onTick() {
-		//Removes dead livingentitys
-		this.objects = this.objects.stream().filter(i->!(i instanceof PSEntityLiving)||!((PSEntityLiving)i).isDead()).collect(Collectors.toList());
+		//Removes dead livingentitys or entitys that are to low
+		this.objects.removeAll(this.objects.stream()
+				.filter(i->i instanceof PSEntity)
+				.map(i->(PSEntity)i)
+				.filter(i->
+				(
+					//Checks if the entity is dead
+					i instanceof PSEntityLiving&&((PSEntityLiving)i).isDead()
+				)||(
+					//Checks if the entity is to low	
+					i.getPhysics().getY()>this.killHeight)
+				)
+				.collect(Collectors.toList()));
 		
 		//Checks if the game is running
 		if(this.isGameRunning()) {

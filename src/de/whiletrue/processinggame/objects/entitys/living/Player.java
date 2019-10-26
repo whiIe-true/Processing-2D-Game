@@ -2,28 +2,27 @@ package de.whiletrue.processinggame.objects.entitys.living;
 
 import java.util.Optional;
 
-import de.whiletrue.processinggame.Game;
+import de.whiletrue.processinggame.Camera;
 import de.whiletrue.processinggame.logic.Hitbox;
 import de.whiletrue.processinggame.objects.PSEntityLiving;
 import de.whiletrue.processinggame.objects.entitys.EntityItem;
-import de.whiletrue.processinggame.rendering.Renderer;
 import de.whiletrue.processinggame.utils.Item;
 import de.whiletrue.processinggame.utils.KeyHandler;
 
 public class Player extends PSEntityLiving{
 
 	private KeyHandler keyhandler;
+	private Camera camera;
 	
 	private int swingticks;
 	
 	private Item itemHolding;
 	private int dropTicks;
 	
-	public Player(Game game,Renderer renderer,KeyHandler keyhandler) {
-		super(game,renderer);
-		
+	public Player(Camera camera,KeyHandler keyhandler) {
 		this.keyhandler = keyhandler;
-
+		this.camera = camera;
+		
 		//Loades the hitbox
 		this.hitbox = new Hitbox(25, 30, 2);
 		
@@ -57,8 +56,18 @@ public class Player extends PSEntityLiving{
 		
 		//Calls the methods callback function
 		super.handleTick();
+		
+		//Updates the camera
+		this.updateCamera();
 	}
 
+	/*
+	 * Updates the cameras x and y
+	 * */
+	private void updateCamera() {
+		this.camera.update(this.physics.getX(),this.physics.getY());
+	}
+	
 	/*
 	 * Handles all key pressing stuff
 	 * */
@@ -149,7 +158,7 @@ public class Player extends PSEntityLiving{
 			return;
 		
 		//Creates the new entity
-		EntityItem thro = new EntityItem(this.game, this.renderer, this.itemHolding, this.physics.getX(), this.physics.getY());
+		EntityItem thro = new EntityItem(this.itemHolding, this.physics.getX(), this.physics.getY());
 		{
 			//Sets a new pickup delay
 			thro.setPickUpDelay();

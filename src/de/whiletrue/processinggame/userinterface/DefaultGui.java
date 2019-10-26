@@ -1,4 +1,4 @@
-package de.whiletrue.processinggame.rendering.userinterface;
+package de.whiletrue.processinggame.userinterface;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -13,9 +13,10 @@ public class Overlay {
 	
 	private AnimationFrame itemframe;
 	
-	public Overlay(Renderer renderer) {
-		this.renderer = renderer;
-		this.player = Game.getInstance().getPlayer();
+	public Overlay() {
+		Game game = Game.getInstance();
+		this.renderer = game.getRenderer();
+		this.player = game.getPlayer();
 		
 		//Loads the itemframe
 		this.itemframe = new AnimationFrame(renderer.loadImage("rsc/overlay/itemframe.png"));

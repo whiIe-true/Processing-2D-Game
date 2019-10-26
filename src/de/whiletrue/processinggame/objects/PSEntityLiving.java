@@ -1,16 +1,9 @@
 package de.whiletrue.processinggame.objects;
 
-import de.whiletrue.processinggame.Game;
-import de.whiletrue.processinggame.rendering.Renderer;
-
 public abstract class PSEntityLiving extends PSEntity{
 
 	protected boolean dead = false;
 	
-	public PSEntityLiving(Game game, Renderer renderer) {
-		super(game, renderer);
-	}
-
 	/**
 	 * @return the dead
 	 */

@@ -1,14 +1,11 @@
 package de.whiletrue.processinggame.objects.entitys.living;
 
-import de.whiletrue.processinggame.Game;
 import de.whiletrue.processinggame.logic.Hitbox;
 import de.whiletrue.processinggame.objects.PSEntityLiving;
-import de.whiletrue.processinggame.rendering.Renderer;
 
 public class EntitySlime extends PSEntityLiving{
 
-	public EntitySlime(Game game, Renderer renderer, int x, int y) {
-		super(game,renderer);
+	public EntitySlime(int x, int y) {
 
 		//Loads the hitbox
 		this.hitbox = new Hitbox(16, 16, 2.5);
