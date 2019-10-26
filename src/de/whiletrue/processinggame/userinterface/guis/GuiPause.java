@@ -2,6 +2,7 @@ package de.whiletrue.processinggame.userinterface.guis;
 
 import de.whiletrue.processinggame.Game;
 import de.whiletrue.processinggame.Settings;
+import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.objects.entitys.EntityItem;
 import de.whiletrue.processinggame.objects.entitys.living.EntitySlime;
 import de.whiletrue.processinggame.rendering.Renderer;
@@ -9,6 +10,7 @@ import de.whiletrue.processinggame.userinterface.DefaultGui;
 import de.whiletrue.processinggame.userinterface.GuiComponent;
 import de.whiletrue.processinggame.userinterface.components.CompoundButton;
 import de.whiletrue.processinggame.userinterface.components.CompoundCheckbox;
+import de.whiletrue.processinggame.userinterface.components.CompoundList;
 import de.whiletrue.processinggame.userinterface.components.CompoundSlider;
 import de.whiletrue.processinggame.utils.Items;
 
@@ -51,30 +53,31 @@ public class GuiPause extends DefaultGui{
 			return "Close";
 		});
 		
-		CompoundButton spawnSlime = new CompoundButton(this.game.getWidth()/2+20, this.game.getHeight()/8+10+(20+40)*0, 300, 40, i->{
-			if(i!=-1)
-				this.game.addObject(new EntitySlime(this.game.getPlayer().getPhysics().getX(), this.game.getPlayer().getPhysics().getY()));
-			return "Spawn Slime";
-		});
-		
-		CompoundButton spawnKey = new CompoundButton(this.game.getWidth()/2+20, this.game.getHeight()/8+10+(20+40)*1, 300, 40, i->{
-			if(i!=-1)
-				this.game.addObject(new EntityItem(Items.key, this.game.getPlayer().getPhysics().getX(), this.game.getPlayer().getPhysics().getY()));
-			return "Spawn Key";
-		});
-		
-		CompoundButton spawnRing = new CompoundButton(this.game.getWidth()/2+20, this.game.getHeight()/8+10+(20+40)*2, 300, 40, i->{
-			if(i!=-1)
-				this.game.addObject(new EntityItem(Items.ring, this.game.getPlayer().getPhysics().getX(), this.game.getPlayer().getPhysics().getY()));
-			return "Spawn Ring";
-		});
-		
-		CompoundCheckbox showHitboxes = new CompoundCheckbox(this.game.getWidth()/2+20, this.game.getHeight()/8+10+(20+40)*3, 40,40, this.game.getSettings().showHitboxes, i->{
+		CompoundCheckbox showHitboxes = new CompoundCheckbox(this.game.getWidth()/2+20, this.game.getHeight()/8+10+(20+40)*1, 40,40, this.game.getSettings().showHitboxes, i->{
 			this.game.getSettings().showHitboxes=i;
 			return "Show Hitboxes";
 		});
 		
-		return new GuiComponent[] {close,jumpheight,speed,size,range,spawnSlime,spawnKey,spawnRing,showHitboxes};
+		CompoundList spawnList = new CompoundList(this.game.getWidth()/2+20, this.game.getHeight()/8+10+(20+40)*0, 300, 40,"Spawn",(id,btn)->{
+			PSEntity spawn = null;
+			switch (id) {
+			case 0:
+				spawn = new EntitySlime(this.game.getPlayer().getPhysics().getX(), this.game.getPlayer().getPhysics().getY());
+				break;
+			case 1:
+				spawn = new EntityItem(Items.key, this.game.getPlayer().getPhysics().getX(), this.game.getPlayer().getPhysics().getY());
+				break;
+			case 2:
+				spawn = new EntityItem(Items.ring, this.game.getPlayer().getPhysics().getX(), this.game.getPlayer().getPhysics().getY());
+				break;
+			}
+			//Checks if a entity is given
+			if(spawn!=null)
+				//Spawns that entity
+				this.game.addObject(spawn);
+		},"Slime","Item/Key","Item/Ring");
+		
+		return new GuiComponent[] {close,jumpheight,speed,size,range,showHitboxes,spawnList};
 	}
 	
 	@Override

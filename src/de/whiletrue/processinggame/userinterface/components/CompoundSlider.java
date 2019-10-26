@@ -39,9 +39,9 @@ public class CompoundSlider extends GuiComponent{
 		this.renderer.push();
 		{
 			//Renders the filled
-			this.renderer.renderRectWithStroke(this.x, this.y, (float) (this.width*this.state), this.height, new Color(0xFB3030).getRGB(), 0, 1);
+			this.renderer.renderRectWithStroke(this.x, this.y, (float) (this.width*this.state), this.height, new Color(0xFB3030).getRGB(), 0, 2);
 			//Renders the empty
-			this.renderer.renderRectWithStroke((float) (this.x+this.width*this.state), this.y, (float) (this.width-this.width*this.state), this.height, new Color(0x595959).getRGB(), 0, 1);
+			this.renderer.renderRectWithStroke((float) (this.x+this.width*this.state), this.y, (float) (this.width-this.width*this.state), this.height, new Color(0x595959).getRGB(), 0, 2);
 			//Renders the text
 			this.renderer.renderTextCenter(this.text, this.x+this.width/2, this.y, this.height-14, null, Color.white.getRGB());
 		}

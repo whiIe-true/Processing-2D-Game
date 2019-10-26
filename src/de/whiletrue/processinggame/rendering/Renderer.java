@@ -20,6 +20,14 @@ public class Renderer {
 	}
 	
 	/*
+	 * Returns the width of the given text
+	 * */
+	public int getTextWidth(String text,int fontsize) {
+		this.window.textSize(fontsize);
+		return (int)this.window.textWidth(text);
+	}
+	
+	/*
 	 * Loads a given image
 	 * */
 	public BufferedImage loadImage(String path) {

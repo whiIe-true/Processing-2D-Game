@@ -75,14 +75,19 @@ public class Game {
 		this.objects.add(new ObjectWall(100, 400, 300));
 		this.objects.add(new ObjectWall(400, 600, 500));
 		this.objects.add(new ObjectWall(1300, 500, 100));
-		this.objects.add(new ObjectWall(1500, 250, 100));
+		this.objects.add(new ObjectWall(1600, 700, 150));
+		this.objects.add(new ObjectWall(1500, 250, 200));
 		this.objects.add(new ObjectWall(1050, 0, 150));
+		this.objects.add(new ObjectWall(1800, 300, 50));
+		this.objects.add(new ObjectWall(-200, 300, 400));
 		
 		//Adds the entitys
 		this.objects.add(new EntitySlime(200, 380));
 		
 		//Adds the items
-		this.objects.add(new EntityItem(Items.key, 200, 200));
+		EntityItem key = new EntityItem(Items.key, 1825, 0);
+		key.getPhysics().setMotionX(0);
+		this.objects.add(key);
 		this.objects.add(new EntityItem(Items.ring, 400, 200));
 	}
 	
