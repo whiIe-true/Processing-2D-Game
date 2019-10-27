@@ -19,8 +19,8 @@ public class EntityChest extends PSEntity{
 		
 		//Loads the animations
 		this.animations.init("closed");
-		this.animations.loadAnimations("closed", "rsc/enviroment/chest/closed.png", 1);
-		this.animations.loadAnimations("open", "rsc/enviroment/chest/open.png", 1);
+		this.animations.loadAnimations("closed", "rsc/enviroment/chest/closed.png", -1);
+		this.animations.loadAnimations("open", "rsc/enviroment/chest/open.png", -1);
 	
 		//Loads the chests hitbox
 		this.hitbox = new Hitbox(16, 15, 2);
@@ -57,7 +57,7 @@ public class EntityChest extends PSEntity{
 		drop.getPhysics().setMotionY(-2);
 		drop.getPhysics().setMotionX(0);
 		
-		this.game.addObject(drop);
+		this.game.getWorld().spawn(drop);
 		
 	}
 	

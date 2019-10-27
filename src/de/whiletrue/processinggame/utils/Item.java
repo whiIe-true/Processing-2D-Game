@@ -12,7 +12,7 @@ public abstract class Item {
 		this.path = path;
 		this.animation = new Animation();
 		this.animation.init("idle");
-		this.animation.loadAnimations("idle", path,1);
+		this.animation.loadAnimations("idle", path,-1);
 	}
 
 	/**

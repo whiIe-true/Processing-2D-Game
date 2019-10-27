@@ -6,10 +6,9 @@ import java.util.List;
 
 import de.whiletrue.processinggame.Game;
 import de.whiletrue.processinggame.rendering.Renderer;
-import de.whiletrue.processinggame.utils.GameEvents;
 import processing.event.MouseEvent;
 
-public abstract class DefaultGui implements GameEvents{
+public abstract class DefaultGui implements GuiEvents{
 
 	private List<GuiComponent> components = new ArrayList<>();
 	protected Game game;

@@ -1,8 +1,8 @@
-package de.whiletrue.processinggame.utils;
+package de.whiletrue.processinggame.userinterface;
 
 import processing.event.MouseEvent;
 
-public interface GameEvents {
+public interface GuiEvents {
 
 	public default void handleMouseClicked(MouseEvent event) {}
 	public default void handleMouseDragged(MouseEvent event) {}

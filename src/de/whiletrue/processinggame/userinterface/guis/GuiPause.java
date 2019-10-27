@@ -84,7 +84,7 @@ public class GuiPause extends DefaultGui{
 			//Checks if a entity is given
 			if(spawn!=null)
 				//Spawns that entity
-				this.game.addObject(spawn);
+				this.game.getWorld().spawn(spawn);
 		},"Slime","Chest","Item/Key","Item/Ring of flying","Item/Egg");
 		
 		return new GuiComponent[] {close,jumpheight,speed,size,range,showHitboxes,spawnList};

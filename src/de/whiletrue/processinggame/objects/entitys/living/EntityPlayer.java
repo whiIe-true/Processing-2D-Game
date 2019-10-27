@@ -7,11 +7,9 @@ import de.whiletrue.processinggame.objects.PSEntityLiving;
 import de.whiletrue.processinggame.objects.entitys.EntityItem;
 import de.whiletrue.processinggame.player.Camera;
 import de.whiletrue.processinggame.utils.Item;
-import de.whiletrue.processinggame.utils.KeyHandler;
 
 public class EntityPlayer extends PSEntityLiving{
 
-	private KeyHandler keyhandler;
 	private Camera camera;
 	
 	private int swingticks;
@@ -19,8 +17,7 @@ public class EntityPlayer extends PSEntityLiving{
 	private Item itemHolding;
 	private int dropTicks;
 	
-	public EntityPlayer(Camera camera,KeyHandler keyhandler) {
-		this.keyhandler = keyhandler;
+	public EntityPlayer(Camera camera) {
 		this.camera = camera;
 		
 		//Loades the hitbox
@@ -47,9 +44,6 @@ public class EntityPlayer extends PSEntityLiving{
 		
 		//Updates the size propery from the settings
 		this.hitbox.setScale(this.game.getSettings().size);
-		
-		//Sets the skin idling or moving depending if the player moves or not
-		this.animations.setIdleAnimation(this.keyhandler.anyPressed(65,68)?"walk":"idle");
 		
 		//Calls the methods callback function
 		super.handleTick();
@@ -106,7 +100,7 @@ public class EntityPlayer extends PSEntityLiving{
 		}
 		
 		//Adds the item to the world
-		this.game.addObject(thro);
+		this.game.getWorld().spawn(thro);
 		
 		//Removes the item
 		this.itemHolding=null;
@@ -136,7 +130,7 @@ public class EntityPlayer extends PSEntityLiving{
 			return;
 		
 		//Iterates over all items to find a item that the player can pickup
-		Optional<EntityItem> pickup = this.game.getObjects().stream()
+		Optional<EntityItem> pickup = this.game.getWorld().getObjects().stream()
 		//Gets all items
 		.filter(i->i instanceof EntityItem)
 		.map(i->(EntityItem)i)
@@ -156,7 +150,7 @@ public class EntityPlayer extends PSEntityLiving{
 		this.itemHolding=entitm.getItem();
 		
 		//Removes the item from the world
-		this.game.removeObject(entitm);
+		this.game.getWorld().kill(entitm);
 	}
 	
 	/*
@@ -191,7 +185,7 @@ public class EntityPlayer extends PSEntityLiving{
 	 * */
 	private Optional<PSEntityLiving> attackEntity(){
 		//Gets all objects
-		return this.game.getObjects().stream()
+		return this.game.getWorld().getObjects().stream()
 				//Filters any entitys
 				.filter(i->i instanceof PSEntityLiving)
 				.map(i->(PSEntityLiving)i)

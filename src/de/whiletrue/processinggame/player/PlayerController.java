@@ -14,10 +14,10 @@ public class PlayerController {
 	private Game game;
 	private KeyHandler keyhandler;
 	
-	public PlayerController(Game game,KeyHandler keyhandler) {
-		this.game = game;
+	public PlayerController(KeyHandler keyhandler) {
+		this.game = Game.getInstance();
 		this.keyhandler = keyhandler;
-		this.player = game.getPlayer();
+		this.player = this.game.getPlayer();
 	}
 	
 	/*
@@ -62,6 +62,9 @@ public class PlayerController {
 			//Drops the current carrying item
 			this.player.dropItem();
 		}
+		
+		//Sets the skin idling or moving depending if the player moves or not
+		this.player.getAnimations().setIdleAnimation(this.keyhandler.anyPressed(65,68)?"walk":"idle");
 	}
 	
 	/*

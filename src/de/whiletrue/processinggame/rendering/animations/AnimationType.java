@@ -26,6 +26,10 @@ public class AnimationType {
 	 * Updates the animation
 	 * */
 	public void handleTick() {
+		//Checks if any animations should be played
+		if(this.ticksperframe==-1)
+			return;
+		
 		//Checks if the ticks are done
 		if(++this.ticks<this.ticksperframe)
 			return;

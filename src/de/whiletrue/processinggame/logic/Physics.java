@@ -13,6 +13,7 @@ public class Physics {
 	private boolean onground,gravity = true,movable=true;
 	
 	private Hitbox hitbox;
+	private Game game;
 	
 	private Random random = new Random();
 	
@@ -20,6 +21,7 @@ public class Physics {
 	 * Mainly the constructor  
 	 */
 	public final void init(Hitbox hitbox,int x,int y,double pushX,double pushY) {
+		this.game = Game.getInstance();
 		this.x = x;
 		this.y = y;
 		this.pushX=pushX;
@@ -45,10 +47,18 @@ public class Physics {
 	 * */
 	private void handleMotionX() {
 		//Checks if the x motion is not equal to 0 and if so pushes the player
-		if(this.motionX>0)
+		if(this.motionX>0) {
 			this.motionX-=this.pushX;
-		if(this.motionX<0)
+			//Checks that the motion wont repeat infinitly
+			if(this.motionX-this.pushX<0)
+				this.motionX=0;
+		}
+		if(this.motionX<0) {
 			this.motionX+=this.pushX;
+			//Checks that the motion wont repeat infinitly
+			if(this.motionX+this.pushX>0)
+				this.motionX=0;
+		}
 		this.x+=this.motionX;
 	}
 	
@@ -57,7 +67,7 @@ public class Physics {
 	 * */
 	private void handleMotionY() {
 		//Checks if the player is colliding with any object
-		Optional<ObjectWall> obj = Game.getInstance().getObjects().stream()
+		Optional<ObjectWall> obj = this.game.getWorld().getObjects().stream()
 		.filter(i->i instanceof ObjectWall)
 		.map(i->(ObjectWall)i)
 		.filter(i->i.getY()-2<this.y)
