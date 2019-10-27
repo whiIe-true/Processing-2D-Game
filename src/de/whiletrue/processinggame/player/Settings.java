@@ -1,4 +1,4 @@
-package de.whiletrue.processinggame;
+package de.whiletrue.processinggame.player;
 
 public class Settings {
 	

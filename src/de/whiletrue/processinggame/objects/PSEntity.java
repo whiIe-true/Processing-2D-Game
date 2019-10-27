@@ -54,4 +54,11 @@ public abstract class PSEntity extends PSObject{
 		return this.hitbox;
 	}
 
+	/**
+	 * @return the animations
+	 */
+	public final Animation getAnimations() {
+		return animations;
+	}
+
 }

@@ -1,7 +1,7 @@
 package de.whiletrue.processinggame.rendering;
 
 import de.whiletrue.processinggame.Game;
-import de.whiletrue.processinggame.objects.entitys.living.Player;
+import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.rendering.animations.AnimationFrame;
 import de.whiletrue.processinggame.utils.Item;
 import processing.core.PImage;
@@ -9,7 +9,7 @@ import processing.core.PImage;
 public class Overlay {
 
 	private Renderer renderer;
-	private Player player;
+	private EntityPlayer player;
 	
 	private AnimationFrame itemframe;
 	

@@ -13,19 +13,21 @@ public class CompoundList extends GuiComponent{
 	private String[] list = {"Test1","Test2","Test3"};
 	private ClickApplet onclick;
 	private String text;
+	private boolean directionUp = false;
 	
-	public CompoundList(int x,int y,int width,int height,String text,ClickApplet onclick,String... list) {
+	public CompoundList(int x,int y,int width,int height,boolean directionUp,String text,ClickApplet onclick,String... list) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		this.directionUp = directionUp;
 		this.text = text;
 		this.onclick = onclick;
 		this.list = list;
 		this.appletWidth = Arrays.stream(list)
 				.map(i->this.renderer.getTextWidth(i, height-8))
 				.reduce((i,i1)->i>i1?i:i1)
-				.get()+5;
+				.get()+20;
 	}
 	
 	@Override
@@ -34,7 +36,7 @@ public class CompoundList extends GuiComponent{
 		boolean hovermain = this.isHoveringMain(mouseX, mouseY);
 		
 		//Sets the new hovering state
-		this.out = hovermain||(this.isHoveringApplet(mouseX, mouseY));
+		this.out = hovermain||(this.isHoveringApplet(mouseX, mouseY)&&this.out);
 		
 		//Gets the color the button should have depending on the button is clicked or hovered
 		Color color = new Color(hovermain?0x757575:0x595959);
@@ -56,10 +58,13 @@ public class CompoundList extends GuiComponent{
 				Color appletColor = new Color(mousePressed&&hoveringApplet?0xFB3030:
 					hoveringApplet?0x757575:
 						0x595959);
+				
+				int yrender = this.directionUp?(this.y-this.height*i):(this.y+this.height*i);
+				
 				//Renders the applet
-				this.renderer.renderRectWithStroke(this.x+this.width, this.y-this.height*i, this.appletWidth, this.height, appletColor.getRGB(), 0, 2);
+				this.renderer.renderRectWithStroke(this.x+this.width, yrender, this.appletWidth, this.height, appletColor.getRGB(), 0, 2);
 				//Renders the text
-				this.renderer.renderTextCenter(this.list[i], this.x+this.width+this.appletWidth/2, this.y-this.height*i, this.height-8, null, Color.white.getRGB());
+				this.renderer.renderTextCenter(this.list[i], this.x+this.width+this.appletWidth/2, yrender, this.height-8, null, Color.white.getRGB());
 			}	
 	}
 	
@@ -94,20 +99,42 @@ public class CompoundList extends GuiComponent{
 	 * Returns if the mouse is hovering over the applet
 	 * */
 	private final boolean isHoveringApplet(int mouseX,int mouseY) {
-		return mouseX >= this.x+this.width&&
-				mouseX <= this.x+this.width+this.appletWidth&&
-				mouseY>=this.y-this.height*(this.list.length-1)&&
-				mouseY<=this.y+this.height*(this.list.length-1);
+		//Checks if the x position is correct
+		boolean x = mouseX >= this.x+this.width&&
+				mouseX <= this.x+this.width+this.appletWidth;
+		
+		//Checks if the y position is correct
+		boolean y = this.directionUp?(
+					mouseY>=this.y-this.height*(this.list.length-1)&&
+					mouseY<=this.y+this.height*(this.list.length-1)
+				):(
+					mouseY>=this.y&&
+					mouseY<=this.y+this.height*this.list.length
+				);
+		
+		//Returns if both positions are correct
+		return x&&y;
 	}
 	
 	/*
 	 * Returns if the mouse is hovering over the given applet
 	 * */
 	private final boolean isHoveringApplet(int mouseX,int mouseY,int applet) {
-		return mouseX >= this.x+this.width&&
-				mouseX<=this.x+this.width+this.appletWidth&&
-				mouseY>=this.y-this.height*applet&&
-				mouseY<=this.y-this.height*(applet-1);
+		//Checks if the x position is correct
+		boolean x = mouseX >= this.x+this.width&&
+				mouseX<=this.x+this.width+this.appletWidth;
+		
+		//Checks if the y position is correct
+		boolean y = this.directionUp?(
+					mouseY>=this.y-this.height*applet&&
+					mouseY<=this.y-this.height*(applet-1)
+				):(
+					mouseY>=this.y+this.height*applet&&
+					mouseY<=this.y+this.height*(applet+1)
+				);
+					
+		//Returns if both positions are correct
+		return x&&y;
 	}
 	
 	@FunctionalInterface

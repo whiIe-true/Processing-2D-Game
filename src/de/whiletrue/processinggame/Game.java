@@ -10,15 +10,18 @@ import java.util.stream.Collectors;
 import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.objects.PSEntityLiving;
 import de.whiletrue.processinggame.objects.PSObject;
+import de.whiletrue.processinggame.objects.entitys.EntityChest;
 import de.whiletrue.processinggame.objects.entitys.EntityItem;
 import de.whiletrue.processinggame.objects.entitys.living.EntitySlime;
-import de.whiletrue.processinggame.objects.entitys.living.Player;
+import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.objects.objects.ObjectWall;
+import de.whiletrue.processinggame.player.Camera;
+import de.whiletrue.processinggame.player.PlayerController;
+import de.whiletrue.processinggame.player.Settings;
 import de.whiletrue.processinggame.rendering.Fonts;
 import de.whiletrue.processinggame.rendering.Overlay;
 import de.whiletrue.processinggame.rendering.Renderer;
 import de.whiletrue.processinggame.userinterface.DefaultGui;
-import de.whiletrue.processinggame.userinterface.guis.GuiPause;
 import de.whiletrue.processinggame.utils.Items;
 import de.whiletrue.processinggame.utils.KeyHandler;
 import processing.core.PApplet;
@@ -39,8 +42,12 @@ public class Game {
 	private Renderer renderer;
 	private Overlay gameoverlay;
 	
-	private Player player;
-	private List<PSObject> objects = new ArrayList<>();
+	private EntityPlayer player;
+	private PlayerController playercontroller;
+	
+	private List<PSObject> objects = new ArrayList<PSObject>(),
+			soonAdd = new ArrayList<PSObject>(),
+			soonRemove = new ArrayList<PSObject>();
 	
 	public Game(PApplet window) {
 		instance = this;
@@ -66,8 +73,11 @@ public class Game {
 		this.renderer = new Renderer(this.window);
 		
 		//Creates the player object
-		this.player = new Player(this.camera,this.keyhandler);
+		this.player = new EntityPlayer(this.camera,this.keyhandler);
 
+		//Creates the player controller
+		this.playercontroller = new PlayerController(this, this.keyhandler);
+		
 		//Creates the overlay
 		this.gameoverlay = new Overlay();
 		
@@ -83,6 +93,7 @@ public class Game {
 		
 		//Adds the entitys
 		this.objects.add(new EntitySlime(200, 380));
+		this.objects.add(new EntityChest(-100, 300, Items.egg));
 		
 		//Adds the items
 		EntityItem key = new EntityItem(Items.key, 1825, 0);
@@ -133,6 +144,13 @@ public class Game {
 	}
 
 	public void onTick() {
+		this.objects.addAll(this.soonAdd);
+		this.objects.removeAll(this.soonRemove);
+		
+		//Clears both lists
+		this.soonAdd.clear();
+		this.soonRemove.clear();
+		
 		//Removes dead livingentitys or entitys that are to low
 		this.objects.removeAll(this.objects.stream()
 				.filter(i->i instanceof PSEntity)
@@ -149,6 +167,10 @@ public class Game {
 		
 		//Checks if the game is running
 		if(this.isGameRunning()) {
+			
+			//Handles the tick for the playercontroller
+			this.playercontroller.handleTick();
+			
 			//Handles the tick for the player
 			this.player.handleTick();
 			
@@ -160,25 +182,24 @@ public class Game {
 	}
 	
 	public void handleKeyPressed(KeyEvent event) {
+		
 		//Handles the keyhandler
 		this.keyhandler.pressed(event);
 		
-		//Checks if the key is the esc key
-		if(event.getKey() == PApplet.ESC) {
-			//Checks if the gui is already open
-			if(this.isGameRunning())
-				//Opens the gui
-				this.openGui(new GuiPause(this,this.renderer));
-			else
-				//Closes the gui
-				this.openGui(null);
-			//Prevents the application from exiting
-			this.window.key = 0;
-		}
+		//Handles the key pressing for the playercontroller
+		this.playercontroller.handleKeyPressed(event,this.isGameRunning());
+		
+		//Prevents the application from exiting
+		if(event.getKey()==PApplet.ESC)
+			this.window.key=0;
 	}
 	
 	public void handleKeyReleased(KeyEvent event) {
+		//Handles the keyhandler
 		this.keyhandler.released(event);
+		
+		//Handles the playercontroller
+		this.playercontroller.handleKeyReleased(event,this.isGameRunning());
 	}
 	
 	
@@ -266,19 +287,15 @@ public class Game {
 	/*
 	 * Returns if the killing/deleteing of the object was successfull
 	 * */
-	public final boolean removeObject(PSObject obj) {
-		//Checks if that object is loaded
-		boolean success = this.objects.contains(obj);
-		//Removes the object
-		this.objects.remove(obj);
-		return success;
+	public final void removeObject(PSObject obj) {
+		this.soonRemove.add(obj);
 	}
 	
 	/*
 	 * Adds a object to the world
 	 * */
 	public final void addObject(PSObject obj) {
-		this.objects.add(obj);
+		this.soonAdd.add(obj);
 	}
 	
 	/**
@@ -291,7 +308,7 @@ public class Game {
 	/**
 	 * @return the player
 	 */
-	public final Player getPlayer() {
+	public final EntityPlayer getPlayer() {
 		return this.player;
 	}
 

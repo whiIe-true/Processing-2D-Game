@@ -10,7 +10,7 @@ public class Physics {
 	
 	private int x,y;
 	private double motionX,motionY,pushX,pushY;
-	private boolean onground,gravity = true;
+	private boolean onground,gravity = true,movable=true;
 	
 	private Hitbox hitbox;
 	
@@ -31,13 +31,31 @@ public class Physics {
 	 * Executes on every update
 	 * */
 	public void handleTick() {
+		//Checks if the object has gravity
+		if(this.gravity)
+			this.handleMotionY();
+		
+		//Checks if the object is moveable
+		if(this.movable)
+			this.handleMotionX();
+	}
+
+	/*
+	 * Handles all motions for the x direction
+	 * */
+	private void handleMotionX() {
 		//Checks if the x motion is not equal to 0 and if so pushes the player
 		if(this.motionX>0)
 			this.motionX-=this.pushX;
 		if(this.motionX<0)
 			this.motionX+=this.pushX;
 		this.x+=this.motionX;
-		
+	}
+	
+	/*
+	 * Handles all motions for the y direction and the onground
+	 * */
+	private void handleMotionY() {
 		//Checks if the player is colliding with any object
 		Optional<ObjectWall> obj = Game.getInstance().getObjects().stream()
 		.filter(i->i instanceof ObjectWall)
@@ -78,7 +96,7 @@ public class Physics {
 		//Adds the motion y to the position y
 		this.y+=this.motionY;
 	}
-
+	
 	/*
 	 * Adds a random motion to the entity
 	 * */
@@ -198,5 +216,19 @@ public class Physics {
 	 */
 	public final void setGravity(boolean gravity) {
 		this.gravity = gravity;
+	}
+	
+	/**
+	 * @return the movable
+	 */
+	public final boolean isMovable() {
+		return this.movable;
+	}
+	
+	/**
+	 * @param moveable the moveable to set 
+	 */
+	public final void setMovable(boolean moveable) {
+		this.movable = moveable;
 	}
 }

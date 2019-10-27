@@ -15,9 +15,9 @@ public abstract class DefaultGui implements GameEvents{
 	protected Game game;
 	protected Renderer renderer;
 	
-	public DefaultGui(Game game,Renderer renderer) {
-		this.game = game;
-		this.renderer = renderer;
+	public DefaultGui() {
+		this.game = Game.getInstance();
+		this.renderer = this.game.getRenderer();
 	}
 	
 	/*

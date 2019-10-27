@@ -2,15 +2,14 @@ package de.whiletrue.processinggame.objects.entitys.living;
 
 import java.util.Optional;
 
-import de.whiletrue.processinggame.Camera;
 import de.whiletrue.processinggame.logic.Hitbox;
 import de.whiletrue.processinggame.objects.PSEntityLiving;
 import de.whiletrue.processinggame.objects.entitys.EntityItem;
+import de.whiletrue.processinggame.player.Camera;
 import de.whiletrue.processinggame.utils.Item;
-import de.whiletrue.processinggame.utils.Items;
 import de.whiletrue.processinggame.utils.KeyHandler;
 
-public class Player extends PSEntityLiving{
+public class EntityPlayer extends PSEntityLiving{
 
 	private KeyHandler keyhandler;
 	private Camera camera;
@@ -20,7 +19,7 @@ public class Player extends PSEntityLiving{
 	private Item itemHolding;
 	private int dropTicks;
 	
-	public Player(Camera camera,KeyHandler keyhandler) {
+	public EntityPlayer(Camera camera,KeyHandler keyhandler) {
 		this.keyhandler = keyhandler;
 		this.camera = camera;
 		
@@ -46,9 +45,6 @@ public class Player extends PSEntityLiving{
 		//Updates the attack
 		this.updateAttack();
 		
-		//Updates key handling
-		this.updateKeyPresses();
-		
 		//Updates the size propery from the settings
 		this.hitbox.setScale(this.game.getSettings().size);
 		
@@ -63,55 +59,67 @@ public class Player extends PSEntityLiving{
 	}
 
 	/*
+	 * Lets the player jump
+	 * */
+	public void jump() {
+		//Checks if the player is onground
+		if(!this.physics.isOnground())
+			return;
+		//Sets the vertical motion
+		this.getPhysics().pushY(-this.game.getSettings().jumpHeight);
+	}
+	
+	/*
+	 * Attack the next entity
+	 * */
+	public void attack() {
+		
+		//Checks if the player has animations to process
+		if(!this.getAnimations().isAnimationComplet())
+			return;
+		
+		this.swingticks=0;
+		this.getAnimations().startAnimation("attack");
+	}
+	
+	/*
+	 * Drops the item if the player has any
+	 * */
+	public void dropItem() {
+		
+		//Checks if the player can drop something
+		if(this.dropTicks>0)
+			return;
+		
+		//Removes the current item if the player is carrying any
+		if(this.itemHolding==null)
+			return;
+		
+		//Creates the new entity
+		EntityItem thro = new EntityItem(this.itemHolding, this.physics.getX(), this.physics.getY());
+		{
+			//Sets a new pickup delay
+			thro.setPickUpDelay();
+			//Adds the throw motion
+			thro.getPhysics().setMotionX(5*(this.animations.isReverse()?-1:1));
+			thro.getPhysics().setMotionY(-2);
+		}
+		
+		//Adds the item to the world
+		this.game.addObject(thro);
+		
+		//Removes the item
+		this.itemHolding=null;
+		
+		//Resets the drop ticks
+		this.dropTicks=10;
+	}
+	
+	/*
 	 * Updates the cameras x and y
 	 * */
 	private void updateCamera() {
 		this.camera.update(this.physics.getX(),this.physics.getY());
-	}
-	
-	/*
-	 * Handles all key pressing stuff
-	 * */
-	public void updateKeyPresses() {
-		
-		//Checks if the key for shift is pressed and if the ring is currently hold
-		if(this.keyhandler.keyPressed(/*Shift*/16)&&this.itemHolding==Items.ring_of_flying)
-			//Lets the player fly
-			this.physics.setMotionY(-2);
-		
-		//Checks if the key for forward is pressed and if the player can move
-		if(this.keyhandler.keyPressed(68/*Key D*/)){
-			//Sets the skin direction
-			this.animations.setReverse(false);
-			//Sets the motion
-			this.physics.addX(this.game.getSettings().speed);
-		}
-		
-		//Checks if the key for backward is pressed and if the player can move
-		if(this.keyhandler.keyPressed(65/*Key A*/)){
-			//Sets the skin direction
-			this.animations.setReverse(true);
-			//Sets the motion
-			this.physics.addX(-this.game.getSettings().speed);
-		}
-		
-		//Checks if the key for jump is pressed, the player is onground and if the player can move
-		if(this.keyhandler.keyPressed(32/*Key Spacebar*/) && this.physics.isOnground()){
-			//Sets the vertical motion
-			this.physics.pushY(-this.game.getSettings().jumpHeight);
-		}
-		
-		//Checks if the key for attack is pressed and no attack is going and if the player can move
-		if(this.keyhandler.keyPressed(87/*Key W*/)&&this.animations.isAnimationComplet()) {
-			//Starts the attack
-			this.swingticks=0;
-			this.animations.startAnimation("attack");
-		}
-		
-		if(this.keyhandler.keyPressed(70/*F*/)) {
-			//Drops the current carrying item
-			this.dropItem();
-		}
 	}
 	
 	/*
@@ -149,39 +157,6 @@ public class Player extends PSEntityLiving{
 		
 		//Removes the item from the world
 		this.game.removeObject(entitm);
-	}
-	
-	/*
-	 * Drops the item if the player has any
-	 * */
-	public void dropItem() {
-		
-		//Checks if the player can drop something
-		if(this.dropTicks>0)
-			return;
-		
-		//Removes the current item if the player is carrying any
-		if(this.itemHolding==null)
-			return;
-		
-		//Creates the new entity
-		EntityItem thro = new EntityItem(this.itemHolding, this.physics.getX(), this.physics.getY());
-		{
-			//Sets a new pickup delay
-			thro.setPickUpDelay();
-			//Adds the throw motion
-			thro.getPhysics().setMotionX(5*(this.animations.isReverse()?-1:1));
-			thro.getPhysics().setMotionY(-2);
-		}
-		
-		//Adds the item to the world
-		this.game.addObject(thro);
-		
-		//Removes the item
-		this.itemHolding=null;
-		
-		//Resets the drop ticks
-		this.dropTicks=10;
 	}
 	
 	/*
@@ -241,6 +216,13 @@ public class Player extends PSEntityLiving{
 	 * @return the itemHolding
 	 */
 	public final Item getItemHolding() {
-		return itemHolding;
+		return this.itemHolding;
+	}
+
+	/**
+	 * @param itemHolding the itemHolding to set
+	 */
+	public final void setItemHolding(Item itemHolding) {
+		this.itemHolding = itemHolding;
 	}
 }
