@@ -1,11 +1,13 @@
 package de.whiletrue.processinggame.rendering;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import de.whiletrue.processinggame.Main;
 import de.whiletrue.processinggame.rendering.animations.AnimationFrame;
 import processing.core.PApplet;
 import processing.core.PFont;
@@ -14,9 +16,28 @@ import processing.core.PImage;
 public class Renderer {
 
 	public PApplet window;
+	private BufferedImage invalidFile;
 	
 	public Renderer(PApplet window) {
 		this.window = window;
+		
+		//Creates the invalidFile image
+		this.invalidFile = new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB) {
+			@Override
+			public Graphics2D createGraphics() {
+				Graphics2D g = super.createGraphics();
+				g.setColor(Color.ORANGE);
+				g.fillRect(0, 0, 8, 8);
+				g.fillRect(8, 8, 8, 8);
+
+				g.setColor(Color.CYAN);
+				g.fillRect(0, 8, 8, 8);
+				g.fillRect(8, 0, 8, 8);
+				g.dispose();
+				return g;
+			}
+		};
+		this.invalidFile.createGraphics();
 	}
 	
 	/*
@@ -32,9 +53,15 @@ public class Renderer {
 	 * */
 	public BufferedImage loadImage(String path) {
 		try {
-			return ImageIO.read(new File(path));
+			//Workes, when not using an IDE
+			return ImageIO.read(Main.class.getClassLoader().getResourceAsStream(path));
 		} catch (Exception e) {
-			return null;
+			//Workes, when debugging in IDE
+			try {
+				return ImageIO.read(new File(path));
+			} catch (Exception e2) {
+				return this.invalidFile;
+			}
 		}
 	}
 	

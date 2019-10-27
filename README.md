@@ -8,3 +8,4 @@ This is a private project to test some things using the processing library
 * [Skeleton-player](https://jesse-m.itch.io/skeleton-pack)
 * [Slime](https://henrysoftware.itch.io/free-pixel-mob)
 * [Chest](https://0x72.itch.io/16x16-dungeon-tileset)
+* [Items](https://alexs-assets.itch.io/16x16-rpg-item-pack)

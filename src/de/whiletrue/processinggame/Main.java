@@ -1,5 +1,8 @@
 package de.whiletrue.processinggame;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import processing.core.PApplet;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
@@ -25,7 +28,16 @@ public class Main extends PApplet{
 	
 	@Override
 	public void setup() {
+		//Starts the game
 		this.game.init();
+		
+		//Helps to close the window and dont let the application running
+		this.frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
 	}
 	
 	@Override
