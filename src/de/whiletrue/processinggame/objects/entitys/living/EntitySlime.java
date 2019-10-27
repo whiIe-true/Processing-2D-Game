@@ -5,8 +5,11 @@ import de.whiletrue.processinggame.objects.PSEntityLiving;
 
 public class EntitySlime extends PSEntityLiving{
 
+	private EntityPlayer player;
+	
 	public EntitySlime(int x, int y) {
-
+		this.player = this.game.getPlayer();
+		
 		//Loads the hitbox
 		this.hitbox = new Hitbox(16, 16, 2.5);
 		
@@ -29,6 +32,13 @@ public class EntitySlime extends PSEntityLiving{
 			//Sets the new animation and resets the ticks
 			this.animations.setIdleAnimation(anim);
 			this.animations.resetIdleticks();
+		}
+		
+		//Checks if the slime is colliding with the player
+		if(this.isEntityColliding(this.player)) {
+			//Pushes the player away
+			this.player.getPhysics().pushY(-1);
+			this.player.getPhysics().pushX(this.player.getPhysics().getX()-this.physics.getX()>0?1:-1);
 		}
 		
 		//Checks if the slime is onground
