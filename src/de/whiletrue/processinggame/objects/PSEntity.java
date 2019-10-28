@@ -2,6 +2,7 @@ package de.whiletrue.processinggame.objects;
 
 import de.whiletrue.processinggame.logic.Hitbox;
 import de.whiletrue.processinggame.logic.Physics;
+import de.whiletrue.processinggame.player.Settings;
 import de.whiletrue.processinggame.rendering.animations.Animation;
 
 public abstract class PSEntity extends PSObject{
@@ -23,7 +24,7 @@ public abstract class PSEntity extends PSObject{
 		//Renders the skin
 		this.animations.renderAt(x, y,this.hitbox.getScale());
 		//Checks if debugrendering is enabled
-		if(this.game.getSettings().showHitboxes)
+		if(Settings.showHitboxes)
 			this.hitbox.renderHitbox(this.renderer, x, y);
 	}
 	
@@ -38,6 +39,13 @@ public abstract class PSEntity extends PSObject{
 	 * */
 	public boolean isEntityColliding(PSEntity entity) {
 		return this.hitbox.areBoxesColliding(this.physics.getX(), this.physics.getY(), entity.physics.getX(), entity.physics.getY(), entity.hitbox);
+	}
+	
+	/*
+	 * Returns the distance between two entitys
+	 * */
+	public double distanceTo(PSEntity entity) {
+		return Math.sqrt(Math.pow(this.physics.getX()-entity.physics.getX(), 2)+Math.pow(this.physics.getY()-entity.physics.getY(), 2));
 	}
 	
 	/**

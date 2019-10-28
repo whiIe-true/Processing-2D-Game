@@ -2,17 +2,29 @@ package de.whiletrue.processinggame.objects;
 
 import java.awt.Color;
 
+import de.whiletrue.processinggame.objects.entitys.BaseStats;
 import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
 
 public abstract class PSEntityLiving extends PSEntity{
 
 	protected boolean dead = false;
-	protected int health=100,maxHealth = 100;
+	protected int health;
 	
 	protected int nodamageTicks;
+
+	public PSEntityLiving() {
+		this.health = this.getStats().getMaxHealth();
+	}
+	
+	public abstract BaseStats getStats();
+	
 	
 	@Override
 	public void handleTick() {
+		//Makes sure, that maxhealth has no bugs
+		if(this.health>this.getStats().getMaxHealth())
+			this.health = this.getStats().getMaxHealth();
+		
 		//Decreases the nodamagetime
 		if(this.nodamageTicks>0)
 			this.nodamageTicks--;
@@ -64,9 +76,9 @@ public abstract class PSEntityLiving extends PSEntity{
 	 * */
 	public final void heal(int health) {
 		//Checks if the health goes higher than maxhealth
-		if(this.health+health>this.maxHealth)
+		if(this.health+health>this.getStats().getMaxHealth())
 			//Sets the health to maxhealth
-			this.health = this.maxHealth;
+			this.health = this.getStats().getMaxHealth();
 		else
 			//Heals the health
 			this.health+=health;
@@ -102,14 +114,7 @@ public abstract class PSEntityLiving extends PSEntity{
 	/**
 	 * @return the maxHealth
 	 */
-	public final int getMaxHealth() {
-		return this.maxHealth;
-	}
-	
-	/**
-	 * @return the maxHealth
-	 */
 	public final float getHealthLeft() {
-		return (float)this.health/(float)this.maxHealth;
+		return (float)this.health/(float)this.getStats().getMaxHealth();
 	}
 }

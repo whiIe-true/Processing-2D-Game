@@ -43,7 +43,7 @@ public class CompoundButton extends GuiComponent{
 			this.renderer.renderRectWithStroke(this.x, this.y, this.width, this.height, color.getRGB(), Color.black.getRGB(), 3);
 
 			//Renders the text
-			this.renderer.renderTextCenter(this.text, this.x+this.width/2, this.y, this.height-16, null, Color.white.getRGB());
+			this.renderer.renderTextCenter(this.text, this.x+this.width/2, this.y, this.height-8, null, Color.white.getRGB());
 		}
 		//Removes the new layer
 		this.renderer.pop();

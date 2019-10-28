@@ -44,7 +44,7 @@ public class PlayerController {
 			//Sets the skin direction
 			this.player.getAnimations().setReverse(false);
 			//Sets the motion
-			this.player.getPhysics().addX(this.game.getSettings().speed);
+			this.player.getPhysics().addX(this.player.getStats().getSpeed());
 		}
 		
 		//Checks if the key for backward is pressed and if the player can move
@@ -52,7 +52,7 @@ public class PlayerController {
 			//Sets the skin direction
 			this.player.getAnimations().setReverse(true);
 			//Sets the motion
-			this.player.getPhysics().addX(-this.game.getSettings().speed);
+			this.player.getPhysics().addX(-this.player.getStats().getSpeed());
 		}
 		
 		//Checks if the key for jump is pressed, the player is onground and if the player can move

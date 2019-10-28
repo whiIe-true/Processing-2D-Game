@@ -6,7 +6,6 @@ import java.awt.Toolkit;
 import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.player.Camera;
 import de.whiletrue.processinggame.player.PlayerController;
-import de.whiletrue.processinggame.player.Settings;
 import de.whiletrue.processinggame.rendering.Fonts;
 import de.whiletrue.processinggame.rendering.Overlay;
 import de.whiletrue.processinggame.rendering.Renderer;
@@ -29,7 +28,6 @@ public class Game {
 	
 	private KeyHandler keyhandler = new KeyHandler();
 	
-	private Settings settings = new Settings();
 	private DefaultGui openGui = null;
 	private Renderer renderer;
 	private Overlay gameoverlay;
@@ -206,13 +204,6 @@ public class Game {
 		this.openGui = gui;
 	}
 	
-	/**
-	 * @return the settings
-	 */
-	public final Settings getSettings() {
-		return this.settings;
-	}
-
 	/**
 	 * @return the player
 	 */

@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -17,6 +19,8 @@ public class Renderer {
 
 	public PApplet window;
 	private BufferedImage invalidFile;
+	
+	private static Map<String, BufferedImage> loadedImages = new HashMap<>();
 	
 	public Renderer(PApplet window) {
 		this.window = window;
@@ -52,6 +56,10 @@ public class Renderer {
 	 * Loads a given image
 	 * */
 	public BufferedImage loadImage(String path) {
+		//Checks if the image is still loaded
+		if(loadedImages.containsKey(path))
+			return loadedImages.get(path);
+		
 		try {
 			//Workes, when not using an IDE
 			return ImageIO.read(Main.class.getClassLoader().getResourceAsStream(path));

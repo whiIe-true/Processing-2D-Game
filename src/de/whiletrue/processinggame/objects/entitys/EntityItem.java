@@ -2,6 +2,7 @@ package de.whiletrue.processinggame.objects.entitys;
 
 import de.whiletrue.processinggame.logic.Hitbox;
 import de.whiletrue.processinggame.objects.PSEntity;
+import de.whiletrue.processinggame.player.Settings;
 import de.whiletrue.processinggame.utils.Item;
 
 public class EntityItem extends PSEntity{
@@ -36,7 +37,7 @@ public class EntityItem extends PSEntity{
 		this.animations.renderAt(x, (int) (y+this.hoverTicks), this.hitbox.getScale());
 		
 		//Checks if debugrendering is enabled
-		if(this.game.getSettings().showHitboxes)
+		if(Settings.showHitboxes)
 			this.hitbox.renderHitbox(this.renderer, x, y);
 	}
 	

@@ -17,11 +17,9 @@ import de.whiletrue.processinggame.utils.Items;
 public class GuiPause extends DefaultGui{
 
 	private float scale = .2f;
-	private Settings settings;
 	
 	public GuiPause() {
 		super(true);
-		this.settings = game.getSettings();
 	}
 	
 	@Override
@@ -30,24 +28,29 @@ public class GuiPause extends DefaultGui{
 		//Shorts the game width and height
 		int w = this.game.getWidth(),h = this.game.getHeight();;
 		
-		CompoundSlider jumpheight = new CompoundSlider(w/8+10, h/8+10+(20+40)*0,w/8*3-20,40,2,10,this.settings.jumpHeight,i->{
-			this.settings.jumpHeight=i;
+		CompoundSlider jumpheight = new CompoundSlider(w/8+10, h/8+10+(20+40)*0,w/8*3-20,40,2,10,Settings.jumpHeight,i->{
+			Settings.jumpHeight=i;
 			return "Jumphight: "+i;
 		});
 		
-		CompoundSlider speed = new CompoundSlider(w/8+10, h/8+10+(20+40)*1,w/8*3-20,40,2,10,this.settings.speed,i->{
-			this.settings.speed=i;
+		CompoundSlider speed = new CompoundSlider(w/8+10, h/8+10+(20+40)*1,w/8*3-20,40,2,10,Settings.speed,i->{
+			Settings.speed=i;
 			return "Speed: "+i;
 		});
 		
-		CompoundSlider size = new CompoundSlider(w/8+10, h/8+10+(20+40)*2,w/8*3-20,40,1,10,this.settings.size,i->{
-			this.settings.size=i;
-			return "Size: "+i;
+		CompoundSlider maxhealth = new CompoundSlider(w/8+10, h/8+10+(20+40)*2,w/8*3-20,40,10,1000,Settings.maxHealth,i->{
+			Settings.maxHealth=i;
+			return "MaxHealth: "+i;
 		});
 		
-		CompoundSlider range = new CompoundSlider(w/8+10, h/8+10+(20+40)*3,w/8*3-20,40,1,10,this.settings.range,i->{
-			this.settings.range=i;
+		CompoundSlider range = new CompoundSlider(w/8+10, h/8+10+(20+40)*3,w/8*3-20,40,1,10,Settings.range,i->{
+			Settings.range=i;
 			return "Range: "+i;
+		});
+		
+		CompoundSlider damage = new CompoundSlider(w/8+10, h/8+10+(20+40)*4,w/8*3-20,40,20,100,Settings.damage,i->{
+			Settings.damage=i;
+			return "Damage: "+i;
 		});
 
 		CompoundButton close = new CompoundButton(w/2-100, h/8*6, 200, 50, i->{
@@ -55,8 +58,8 @@ public class GuiPause extends DefaultGui{
 			return "Close";
 		});
 		
-		CompoundCheckbox showHitboxes = new CompoundCheckbox(w/2+20, h/8+10+(20+40)*1, 40,40, this.game.getSettings().showHitboxes, i->{
-			this.game.getSettings().showHitboxes=i;
+		CompoundCheckbox showHitboxes = new CompoundCheckbox(w/2+20, h/8+10+(20+40)*1, 40,40, Settings.showHitboxes, i->{
+			Settings.showHitboxes=i;
 			return "Show Hitboxes";
 		});
 		
@@ -88,7 +91,7 @@ public class GuiPause extends DefaultGui{
 				this.game.getWorld().spawn(spawn);
 		},"Slime","Chest","Item/Key","Item/Ring of flying","Item/Egg");
 		
-		CompoundButton spawntp = new CompoundButton(w/2+20, h/8+10+(20+40)*2,200,50, btnid->{
+		CompoundButton spawntp = new CompoundButton(w/2+20, h/8+10+(20+40)*2,200,40, btnid->{
 			if(btnid!=-1) {
 				//Teleports the player back to the spawn
 				this.game.getPlayer().teleportSpawn();
@@ -96,7 +99,7 @@ public class GuiPause extends DefaultGui{
 			return "Tp Spawn";
 		});
 		
-		return new GuiComponent[] {close,jumpheight,speed,size,range,showHitboxes,spawnList,spawntp};
+		return new GuiComponent[] {close,jumpheight,speed,range,showHitboxes,spawnList,spawntp,damage,maxhealth};
 	}
 	
 	@Override
