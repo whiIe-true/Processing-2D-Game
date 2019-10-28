@@ -17,14 +17,18 @@ public class EntityPlayer extends PSEntityLiving{
 	private Item itemHolding;
 	private int dropTicks;
 	
-	public EntityPlayer(Camera camera) {
+	private int spawnX,spawnY;
+	
+	public EntityPlayer(Camera camera,int x,int y) {
 		this.camera = camera;
+		this.spawnX = x;
+		this.spawnY = y;
 		
 		//Loades the hitbox
 		this.hitbox = new Hitbox(25, 30, 2);
 		
 		//Loads the physics
-		this.physics.init(this.hitbox,game.getWidth()/2, this.game.getHeight()/2,.2,.2);
+		this.physics.init(this.hitbox,x, y,.2,.2);
 		
 		//Loads the skin
 		this.animations.init("idle");
@@ -52,6 +56,27 @@ public class EntityPlayer extends PSEntityLiving{
 		this.updateCamera();
 	}
 
+	/*
+	 * Teleports the player back to his spawn point
+	 * */
+	public final void teleportSpawn() {
+		this.physics.teleport(this.spawnX, this.spawnY);
+	}
+	
+	/*
+	 * Respawns once dead
+	 * */
+	public final void respawn() {
+		//Checks if the entity is dead
+		if(!this.isDead())
+			return;
+		//Sets the player back alive
+		this.dead = false;
+		this.health = this.maxHealth;
+		//Teleports the player back to the spawn
+		this.teleportSpawn();
+	}
+	
 	/*
 	 * Lets the player jump
 	 * */

@@ -37,8 +37,10 @@ public class EntitySlime extends PSEntityLiving{
 		//Checks if the slime is colliding with the player
 		if(this.isEntityColliding(this.player)) {
 			//Pushes the player away
-			this.player.getPhysics().pushY(-1);
+			this.player.getPhysics().pushY(-.8);
 			this.player.getPhysics().pushX(this.player.getPhysics().getX()-this.physics.getX()>0?1:-1);
+			//Damages the player
+			this.player.damage(20);
 		}
 		
 		//Checks if the slime is onground

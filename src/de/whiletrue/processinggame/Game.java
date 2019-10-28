@@ -58,7 +58,7 @@ public class Game {
 		this.renderer = new Renderer(this.window);
 		
 		//Creates the player object
-		this.player = new EntityPlayer(this.camera);
+		this.player = new EntityPlayer(this.camera,650,400);
 
 		//Creates the player controller
 		this.playercontroller = new PlayerController(this.keyhandler);
@@ -257,5 +257,12 @@ public class Game {
 	 */
 	public final World getWorld() {
 		return this.world;
+	}
+
+	/**
+	 * @return the openGui
+	 */
+	public final DefaultGui getOpenGui() {
+		return this.openGui;
 	}
 }

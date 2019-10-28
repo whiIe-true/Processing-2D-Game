@@ -2,6 +2,7 @@ package de.whiletrue.processinggame.player;
 
 import de.whiletrue.processinggame.Game;
 import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
+import de.whiletrue.processinggame.userinterface.guis.GuiDeathscreen;
 import de.whiletrue.processinggame.userinterface.guis.GuiPause;
 import de.whiletrue.processinggame.utils.Items;
 import de.whiletrue.processinggame.utils.KeyHandler;
@@ -24,7 +25,15 @@ public class PlayerController {
 	 * Executes on every tick
 	 * */
 	public void handleTick() {
+		//Handles the key inputs
+		this.handleKeyInputs();
 		
+		//Handles if the player is dead
+		if(this.player.isDead())
+			this.game.openGui(new GuiDeathscreen());
+	}
+	
+	private void handleKeyInputs() {
 		//Checks if the key for shift is pressed and if the ring is currently hold
 		if(this.keyhandler.keyPressed(/*Shift*/16)&&this.player.getItemHolding()==Items.ring_of_flying)
 			//Lets the player fly
@@ -78,9 +87,11 @@ public class PlayerController {
 			if(gamerunning)
 				//Opens the gui
 				this.game.openGui(new GuiPause());
-			else
-				//Closes the gui
-				this.game.openGui(null);
+			
+			//Checks if the gui is closeable
+			else if(this.game.getOpenGui().isCloseable())
+					//Closes the gui
+					this.game.openGui(null);
 		}
 	}
 	

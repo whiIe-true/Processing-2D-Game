@@ -217,7 +217,7 @@ public class Renderer {
 	 * Renders a rect
 	 * */
 	public void renderRect(float x,float y,float width,float height,int color) {
-		this.renderRect(x, y, width, height, color, 200);
+		this.renderRect(x, y, width, height, color, 1000);
 	}
 	
 	/*

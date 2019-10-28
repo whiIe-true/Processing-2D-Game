@@ -108,6 +108,16 @@ public class Physics {
 	}
 	
 	/*
+	 * Teleports the physics
+	 * */
+	public void teleport(int x,int y) {
+		this.motionX = 0;
+		this.motionY = 0;
+		this.x = x;
+		this.y = y;
+	}
+	
+	/*
 	 * Adds a random motion to the entity
 	 * */
 	public void randomMotion(int strenght) {

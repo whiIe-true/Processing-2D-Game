@@ -14,7 +14,10 @@ public abstract class DefaultGui implements GuiEvents{
 	protected Game game;
 	protected Renderer renderer;
 	
-	public DefaultGui() {
+	private boolean closeable;
+	
+	public DefaultGui(boolean closeable) {
+		this.closeable = closeable;
 		this.game = Game.getInstance();
 		this.renderer = this.game.getRenderer();
 	}
@@ -63,6 +66,13 @@ public abstract class DefaultGui implements GuiEvents{
 	@Override
 	public void handleMouseReleased(MouseEvent event) {
 		this.components.forEach(i->i.handleMouseReleased(event));
+	}
+
+	/**
+	 * @return the closeable
+	 */
+	public final boolean isCloseable() {
+		return closeable;
 	}
 	
 }

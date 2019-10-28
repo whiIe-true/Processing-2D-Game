@@ -20,6 +20,7 @@ public class GuiPause extends DefaultGui{
 	private Settings settings;
 	
 	public GuiPause() {
+		super(true);
 		this.settings = game.getSettings();
 	}
 	
@@ -89,7 +90,8 @@ public class GuiPause extends DefaultGui{
 		
 		CompoundButton spawntp = new CompoundButton(w/2+20, h/8+10+(20+40)*2,200,50, btnid->{
 			if(btnid!=-1) {
-				this.game.getPlayer().getPhysics().setY(0);
+				//Teleports the player back to the spawn
+				this.game.getPlayer().teleportSpawn();
 			}
 			return "Tp Spawn";
 		});
