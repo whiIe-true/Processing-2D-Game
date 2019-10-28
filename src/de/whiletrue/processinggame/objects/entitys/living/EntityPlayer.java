@@ -201,8 +201,14 @@ public class EntityPlayer extends PSEntityLiving{
 		//Checks if that exists
 		if(!hit.isPresent())
 			return;
-		//Kills the object
-		hit.get().kill();
+		//Gets the entity
+		PSEntityLiving ent = hit.get();
+		//Pushes the entity back
+		ent.getPhysics().pushY(-.8);
+		ent.getPhysics().pushX(ent.getPhysics().getX()-this.physics.getX()>0?2:-2);
+		
+		//Damages the object
+		ent.damage(this.game.getSettings().damage);
 	}
 	
 	/*

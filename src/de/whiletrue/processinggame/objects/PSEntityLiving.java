@@ -1,5 +1,9 @@
 package de.whiletrue.processinggame.objects;
 
+import java.awt.Color;
+
+import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
+
 public abstract class PSEntityLiving extends PSEntity{
 
 	protected boolean dead = false;
@@ -15,6 +19,30 @@ public abstract class PSEntityLiving extends PSEntity{
 		
 		//Calles the fallback
 		super.handleTick();
+	}
+	
+	@Override
+	public void handleRender(int mouseX, int mouseY, boolean mousePressed) {
+		
+		//Shorts the variables
+		int x = this.physics.getX(),y = this.physics.getY()-this.hitbox.getFixedY()-8;
+		//Healthbar
+		healthbar:{
+			//Checks if the current entity is the player
+			if(this instanceof EntityPlayer)
+				//Prevents the healthbar from rendering
+				break healthbar;
+			
+			//Background
+			this.renderer.renderRect(x-20, y, 40, 5, Color.gray.getRGB());
+			//Health
+			this.renderer.renderRect(x-20, y, 40*this.getHealthLeft(), 5, Color.red.getRGB());
+			//Outline
+			this.renderer.renderOutline(x-20, y, 40, 5, 0, 1);
+			
+		}
+		
+		super.handleRender(mouseX, mouseY, mousePressed);
 	}
 	
 	/**
