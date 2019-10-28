@@ -1,18 +1,26 @@
 package de.whiletrue.processinggame.utils;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import de.whiletrue.processinggame.rendering.animations.Animation;
 
 public abstract class Item {
 
+	private static Set<Item> registeredItems = new HashSet<>();
+	
 	private String name,path;
 	private Animation animation;
+	private int id;
 	
-	public Item(String name,String path) {
+	public Item(int id,String name,String path) {
 		this.name = name;
 		this.path = path;
+		this.id = id;
 		this.animation = new Animation();
 		this.animation.init("idle");
 		this.animation.loadAnimations("idle", path,-1);
+		registeredItems.add(this);
 	}
 
 	/**
@@ -34,6 +42,20 @@ public abstract class Item {
 	 */
 	public final Animation getAnimation() {
 		return this.animation;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public final int getId() {
+		return this.id;
+	}
+
+	/**
+	 * @return the registeredItems
+	 */
+	public static final Set<Item> getRegisteredItems() {
+		return registeredItems;
 	}
 	
 }

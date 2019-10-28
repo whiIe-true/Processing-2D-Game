@@ -40,13 +40,16 @@ public class World {
 		
 		//Adds the entitys
 		this.spawn(new EntitySlime(200, 380));
-		this.spawn(new EntityChest(-100, 300, Items.egg));
+		this.spawn(new EntityChest(-100, 300, Items.sword));
 		
 		//Adds the items
 		EntityItem key = new EntityItem(Items.key, 1825, 0);
 		key.getPhysics().setMotionX(0);
 		this.spawn(key);
-		this.spawn(new EntityItem(Items.ring_of_flying, 400, 200));
+		this.spawn(new EntityItem(Items.ring_of_jumping, 400, 200));
+		EntityItem healpotion = new EntityItem(Items.heal_potion, 1680, 680);
+		healpotion.getPhysics().setMotionX(0);
+		this.spawn(healpotion);
 	}
 	
 	public void handleRender(int mouseX,int mouseY,boolean mousePressed) {

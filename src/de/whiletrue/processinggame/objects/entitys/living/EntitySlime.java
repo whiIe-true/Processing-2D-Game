@@ -25,7 +25,7 @@ public class EntitySlime extends PSEntityLiving{
 	}
 	
 	@Override
-	public BaseStats getStats() {
+	public BaseStats initBaseStats() {
 		return new BaseStats(20,1,2,0,100) {
 			
 			@Override

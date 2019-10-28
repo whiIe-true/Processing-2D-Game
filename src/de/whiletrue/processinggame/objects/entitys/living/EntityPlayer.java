@@ -7,8 +7,8 @@ import de.whiletrue.processinggame.objects.PSEntityLiving;
 import de.whiletrue.processinggame.objects.entitys.BaseStats;
 import de.whiletrue.processinggame.objects.entitys.EntityItem;
 import de.whiletrue.processinggame.player.Camera;
-import de.whiletrue.processinggame.player.Settings;
 import de.whiletrue.processinggame.utils.Item;
+import de.whiletrue.processinggame.utils.Items;
 
 public class EntityPlayer extends PSEntityLiving{
 	
@@ -39,32 +39,41 @@ public class EntityPlayer extends PSEntityLiving{
 	}
 	
 	@Override
-	public BaseStats getStats() {
+	public BaseStats initBaseStats() {
 		return new BaseStats(20,5,5,2,100) {
 			
 			@Override
 			protected int speed(int baseSpeed) {
-				return Settings.speed;
+				//Increases the speed by 20% when wearing the boots
+				if(itemHolding==Items.boots)
+					baseSpeed*=1.2;
+				return baseSpeed;
 			}
 			
 			@Override
 			protected int jumpheight(int baseJumpheight) {
-				return Settings.jumpHeight;
+				//Lets the player jump 20% higher
+				if(itemHolding==Items.ring_of_jumping)
+					baseJumpheight*=1.2;
+				return baseJumpheight;
 			}
 			
 			@Override
 			protected int attackDamage(int baseDamage) {
-				return Settings.damage;
+				//Increases the attack damage by 30% when sword equiped
+				if(itemHolding==Items.sword)
+					baseDamage*=1.3;
+				return baseDamage;
 			}
 
 			@Override
 			protected int range(int baseRange) {
-				return Settings.range;
+				return baseRange;
 			}
 
 			@Override
 			protected int maxHealth(int baseMaxHealth) {
-				return Settings.maxHealth;
+				return baseMaxHealth;
 			}
 		};
 	}
@@ -102,7 +111,7 @@ public class EntityPlayer extends PSEntityLiving{
 			return;
 		//Sets the player back alive
 		this.dead = false;
-		this.health = this.getStats().getMaxHealth();
+		this.health = this.stats.getMaxHealth();
 		//Teleports the player back to the spawn
 		this.teleportSpawn();
 	}
@@ -115,7 +124,7 @@ public class EntityPlayer extends PSEntityLiving{
 		if(!this.physics.isOnground())
 			return;
 		//Sets the vertical motion
-		this.getPhysics().pushY(-this.getStats().getJumpHeight());
+		this.getPhysics().pushY(-this.stats.getJumpHeight());
 	}
 	
 	/*
@@ -238,7 +247,7 @@ public class EntityPlayer extends PSEntityLiving{
 		ent.getPhysics().pushX(ent.getPhysics().getX()-this.physics.getX()>0?2:-2);
 		
 		//Damages the object
-		ent.damage(this.getStats().getAttackDamage());
+		ent.damage(this.stats.getAttackDamage());
 	}
 	
 	/*
@@ -259,10 +268,10 @@ public class EntityPlayer extends PSEntityLiving{
 						i->
 						(!this.animations.isReverse()&&
 						i.getPhysics().getX()>this.physics.getX()&&
-						i.getPhysics().getX()-this.physics.getX()<this.getStats().getRange()*20*this.hitbox.getScale())||
+						i.getPhysics().getX()-this.physics.getX()<this.stats.getRange()*20*this.hitbox.getScale())||
 						(this.animations.isReverse()&&
 						i.getPhysics().getX()<this.physics.getX()&&
-						this.physics.getX()-i.getPhysics().getX()<this.getStats().getRange()*20*this.hitbox.getScale()))
+						this.physics.getX()-i.getPhysics().getX()<this.stats.getRange()*20*this.hitbox.getScale()))
 				//Findes the nearest
 				.reduce((e1,e2)->{
 					return e1.distanceTo(this)<e2.distanceTo(this)?e1:e2;

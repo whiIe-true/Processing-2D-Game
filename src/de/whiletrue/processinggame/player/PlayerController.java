@@ -4,6 +4,7 @@ import de.whiletrue.processinggame.Game;
 import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.userinterface.guis.GuiDeathscreen;
 import de.whiletrue.processinggame.userinterface.guis.GuiPause;
+import de.whiletrue.processinggame.utils.Item;
 import de.whiletrue.processinggame.utils.Items;
 import de.whiletrue.processinggame.utils.KeyHandler;
 import processing.core.PApplet;
@@ -35,9 +36,9 @@ public class PlayerController {
 	
 	private void handleKeyInputs() {
 		//Checks if the key for shift is pressed and if the ring is currently hold
-		if(this.keyhandler.keyPressed(/*Shift*/16)&&this.player.getItemHolding()==Items.ring_of_flying)
-			//Lets the player fly
-			this.player.getPhysics().setMotionY(-8);
+		if(this.keyhandler.keyPressed(/*Shift*/16))
+			//Handles the itemused
+			this.handleUseItem(this.player.getItemHolding());
 		
 		//Checks if the key for forward is pressed and if the player can move
 		if(this.keyhandler.keyPressed(68/*Key D*/)){
@@ -98,8 +99,27 @@ public class PlayerController {
 	/*
 	 * Handles whenever a key goes up
 	 * */
-	public void handleKeyReleased(KeyEvent event,boolean gamerunning) {
+	public void handleKeyReleased(KeyEvent event,boolean gamerunning) {}
+	
+	/*
+	 * Handles everytime the useitem key is pressed
+	 * */
+	public void handleUseItem(Item item) {
 		
+		//Checks if the item exitsts
+		if(item==null)
+			return;
+		
+		//Heal potion
+		if(item==Items.heal_potion) {
+			//Checks if the player still has full hearts
+			if(this.player.getHealthLeft()>=1)
+				return;
+			//Heals the player for 20 hearts
+			this.player.heal(20);
+			//Removes the item
+			this.player.setItemHolding(null);
+		}
 	}
 	
 }
