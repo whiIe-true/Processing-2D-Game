@@ -9,7 +9,7 @@ import de.whiletrue.processinggame.player.Camera;
 import de.whiletrue.processinggame.utils.Item;
 
 public class EntityPlayer extends PSEntityLiving{
-
+	
 	private Camera camera;
 	
 	private int swingticks;
@@ -24,7 +24,7 @@ public class EntityPlayer extends PSEntityLiving{
 		this.hitbox = new Hitbox(25, 30, 2);
 		
 		//Loads the physics
-		this.physics.init(hitbox,game.getWidth()/2, game.getHeight()/2,.2,.2);
+		this.physics.init(this.hitbox,game.getWidth()/2, this.game.getHeight()/2,.2,.2);
 		
 		//Loads the skin
 		this.animations.init("idle");
@@ -192,16 +192,16 @@ public class EntityPlayer extends PSEntityLiving{
 				//Filters the it is not dead
 				.filter(i->!i.isDead())
 				//Filters the range y
-				.filter(i->Math.abs(i.getPhysics().getY()-this.physics.getY()) <70)
+				.filter(i->Math.abs(i.getPhysics().getY()-this.physics.getY()) < 70)
 				//Filters the range x
 				.filter(
 						i->
 						(!this.animations.isReverse()&&
 						i.getPhysics().getX()>this.physics.getX()&&
-						i.getPhysics().getX()-this.physics.getX()<this.game.getSettings().range*40)||
+						i.getPhysics().getX()-this.physics.getX()<this.game.getSettings().range*20*this.hitbox.getScale())||
 						(this.animations.isReverse()&&
 						i.getPhysics().getX()<this.physics.getX()&&
-						this.physics.getX()-i.getPhysics().getX()<this.game.getSettings().range*40))
+						this.physics.getX()-i.getPhysics().getX()<this.game.getSettings().range*20*this.hitbox.getScale()))
 				//Returns the match
 				.findAny();
 	}

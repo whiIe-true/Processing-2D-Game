@@ -9,3 +9,11 @@ This is a private project to test some things using the processing library
 * [Slime](https://henrysoftware.itch.io/free-pixel-mob)
 * [Chest](https://0x72.itch.io/16x16-dungeon-tileset)
 * [Items](https://alexs-assets.itch.io/16x16-rpg-item-pack)
+
+# Soonadded
+* (v1) Healthbar for the Player
+* (v2) Health for the living entitys
+* (v1) Deadscreen
+* (v1) Respawn
+* (v3) Xp
+* (v3) Xpbar

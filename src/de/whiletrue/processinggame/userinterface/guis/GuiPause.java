@@ -66,7 +66,7 @@ public class GuiPause extends DefaultGui{
 			
 			switch (id) {
 			case 0:
-				spawn = new EntitySlime(x, y);
+				spawn = new EntitySlime(x, y-100);
 				break;
 			case 1:
 				spawn = new EntityChest(x, y, Items.egg);
@@ -87,7 +87,14 @@ public class GuiPause extends DefaultGui{
 				this.game.getWorld().spawn(spawn);
 		},"Slime","Chest","Item/Key","Item/Ring of flying","Item/Egg");
 		
-		return new GuiComponent[] {close,jumpheight,speed,size,range,showHitboxes,spawnList};
+		CompoundButton spawntp = new CompoundButton(w/2+20, h/8+10+(20+40)*2,200,50, btnid->{
+			if(btnid!=-1) {
+				this.game.getPlayer().getPhysics().setY(0);
+			}
+			return "Tp Spawn";
+		});
+		
+		return new GuiComponent[] {close,jumpheight,speed,size,range,showHitboxes,spawnList,spawntp};
 	}
 	
 	@Override
