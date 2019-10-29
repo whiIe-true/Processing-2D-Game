@@ -16,7 +16,7 @@ import de.whiletrue.processinggame.utils.Items;
 
 public class World {
 
-	private final int killHeight = 1000;
+	private final int killHeight = 1000,killWeight = 5000;
 	
 	private EntityPlayer player;
 	
@@ -66,6 +66,8 @@ public class World {
 		this.soonRemove.addAll(this.objects.stream().filter(i->i instanceof PSEntityLiving&&((PSEntityLiving)i).isDead()).collect(Collectors.toList()));
 		//Removes all entitys that are to low
 		this.soonRemove.addAll(this.objects.stream().filter(i->i instanceof PSEntity&&((PSEntity)i).getPhysics().getY()>this.killHeight).collect(Collectors.toList()));
+		//Removes all entitys that are to far away
+		this.soonRemove.addAll(this.objects.stream().filter(i-> i instanceof PSEntity).map(i->(PSEntity)i).filter(i->i.getPhysics().getX()>this.killWeight||i.getPhysics().getX()<-this.killWeight).collect(Collectors.toList()));
 		
 		//Adds and removes all objects
 		this.objects.addAll(this.soonAdd);

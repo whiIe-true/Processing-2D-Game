@@ -8,5 +8,6 @@ public class Items {
 	public static Item heal_potion = new Item(3,"Heal Potion","rsc/items/heal_potion.png") {};
 	public static Item sword = new Item(4,"Sword","rsc/items/sword.png") {};
 	public static Item boots = new Item(5,"Boots","rsc/items/boots.png") {};
+	public static Item fireball_wand = new Item(6,"Fireball Wand","rsc/items/fireball_wand.png") {};
 	
 }

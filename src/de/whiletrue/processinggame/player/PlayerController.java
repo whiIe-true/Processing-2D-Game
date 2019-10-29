@@ -1,6 +1,7 @@
 package de.whiletrue.processinggame.player;
 
 import de.whiletrue.processinggame.Game;
+import de.whiletrue.processinggame.objects.entitys.EntityFireball;
 import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.userinterface.guis.GuiDeathscreen;
 import de.whiletrue.processinggame.userinterface.guis.GuiPause;
@@ -16,6 +17,8 @@ public class PlayerController {
 	private Game game;
 	private KeyHandler keyhandler;
 	
+	private int fireballTicks;
+	
 	public PlayerController(KeyHandler keyhandler) {
 		this.game = Game.getInstance();
 		this.keyhandler = keyhandler;
@@ -26,6 +29,9 @@ public class PlayerController {
 	 * Executes on every tick
 	 * */
 	public void handleTick() {
+		//Updates all ticks
+		this.updateTicks();
+		
 		//Handles the key inputs
 		this.handleKeyInputs();
 		
@@ -120,6 +126,25 @@ public class PlayerController {
 			//Removes the item
 			this.player.setItemHolding(null);
 		}
+		
+		if(item==Items.fireball_wand) {
+			//Checks if the fireballticks are done
+			if(this.fireballTicks>0)
+				return;
+			//Resets the ticks
+			this.fireballTicks=40;
+			//Spawn the entity
+			EntityFireball spawn = new EntityFireball(this.player.getPhysics().getX(),this.player.getPhysics().getY(),this.player.getAnimations().isReverse()?-2:2);
+			this.game.getWorld().spawn(spawn);
+		}
+	}
+	
+	/*
+	 * Updates all ticks
+	 * */
+	private void updateTicks() {
+		if(this.fireballTicks>0)
+			this.fireballTicks--;
 	}
 	
 }
