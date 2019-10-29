@@ -62,6 +62,11 @@ public class World {
 	
 	public void handleTick() {
 
+		//Checks if the player is lower than the lowest possable position
+		if(this.player.getPhysics().getY()>this.killHeight)
+			//Damages the player
+			this.player.damage(20);
+		
 		//Removes all dead entity
 		this.soonRemove.addAll(this.objects.stream().filter(i->i instanceof PSEntityLiving&&((PSEntityLiving)i).isDead()).collect(Collectors.toList()));
 		//Removes all entitys that are to low
