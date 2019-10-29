@@ -38,7 +38,7 @@ public class EntityFireball extends PSEntity{
 			return;
 		
 		//Damages the entity and despawnes
-		hit.get().damage(20);
+		hit.get().damage(20,0,0);
 		this.game.getWorld().kill(this);
 	}
 	

@@ -65,7 +65,7 @@ public class World {
 		//Checks if the player is lower than the lowest possable position
 		if(this.player.getPhysics().getY()>this.killHeight)
 			//Damages the player
-			this.player.damage(20);
+			this.player.damage(20,0,0);
 		
 		//Removes all dead entity
 		this.soonRemove.addAll(this.objects.stream().filter(i->i instanceof PSEntityLiving&&((PSEntityLiving)i).isDead()).collect(Collectors.toList()));
@@ -107,6 +107,6 @@ public class World {
 	 * @return the objects
 	 */
 	public final List<PSObject> getObjects() {
-		return objects;
+		return this.objects;
 	}
 }

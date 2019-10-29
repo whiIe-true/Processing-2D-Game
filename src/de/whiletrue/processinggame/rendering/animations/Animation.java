@@ -14,7 +14,9 @@ public class Animation {
 	
 	private Map<String, AnimationType> animations = new HashMap<>();
 
-	private boolean reverse;
+	private boolean reverse,blinking;
+	private int blinkticks;
+	
 	private String idleanimation;
 	private String current;
 	
@@ -53,6 +55,11 @@ public class Animation {
 		//Opens the matrix
 		this.renderer.push();
 		{
+			//Checks if blinking is enabled and the image is ready to blink
+			if(this.blinking&&this.blinkticks>=5)
+				//Makes the image transparent
+				this.renderer.window.tint(255,10);
+			
 			this.renderer.window.fill(Color.DARK_GRAY.getRGB());
 			//Checks the render direction
 			if(this.reverse) {
@@ -74,6 +81,13 @@ public class Animation {
 	 * Executes on every tick to change costume
 	 * */
 	public void onTick() {
+		//Checks if blinking is enabled
+		if(this.blinking) {
+			//Increases the ticks and checks if they are to high
+			if(++this.blinkticks>10)
+				this.blinkticks=0;
+		}
+		
 		//Checks if a animation is played
 		if(this.current==null)
 			//Handles the tick event
@@ -141,5 +155,19 @@ public class Animation {
 	 * */
 	public boolean isReverse() {
 		return this.reverse;
+	}
+
+	/**
+	 * @return the blinking
+	 */
+	public final boolean isBlinking() {
+		return blinking;
+	}
+
+	/**
+	 * @param blinking the blinking to set
+	 */
+	public final void setBlinking(boolean blinking) {
+		this.blinking = blinking;
 	}
 }

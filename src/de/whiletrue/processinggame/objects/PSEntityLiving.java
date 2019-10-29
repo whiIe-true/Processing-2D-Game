@@ -28,9 +28,14 @@ public abstract class PSEntityLiving extends PSEntity{
 		if(this.health>this.stats.getMaxHealth())
 			this.health = this.stats.getMaxHealth();
 		
-		//Decreases the nodamagetime
-		if(this.nodamageTicks>0)
+		//Checks if the entity is imune because of no damage time
+		if(this.nodamageTicks>0) {
 			this.nodamageTicks--;
+			//Sets the animations blinking
+			this.animations.setBlinking(true);
+		}else
+			//Removes the blinking from the skin
+			this.animations.setBlinking(false);
 		
 		//Calles the fallback
 		super.handleTick();
@@ -90,16 +95,20 @@ public abstract class PSEntityLiving extends PSEntity{
 	/*
 	 * Attacks the entity
 	 * */
-	public final void damage(int damage) {
+	public final void damage(int damage,double knockbackX,double knockbackY) {
 		//Checks if the entity can be damaged
 		if(this.nodamageTicks>0)
 			return;
 		
 		//Sets the nodamage ticks
-		this.nodamageTicks = 10;
+		this.nodamageTicks = 20;
 		
 		//Removes the health from the entity
 		this.health-=damage;
+		//Pushes the entity back
+		this.physics.pushX(knockbackX);
+		this.physics.pushY(knockbackY);
+		
 		//Checks if the entity is dead
 		if(this.health<=0) {
 			this.dead=true;

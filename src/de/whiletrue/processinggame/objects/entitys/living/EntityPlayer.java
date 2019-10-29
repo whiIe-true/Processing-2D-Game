@@ -114,6 +114,8 @@ public class EntityPlayer extends PSEntityLiving{
 		this.health = this.stats.getMaxHealth();
 		//Teleports the player back to the spawn
 		this.teleportSpawn();
+		//Sets nodamage ticks very hight
+		this.nodamageTicks=100;
 	}
 	
 	/*
@@ -242,12 +244,12 @@ public class EntityPlayer extends PSEntityLiving{
 			return;
 		//Gets the entity
 		PSEntityLiving ent = hit.get();
-		//Pushes the entity back
-		ent.getPhysics().pushY(-.8);
-		ent.getPhysics().pushX(ent.getPhysics().getX()-this.physics.getX()>0?2:-2);
+		
+		//Gets the push direction
+		int dir = ent.getPhysics().getX()-this.physics.getX()>0?1:-1;
 		
 		//Damages the object
-		ent.damage(this.stats.getAttackDamage());
+		ent.damage(this.stats.getAttackDamage(),dir*2,-.8);
 	}
 	
 	/*

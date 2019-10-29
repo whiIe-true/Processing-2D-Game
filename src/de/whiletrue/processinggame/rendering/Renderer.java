@@ -108,6 +108,8 @@ public class Renderer {
 	 * */
 	public void push() {
 		this.window.pushMatrix();
+		this.window.push();
+		this.window.pushStyle();
 	}
 	
 	/*
@@ -115,6 +117,8 @@ public class Renderer {
 	 * */
 	public void pop() {
 		this.window.popMatrix();
+		this.window.pop();
+		this.window.popStyle();
 	}
 	
 	/*
