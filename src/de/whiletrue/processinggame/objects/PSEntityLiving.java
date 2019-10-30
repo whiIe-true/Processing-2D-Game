@@ -68,21 +68,21 @@ public abstract class PSEntityLiving extends PSEntity{
 	/**
 	 * @return the dead
 	 */
-	public final boolean isDead() {
+	public boolean isDead() {
 		return this.dead;
 	}
 
 	/**
 	 * @param dead the dead to set
 	 */
-	public final void kill() {
+	public void kill() {
 		this.dead = true;
 	}
 	
 	/*
 	 * Healts the entity
 	 * */
-	public final void heal(int health) {
+	public void heal(int health) {
 		//Checks if the health goes higher than maxhealth
 		if(this.health+health>this.stats.getMaxHealth())
 			//Sets the health to maxhealth
@@ -95,7 +95,7 @@ public abstract class PSEntityLiving extends PSEntity{
 	/*
 	 * Attacks the entity
 	 * */
-	public final void damage(int damage,double knockbackX,double knockbackY) {
+	public void damage(int damage,double knockbackX,double knockbackY) {
 		//Checks if the entity can be damaged
 		if(this.nodamageTicks>0)
 			return;

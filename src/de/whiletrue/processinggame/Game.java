@@ -83,12 +83,12 @@ public class Game {
 	private void loadSettings() {
 		//Sets the default values
 		this.gamesettings.setDefault("showHitboxes", false);
-		this.gamesettings.setDefault("key_item", 16);
+		this.gamesettings.setDefault("key_dropitem", 70);
 		this.gamesettings.setDefault("key_right", 68);
 		this.gamesettings.setDefault("key_left", 65);
 		this.gamesettings.setDefault("key_jump", 32);
 		this.gamesettings.setDefault("key_attack", 87);
-		this.gamesettings.setDefault("key_dropitem", 16);
+		this.gamesettings.setDefault("key_item", 16);
 		
 		//Loads the settings
 		this.gamesettings.loadSettings();
@@ -292,5 +292,12 @@ public class Game {
 	 */
 	public final Settings getSettings() {
 		return this.gamesettings;
+	}
+
+	/**
+	 * @return the gameoverlay
+	 */
+	public final Overlay getOverlay() {
+		return this.gameoverlay;
 	}
 }

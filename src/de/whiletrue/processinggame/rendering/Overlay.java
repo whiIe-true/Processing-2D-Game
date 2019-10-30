@@ -23,7 +23,7 @@ public class Overlay {
 		this.player = this.game.getPlayer();
 		
 		//Loads the itemframe
-		this.itemframe = new AnimationFrame(renderer.loadImage("rsc/overlay/itemframe.png"));
+		this.itemframe = new AnimationFrame(this.renderer.loadImage("rsc/overlay/itemframe.png"));
 		this.itemframe.updateScale(2);
 	}
 	

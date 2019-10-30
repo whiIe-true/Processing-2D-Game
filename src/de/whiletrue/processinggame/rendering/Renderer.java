@@ -129,6 +129,13 @@ public class Renderer {
 	}
 	
 	/*
+	 * Renders the given image
+	 * */
+	public void renderImage(PImage frame,int x,int y,int width,int height) {
+		this.window.image(frame, x, y,width,height);
+	}
+	
+	/*
 	 * Renders a cirle
 	 * */
 	public void renderCirle(float x,float y,float radius,int color) {

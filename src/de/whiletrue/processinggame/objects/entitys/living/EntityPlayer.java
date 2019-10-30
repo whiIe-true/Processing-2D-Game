@@ -111,6 +111,7 @@ public class EntityPlayer extends PSEntityLiving{
 	 * Respawns once dead
 	 * */
 	public final void respawn() {
+		
 		//Checks if the entity is dead
 		if(!this.isDead())
 			return;
