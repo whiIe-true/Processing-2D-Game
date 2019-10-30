@@ -8,6 +8,8 @@ import de.whiletrue.processinggame.objects.PSEntityLiving;
 
 public class EntityFireball extends PSEntity{
 
+	private int lifespan;
+	
 	public EntityFireball(int x,int y,int motionX) {
 		//Loads the items texture
 		this.animations.init("idle");
@@ -23,6 +25,10 @@ public class EntityFireball extends PSEntity{
 	
 	@Override
 	public void handleTick() {
+		//Checks if the fireball has lived long enought
+		if(++this.lifespan>300)
+			this.game.getWorld().kill(this);
+		
 		//Calles the callback
 		super.handleTick();
 

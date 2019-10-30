@@ -2,12 +2,10 @@ package de.whiletrue.processinggame.userinterface.guis;
 
 import java.util.Optional;
 
-import de.whiletrue.processinggame.Game;
 import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.objects.entitys.EntityChest;
 import de.whiletrue.processinggame.objects.entitys.EntityItem;
 import de.whiletrue.processinggame.objects.entitys.living.EntitySlime;
-import de.whiletrue.processinggame.player.Settings;
 import de.whiletrue.processinggame.userinterface.DefaultGui;
 import de.whiletrue.processinggame.userinterface.GuiComponent;
 import de.whiletrue.processinggame.userinterface.components.CompoundButton;
@@ -30,13 +28,20 @@ public class GuiPause extends DefaultGui{
 		//Shorts the game width and height
 		int w = this.game.getWidth(),h = this.game.getHeight();;
 		
-		CompoundButton close = new CompoundButton(w/2-100, h/8*6, 200, 50, i->{
-			Game.getInstance().openGui(null);
+		CompoundButton close = new CompoundButton(w/2-225, h/8*6, 200, 50, i->{
+			if(i!=-1)
+				this.game.openGui(null);
 			return "Close";
 		});
 		
-		CompoundCheckbox showHitboxes = new CompoundCheckbox(w/2-140, h/8+10+(20+40)*2, 40,40, Settings.showHitboxes, i->{
-			Settings.showHitboxes=i;
+		CompoundButton endgame = new CompoundButton(w/2+25, h/8*6, 200, 50, i->{
+			if(i!=-1)
+				this.game.closeGame();
+			return "End game";
+		});
+		
+		CompoundCheckbox showHitboxes = new CompoundCheckbox(w/2-140, h/8+10+(20+40)*2, 40,40, this.game.getSettings().getBool("showHitboxes"), i->{
+			this.game.getSettings().edit("showHitboxes", i);
 			return "Show Hitboxes";
 		});
 		
@@ -79,7 +84,7 @@ public class GuiPause extends DefaultGui{
 			return "Tp Spawn";
 		});
 		
-		return new GuiComponent[] {close,showHitboxes,spawnList,spawntp,spawnItems};
+		return new GuiComponent[] {endgame,showHitboxes,spawnList,spawntp,spawnItems,close};
 	}
 	
 	@Override

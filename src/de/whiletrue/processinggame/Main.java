@@ -35,7 +35,8 @@ public class Main extends PApplet{
 		this.frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				System.exit(0);
+				//Closes the game
+				game.closeGame();
 			}
 		});
 	}

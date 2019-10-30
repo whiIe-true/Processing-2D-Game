@@ -2,7 +2,6 @@ package de.whiletrue.processinggame.objects;
 
 import de.whiletrue.processinggame.logic.Hitbox;
 import de.whiletrue.processinggame.logic.Physics;
-import de.whiletrue.processinggame.player.Settings;
 import de.whiletrue.processinggame.rendering.animations.Animation;
 
 public abstract class PSEntity extends PSObject{
@@ -24,7 +23,7 @@ public abstract class PSEntity extends PSObject{
 		//Renders the skin
 		this.animations.renderAt(x, y,this.hitbox.getScale());
 		//Checks if debugrendering is enabled
-		if(Settings.showHitboxes)
+		if(this.game.getSettings().getBool("showHitboxes"))
 			this.hitbox.renderHitbox(this.renderer, x, y);
 	}
 	

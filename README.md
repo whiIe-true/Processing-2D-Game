@@ -11,6 +11,6 @@ This is a private project to test some things using the processing library
 * [Items](https://alexs-assets.itch.io/16x16-rpg-item-pack)
 * [Fireball](https://codemanu.itch.io/pixelart-effect-pack)
 
-# Soonadded
+## TODO`s
 * (v3) Xp
 * (v3) Xpbar

@@ -9,6 +9,7 @@ import de.whiletrue.processinggame.player.PlayerController;
 import de.whiletrue.processinggame.rendering.Fonts;
 import de.whiletrue.processinggame.rendering.Overlay;
 import de.whiletrue.processinggame.rendering.Renderer;
+import de.whiletrue.processinggame.settings.Settings;
 import de.whiletrue.processinggame.userinterface.DefaultGui;
 import de.whiletrue.processinggame.utils.KeyHandler;
 import processing.core.PApplet;
@@ -26,15 +27,23 @@ public class Game {
 	private EntityPlayer player;
 	private PlayerController playercontroller;
 	
-	private KeyHandler keyhandler = new KeyHandler();
+	private KeyHandler keyhandler;
 	
 	private DefaultGui openGui = null;
 	private Renderer renderer;
 	private Overlay gameoverlay;
 	
+	private Settings gamesettings = new Settings();
+	
 	public Game(PApplet window) {
 		instance = this;
 		this.window = window;
+
+		//Creates the keyhandler
+		this.keyhandler = new KeyHandler();
+		
+		//Loads the settings
+		this.loadSettings();
 		
 		//Gets the screen size
 		Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -56,7 +65,7 @@ public class Game {
 		this.renderer = new Renderer(this.window);
 		
 		//Creates the player object
-		this.player = new EntityPlayer(this.camera,650,400);
+		this.player = new EntityPlayer(this.camera,0,0);
 
 		//Creates the player controller
 		this.playercontroller = new PlayerController(this.keyhandler);
@@ -66,6 +75,23 @@ public class Game {
 		
 		//Creates the world
 		this.world = new World();
+	}
+	
+	/*
+	 * Loads the settings
+	 * */
+	private void loadSettings() {
+		//Sets the default values
+		this.gamesettings.setDefault("showHitboxes", false);
+		this.gamesettings.setDefault("key_item", 16);
+		this.gamesettings.setDefault("key_right", 68);
+		this.gamesettings.setDefault("key_left", 65);
+		this.gamesettings.setDefault("key_jump", 32);
+		this.gamesettings.setDefault("key_attack", 87);
+		this.gamesettings.setDefault("key_dropitem", 16);
+		
+		//Loads the settings
+		this.gamesettings.loadSettings();
 	}
 	
 	public void handleRender() {
@@ -140,8 +166,7 @@ public class Game {
 		//Handles the playercontroller
 		this.playercontroller.handleKeyReleased(event,this.isGameRunning());
 	}
-	
-	
+		
 	public void handleMouseClicked(MouseEvent event) {
 		//Checks if the game is running
 		if(this.isGameRunning())
@@ -158,9 +183,7 @@ public class Game {
 		//Sends the event to the gui
 		this.openGui.handleMouseDragged(event);
 	}
-	
-	
-	
+		
 	public void handleMousePressed(MouseEvent event) {
 		//Checks if the game is running
 		if(this.isGameRunning())
@@ -169,7 +192,6 @@ public class Game {
 		this.openGui.handleMousePressed(event);
 	}
 	
-	
 	public void handleMouseReleased(MouseEvent event) {
 		//Checks if the game is running
 		if(this.isGameRunning())
@@ -177,7 +199,6 @@ public class Game {
 		//Sends the event to the gui
 		this.openGui.handleMouseReleased(event);
 	}
-	
 	
 	public void handleMouseMoved(MouseEvent event) {
 		//Checks if the game is running
@@ -188,6 +209,15 @@ public class Game {
 			this.openGui.handleMouseMoved(event);
 	}
 	
+	/*
+	 * Closes the game properly
+	 * */
+	public final void closeGame() {
+		//Saves the settings
+		this.gamesettings.saveSettings();
+		//Exits the game
+		System.exit(0);
+	}
 	
 	/*
 	 * Opens a gui
@@ -255,5 +285,12 @@ public class Game {
 	 */
 	public final DefaultGui getOpenGui() {
 		return this.openGui;
+	}
+
+	/**
+	 * @return the gamesettings
+	 */
+	public final Settings getSettings() {
+		return this.gamesettings;
 	}
 }

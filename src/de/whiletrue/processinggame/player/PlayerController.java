@@ -42,12 +42,12 @@ public class PlayerController {
 	
 	private void handleKeyInputs() {
 		//Checks if the key for shift is pressed and if the ring is currently hold
-		if(this.keyhandler.keyPressed(/*Shift*/16))
+		if(this.keyhandler.keyPressedSetting("item"))
 			//Handles the itemused
 			this.handleUseItem(this.player.getItemHolding());
 		
 		//Checks if the key for forward is pressed and if the player can move
-		if(this.keyhandler.keyPressed(68/*Key D*/)){
+		if(this.keyhandler.keyPressedSetting("right")){
 			//Sets the skin direction
 			this.player.getAnimations().setReverse(false);
 			//Sets the motion
@@ -55,7 +55,7 @@ public class PlayerController {
 		}
 		
 		//Checks if the key for backward is pressed and if the player can move
-		if(this.keyhandler.keyPressed(65/*Key A*/)){
+		if(this.keyhandler.keyPressedSetting("left")){
 			//Sets the skin direction
 			this.player.getAnimations().setReverse(true);
 			//Sets the motion
@@ -63,24 +63,24 @@ public class PlayerController {
 		}
 		
 		//Checks if the key for jump is pressed, the player is onground and if the player can move
-		if(this.keyhandler.keyPressed(32/*Key Spacebar*/)){
+		if(this.keyhandler.keyPressedSetting("jump")){
 			this.player.jump();
 		}
 		
 		//Checks if the key for attack is pressed and no attack is going and if the player can move
-		if(this.keyhandler.keyPressed(87/*Key W*/)) {
+		if(this.keyhandler.keyPressedSetting("attack")) {
 			//Starts the attack
 			this.player.attack();
 		}
 		
 		//Drops the item
-		if(this.keyhandler.keyPressed(70/*Key F*/)) {
+		if(this.keyhandler.keyPressedSetting("dropitem")) {
 			//Drops the current carrying item
 			this.player.dropItem();
 		}
 		
 		//Sets the skin idling or moving depending if the player moves or not
-		this.player.getAnimations().setIdleAnimation(this.keyhandler.anyPressed(65,68)?"walk":"idle");
+		this.player.getAnimations().setIdleAnimation(this.keyhandler.anyPressedSettings("left","right")?"walk":"idle");
 	}
 	
 	/*

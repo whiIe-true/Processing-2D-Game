@@ -26,7 +26,10 @@ public class EntitySlime extends PSEntityLiving{
 	
 	@Override
 	public BaseStats initBaseStats() {
-		return new BaseStats(20,1,2,0,100) {
+		/*
+		 * -1 means unused
+		 * */
+		return new BaseStats(20,1,2,-1,100,20) {
 			
 			@Override
 			protected int speed(int baseSpeed) {
@@ -52,6 +55,11 @@ public class EntitySlime extends PSEntityLiving{
 			protected int attackDamage(int baseDamage) {
 				return baseDamage;
 			}
+
+			@Override
+			protected int noDamageTicks(int baseNoDamageTicks) {
+				return baseNoDamageTicks;
+			}
 		};
 	}
 	
@@ -70,7 +78,7 @@ public class EntitySlime extends PSEntityLiving{
 			//Gets push direction
 			int dir = this.player.getPhysics().getX()-this.physics.getX()>0?1:-1;
 			//Damages the player
-			this.player.damage(this.getStats().getAttackDamage(),dir*4,-1.5);
+			this.player.damage(this.getStats().getAttackDamage(),dir*5.5,-1.5);
 		}
 		
 		//Checks if the slime is onground

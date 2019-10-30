@@ -101,7 +101,7 @@ public abstract class PSEntityLiving extends PSEntity{
 			return;
 		
 		//Sets the nodamage ticks
-		this.nodamageTicks = 20;
+		this.nodamageTicks = this.stats.getNoDamageTicks();
 		
 		//Removes the health from the entity
 		this.health-=damage;
@@ -134,6 +134,13 @@ public abstract class PSEntityLiving extends PSEntity{
 	 * @return the stats
 	 */
 	public final BaseStats getStats() {
-		return stats;
+		return this.stats;
+	}
+
+	/**
+	 * @return the nodamageTicks
+	 */
+	public final int getNodamageTicks() {
+		return this.nodamageTicks;
 	}
 }

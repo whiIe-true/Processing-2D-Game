@@ -2,14 +2,15 @@ package de.whiletrue.processinggame.objects.entitys;
 
 public abstract class BaseStats {
 
-	private int attackDamage,speed,jumpHeight,range,maxhealth;
+	private int attackDamage,speed,jumpHeight,range,maxhealth,noDamageTicks;
 	
-	public BaseStats(int attackDamage,int speed,int jumpheight,int range,int maxhealth) {
+	public BaseStats(int attackDamage,int speed,int jumpheight,int range,int maxhealth,int noDamageTicks) {
 		this.attackDamage = attackDamage;
 		this.speed = speed;
 		this.range = range;
 		this.jumpHeight = jumpheight;
 		this.maxhealth = maxhealth;
+		this.noDamageTicks = noDamageTicks;
 	}
 
 	protected abstract int attackDamage(int baseDamage);
@@ -17,11 +18,11 @@ public abstract class BaseStats {
 	protected abstract int jumpheight(int baseJumpheight);
 	protected abstract int range(int baseRange);
 	protected abstract int maxHealth(int baseMaxHealth);
+	protected abstract int noDamageTicks(int baseNoDamageTicks);
 	
 	public int getAttackDamage() {
 		return this.attackDamage(this.attackDamage);
 	}
-	
 	public int getSpeed() {
 		return this.speed(this.speed);
 	}
@@ -33,5 +34,8 @@ public abstract class BaseStats {
 	}
 	public int getMaxHealth() {
 		return this.maxHealth(this.maxhealth);
+	}
+	public int getNoDamageTicks() {
+		return this.noDamageTicks(this.noDamageTicks);
 	}
 }

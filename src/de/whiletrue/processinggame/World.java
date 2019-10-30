@@ -29,7 +29,11 @@ public class World {
 		this.player = Game.getInstance().getPlayer();
 		
 		//Adds the objects
-		this.spawn(new ObjectWall(100, 400, 300));
+		this.spawn(new ObjectWall(-250, 0, 500));
+		this.spawn(new ObjectWall(250, -350, 50));
+		this.spawn(new ObjectWall(750, 600, 20));
+		this.spawn(new ObjectWall(-100, 800, 200));
+		this.spawn(new ObjectWall(0, 400, 400));
 		this.spawn(new ObjectWall(400, 600, 500));
 		this.spawn(new ObjectWall(1300, 500, 100));
 		this.spawn(new ObjectWall(1600, 700, 150));
@@ -43,7 +47,7 @@ public class World {
 		this.spawn(new EntityChest(-100, 300, Items.sword));
 		
 		//Adds the items
-		EntityItem key = new EntityItem(Items.key, 1825, 0);
+		EntityItem key = new EntityItem(Items.key, 260, -350);
 		key.getPhysics().setMotionX(0);
 		this.spawn(key);
 		this.spawn(new EntityItem(Items.ring_of_jumping, 400, 200));

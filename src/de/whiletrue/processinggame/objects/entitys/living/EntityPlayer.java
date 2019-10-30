@@ -40,7 +40,7 @@ public class EntityPlayer extends PSEntityLiving{
 	
 	@Override
 	public BaseStats initBaseStats() {
-		return new BaseStats(20,5,5,2,100) {
+		return new BaseStats(20,5,5,2,100,20) {
 			
 			@Override
 			protected int speed(int baseSpeed) {
@@ -74,6 +74,11 @@ public class EntityPlayer extends PSEntityLiving{
 			@Override
 			protected int maxHealth(int baseMaxHealth) {
 				return baseMaxHealth;
+			}
+
+			@Override
+			protected int noDamageTicks(int baseNoDamageTicks) {
+				return baseNoDamageTicks;
 			}
 		};
 	}
@@ -238,7 +243,7 @@ public class EntityPlayer extends PSEntityLiving{
 		this.swingticks = -1;
 		
 		//Gets the nearest entity to hit;
-		Optional<PSEntityLiving> hit = this.attackEntity();
+		Optional<PSEntityLiving> hit = this.getEntityToAttack();
 		//Checks if that exists
 		if(!hit.isPresent())
 			return;
@@ -255,7 +260,7 @@ public class EntityPlayer extends PSEntityLiving{
 	/*
 	 * Returns the slime the player has hit
 	 * */
-	private Optional<PSEntityLiving> attackEntity(){
+	private Optional<PSEntityLiving> getEntityToAttack(){
 		//Gets all objects
 		return this.game.getWorld().getObjects().stream()
 				//Filters any entitys
@@ -263,6 +268,8 @@ public class EntityPlayer extends PSEntityLiving{
 				.map(i->(PSEntityLiving)i)
 				//Filters the it is not dead
 				.filter(i->!i.isDead())
+				//Ensures, that the entity can be attacked
+				.filter(i->i.getNodamageTicks()<=0)
 				//Filters the range y
 				.filter(i->Math.abs(i.getPhysics().getY()-this.physics.getY()) < 70)
 				//Filters the range x
