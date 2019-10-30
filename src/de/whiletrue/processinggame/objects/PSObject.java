@@ -1,16 +1,17 @@
 package de.whiletrue.processinggame.objects;
 
-import de.whiletrue.processinggame.Game;
+import de.whiletrue.processinggame.game.Game;
+import de.whiletrue.processinggame.game.ingame.StateIngame;
 import de.whiletrue.processinggame.rendering.Renderer;
 
 public abstract class PSObject{
 	
-	protected Game game;
+	protected StateIngame state;
 	protected Renderer renderer;
 	
 	public PSObject() {
-		this.game = Game.getInstance();
-		this.renderer = this.game.getRenderer();
+		this.state = (StateIngame) Game.getInstance().getState();
+		this.renderer = Renderer.getInstance();
 	}
 	
 	public void handleTick() {}

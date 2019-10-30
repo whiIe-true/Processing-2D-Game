@@ -17,12 +17,14 @@ import processing.core.PImage;
 
 public class Renderer {
 
+	private static Map<String, BufferedImage> loadedImages = new HashMap<>();
+	private static Renderer instance;
+	
 	public PApplet window;
 	private BufferedImage invalidFile;
 	
-	private static Map<String, BufferedImage> loadedImages = new HashMap<>();
-	
 	public Renderer(PApplet window) {
+		instance = this;
 		this.window = window;
 		
 		//Creates the invalidFile image
@@ -265,5 +267,12 @@ public class Renderer {
 		this.window.stroke(color);
 		this.window.strokeWeight(width);
 		this.window.line(x, y, x2, y2);
+	}
+
+	/**
+	 * @return the instance
+	 */
+	public static final Renderer getInstance() {
+		return instance;
 	}
 }

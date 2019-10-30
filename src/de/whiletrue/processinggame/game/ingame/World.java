@@ -1,9 +1,10 @@
-package de.whiletrue.processinggame;
+package de.whiletrue.processinggame.game.ingame;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.objects.PSEntityLiving;
 import de.whiletrue.processinggame.objects.PSObject;
@@ -26,7 +27,7 @@ public class World {
 	
 	public World() {
 		//Gets some references
-		this.player = Game.getInstance().getPlayer();
+		this.player = ((StateIngame)Game.getInstance().getState()).getPlayer();
 		
 		//Adds the objects
 		this.spawn(new ObjectWall(-250, 0, 500));

@@ -6,6 +6,8 @@ import de.whiletrue.processinggame.rendering.Renderer;
 
 public class Hitbox {
 
+	private Renderer renderer;
+	
 	private final int sizeX,sizeY;
 	private double scale;
 	
@@ -13,14 +15,15 @@ public class Hitbox {
 		this.sizeX=sizeX;
 		this.sizeY=sizeY;
 		this.scale = scale;
+		this.renderer = Renderer.getInstance();
 	}
 
 	/*
 	 * Renders the hitbox
 	 * */
-	public final void renderHitbox(Renderer renderer,int x,int y) {
+	public final void renderHitbox(int x,int y) {
 		//Renders the hitbox
-		renderer.renderOutline(x-this.getFixedX()/2, y-this.getFixedY(), this.getFixedX(), this.getFixedY(), Color.blue.getRGB(), 1);
+		this.renderer.renderOutline(x-this.getFixedX()/2, y-this.getFixedY(), this.getFixedX(), this.getFixedY(), Color.blue.getRGB(), 1);
 	}
 	
 	

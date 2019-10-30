@@ -1,7 +1,9 @@
-package de.whiletrue.processinggame.userinterface.guis;
+package de.whiletrue.processinggame.game.ingame.guis;
 
 import java.util.Optional;
 
+import de.whiletrue.processinggame.game.ingame.StateIngame;
+import de.whiletrue.processinggame.game.startmenu.StateStartMenu;
 import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.objects.entitys.EntityChest;
 import de.whiletrue.processinggame.objects.entitys.EntityItem;
@@ -17,26 +19,28 @@ import de.whiletrue.processinggame.utils.Items;
 public class GuiPause extends DefaultGui{
 
 	private float scale = .2f;
+	private StateIngame state;
 	
-	public GuiPause() {
+	public GuiPause(StateIngame state) {
 		super(true);
+		this.state = state;
 	}
 	
 	@Override
 	public GuiComponent[] addComponents() {
 		
 		//Shorts the game width and height
-		int w = this.game.getWidth(),h = this.game.getHeight();;
+		int w = this.renderer.window.width,h = this.renderer.window.height;
 		
 		CompoundButton close = new CompoundButton(w/2-225, h/8*6, 200, 50, i->{
 			if(i!=-1)
-				this.game.openGui(null);
+				this.state.openGui(null);
 			return "Close";
 		});
 		
 		CompoundButton endgame = new CompoundButton(w/2+25, h/8*6, 200, 50, i->{
 			if(i!=-1)
-				this.game.closeGame();
+				this.game.changeState(new StateStartMenu());
 			return "End game";
 		});
 		
@@ -48,7 +52,7 @@ public class GuiPause extends DefaultGui{
 		CompoundList spawnList = new CompoundList(w/2-150, h/8+10+(20+40)*0, 300, 40,false,"Spawn",(id,btn)->{
 			PSEntity spawn = null;
 			//Shorts players x and y
-			int x = this.game.getPlayer().getPhysics().getX(),y = this.game.getPlayer().getPhysics().getY();
+			int x = this.state.getPlayer().getPhysics().getX(),y = this.state.getPlayer().getPhysics().getY();
 			
 			switch (id) {
 			case 0:
@@ -61,25 +65,25 @@ public class GuiPause extends DefaultGui{
 			//Checks if a entity is given
 			if(spawn!=null)
 				//Spawns that entity
-				this.game.getWorld().spawn(spawn);
+				this.state.getWorld().spawn(spawn);
 		},"Slime","Chest");
 		
 		CompoundList spawnItems = new CompoundList(w/2-150, h/8+10+(20+40)*1, 300, 40,false,"Items",(id,btn)->{
 			//Shorts players x and y
-			int x = this.game.getPlayer().getPhysics().getX(),y = this.game.getPlayer().getPhysics().getY();
+			int x = this.state.getPlayer().getPhysics().getX(),y = this.state.getPlayer().getPhysics().getY();
 			
 			//Gets the item with the matching id
 			Optional<Item> itm = Item.getRegisteredItems().stream().filter(i->i.getId()==id).findFirst();
 			//Checks if that item exists
 			if(!itm.isPresent())
 				return;
-			this.game.getWorld().spawn(new EntityItem(itm.get(), x, y));
+			this.state.getWorld().spawn(new EntityItem(itm.get(), x, y));
 		},Item.getRegisteredItems().stream().sorted((i1,i2)->i1.getId()>i2.getId()?1:-1).map(i->i.getName()).toArray(String[]::new));
 		
 		CompoundButton spawntp = new CompoundButton(w/2-100, h/8+10+(20+40)*3,200,40, btnid->{
 			if(btnid!=-1) {
 				//Teleports the player back to the spawn
-				this.game.getPlayer().teleportSpawn();
+				this.state.getPlayer().teleportSpawn();
 			}
 			return "Tp Spawn";
 		});
@@ -89,10 +93,13 @@ public class GuiPause extends DefaultGui{
 	
 	@Override
 	public void handleRender(int mouseX, int mouseY, boolean mousePressed) {
+		//Shorts some variables
+		int w = this.renderer.window.width,h = this.renderer.window.height;
+		
 		//Opens the matrix
 		this.renderer.push();
 		{
-			this.renderer.renderRectWithStroke(this.game.getWidth()/8*this.scale, this.game.getHeight()/8*this.scale, this.game.getWidth()/8*6*this.scale, this.game.getHeight()/8*6*this.scale, 0, 130, 0, 3);
+			this.renderer.renderRectWithStroke(w/8*this.scale, h/8*this.scale, w/8*6*this.scale, h/8*6*this.scale, 0, 130, 0, 3);
 		}
 		//Closes the matrix
 		this.renderer.pop();

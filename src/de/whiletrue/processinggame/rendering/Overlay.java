@@ -2,7 +2,8 @@ package de.whiletrue.processinggame.rendering;
 
 import java.awt.Color;
 
-import de.whiletrue.processinggame.Game;
+import de.whiletrue.processinggame.game.Game;
+import de.whiletrue.processinggame.game.ingame.StateIngame;
 import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.rendering.animations.AnimationFrame;
 import de.whiletrue.processinggame.utils.Item;
@@ -13,14 +14,11 @@ public class Overlay {
 	private Renderer renderer;
 	private EntityPlayer player;
 	
-	private Game game;
-	
 	private AnimationFrame itemframe;
 	
 	public Overlay() {
-		this.game = Game.getInstance();
-		this.renderer = this.game.getRenderer();
-		this.player = this.game.getPlayer();
+		this.renderer = Renderer.getInstance();
+		this.player = ((StateIngame)Game.getInstance().getState()).getPlayer();
 		
 		//Loads the itemframe
 		this.itemframe = new AnimationFrame(this.renderer.loadImage("rsc/overlay/itemframe.png"));
@@ -29,7 +27,7 @@ public class Overlay {
 	
 	public void handleRender(int mouseX,int mouseY,boolean mouseClicked) {
 		
-		int w = this.game.getWidth();
+		int w = this.renderer.window.width;
 		
 		//Opens the matrix
 		this.renderer.push();

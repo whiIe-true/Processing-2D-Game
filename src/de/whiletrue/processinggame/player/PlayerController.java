@@ -1,10 +1,11 @@
 package de.whiletrue.processinggame.player;
 
-import de.whiletrue.processinggame.Game;
+import de.whiletrue.processinggame.game.Game;
+import de.whiletrue.processinggame.game.ingame.StateIngame;
+import de.whiletrue.processinggame.game.ingame.guis.GuiDeathscreen;
+import de.whiletrue.processinggame.game.ingame.guis.GuiPause;
 import de.whiletrue.processinggame.objects.entitys.EntityFireball;
 import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
-import de.whiletrue.processinggame.userinterface.guis.GuiDeathscreen;
-import de.whiletrue.processinggame.userinterface.guis.GuiPause;
 import de.whiletrue.processinggame.utils.Item;
 import de.whiletrue.processinggame.utils.Items;
 import de.whiletrue.processinggame.utils.KeyHandler;
@@ -14,15 +15,15 @@ import processing.event.KeyEvent;
 public class PlayerController {
 
 	private EntityPlayer player;
-	private Game game;
+	private StateIngame state;
 	private KeyHandler keyhandler;
 	
 	private int fireballTicks;
 	
-	public PlayerController(KeyHandler keyhandler) {
-		this.game = Game.getInstance();
-		this.keyhandler = keyhandler;
-		this.player = this.game.getPlayer();
+	public PlayerController() {
+		this.state = (StateIngame) Game.getInstance().getState();
+		this.keyhandler = KeyHandler.getInstance();
+		this.player = this.state.getPlayer();
 	}
 	
 	/*
@@ -37,7 +38,7 @@ public class PlayerController {
 		
 		//Handles if the player is dead
 		if(this.player.isDead())
-			this.game.openGui(new GuiDeathscreen());
+			this.state.openGui(new GuiDeathscreen(this.state));
 	}
 	
 	private void handleKeyInputs() {
@@ -86,26 +87,26 @@ public class PlayerController {
 	/*
 	 * Handles whenever a key is pressed
 	 * */
-	public void handleKeyPressed(KeyEvent event,boolean gamerunning) {
+	public void handleKeyPressed(KeyEvent event) {
 		
 		//Checks if the key is the esc key
 		if(event.getKey() == PApplet.ESC) {
 			//Checks if a gui is already open
-			if(gamerunning)
+			if(!this.state.isGuiOpen())
 				//Opens the gui
-				this.game.openGui(new GuiPause());
+				this.state.openGui(new GuiPause(this.state));
 			
 			//Checks if the gui is closeable
-			else if(this.game.getOpenGui().isCloseable())
+			else if(this.state.getOpenGui().isCloseable())
 					//Closes the gui
-					this.game.openGui(null);
+					this.state.openGui(null);
 		}
 	}
 	
 	/*
 	 * Handles whenever a key goes up
 	 * */
-	public void handleKeyReleased(KeyEvent event,boolean gamerunning) {}
+	public void handleKeyReleased(KeyEvent event) {}
 	
 	/*
 	 * Handles everytime the useitem key is pressed
@@ -135,7 +136,7 @@ public class PlayerController {
 			this.fireballTicks=40;
 			//Spawn the entity
 			EntityFireball spawn = new EntityFireball(this.player.getPhysics().getX(),this.player.getPhysics().getY(),this.player.getAnimations().isReverse()?-2:2);
-			this.game.getWorld().spawn(spawn);
+			this.state.getWorld().spawn(spawn);
 		}
 	}
 	

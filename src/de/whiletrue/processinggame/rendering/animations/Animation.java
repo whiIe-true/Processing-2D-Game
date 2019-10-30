@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.whiletrue.processinggame.Game;
 import de.whiletrue.processinggame.rendering.Renderer;
 import processing.core.PImage;
 
@@ -24,7 +23,7 @@ public class Animation {
 	 * Mainly the constructor
 	 * */
 	public final void init(String idleanimation) {
-		this.renderer = Game.getInstance().getRenderer();
+		this.renderer = Renderer.getInstance();
 		this.idleanimation = idleanimation.toLowerCase();
 		this.reverse = false;
 	}
@@ -161,7 +160,7 @@ public class Animation {
 	 * @return the blinking
 	 */
 	public final boolean isBlinking() {
-		return blinking;
+		return this.blinking;
 	}
 
 	/**

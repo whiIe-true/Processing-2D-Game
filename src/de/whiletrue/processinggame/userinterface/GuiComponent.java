@@ -1,6 +1,6 @@
 package de.whiletrue.processinggame.userinterface;
 
-import de.whiletrue.processinggame.Game;
+import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.rendering.Renderer;
 
 public abstract class GuiComponent implements GuiEvents{
@@ -10,7 +10,7 @@ public abstract class GuiComponent implements GuiEvents{
 	
 	public GuiComponent() {
 		this.game = Game.getInstance();
-		this.renderer = this.game.getRenderer();
+		this.renderer = Renderer.getInstance();
 	}
 	
 }

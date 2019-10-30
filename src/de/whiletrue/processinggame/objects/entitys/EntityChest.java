@@ -15,7 +15,7 @@ public class EntityChest extends PSEntity{
 	
 	public EntityChest(int x,int y,Item inside) {
 		this.inside = inside;
-		this.player = this.game.getPlayer();
+		this.player = this.state.getPlayer();
 		
 		//Loads the animations
 		this.animations.init("closed");
@@ -57,7 +57,7 @@ public class EntityChest extends PSEntity{
 		drop.getPhysics().setMotionY(-2);
 		drop.getPhysics().setMotionX(0);
 		
-		this.game.getWorld().spawn(drop);
+		this.state.getWorld().spawn(drop);
 		
 	}
 	

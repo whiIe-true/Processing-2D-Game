@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import de.whiletrue.processinggame.Game;
+import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.rendering.Renderer;
 import processing.event.MouseEvent;
 
@@ -19,7 +19,7 @@ public abstract class DefaultGui implements GuiEvents{
 	public DefaultGui(boolean closeable) {
 		this.closeable = closeable;
 		this.game = Game.getInstance();
-		this.renderer = this.game.getRenderer();
+		this.renderer = Renderer.getInstance();
 	}
 	
 	/*
@@ -72,7 +72,7 @@ public abstract class DefaultGui implements GuiEvents{
 	 * @return the closeable
 	 */
 	public final boolean isCloseable() {
-		return closeable;
+		return this.closeable;
 	}
 	
 }

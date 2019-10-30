@@ -3,15 +3,18 @@ package de.whiletrue.processinggame.utils;
 import java.util.Set;
 import java.util.TreeSet;
 
-import de.whiletrue.processinggame.Game;
+import de.whiletrue.processinggame.game.Game;
 import processing.event.KeyEvent;
 
 public class KeyHandler {
 
+	private static KeyHandler instance;
+	
 	private Set<Integer> pressedKeys = new TreeSet<Integer>();
 	private Game game;
 	
 	public KeyHandler() {
+		instance = this;
 		this.game = Game.getInstance();
 	}
 	
@@ -65,6 +68,13 @@ public class KeyHandler {
 			if(this.pressedKeys.contains(this.game.getSettings().getInt("key_"+k)))
 				return true;
 		return false;
+	}
+	
+	/**
+	 * @returns the instance of the keyhandler
+	 * */
+	public static KeyHandler getInstance() {
+		return instance;
 	}
 	
 }

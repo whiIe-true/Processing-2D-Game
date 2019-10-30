@@ -3,6 +3,7 @@ package de.whiletrue.processinggame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import de.whiletrue.processinggame.game.Game;
 import processing.core.PApplet;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;

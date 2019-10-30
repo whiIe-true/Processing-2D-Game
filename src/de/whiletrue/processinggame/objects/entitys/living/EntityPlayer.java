@@ -172,7 +172,7 @@ public class EntityPlayer extends PSEntityLiving{
 		}
 		
 		//Adds the item to the world
-		this.game.getWorld().spawn(thro);
+		this.state.getWorld().spawn(thro);
 		
 		//Removes the item
 		this.itemHolding=null;
@@ -202,7 +202,7 @@ public class EntityPlayer extends PSEntityLiving{
 			return;
 		
 		//Iterates over all items to find a item that the player can pickup
-		Optional<EntityItem> pickup = this.game.getWorld().getObjects().stream()
+		Optional<EntityItem> pickup = this.state.getWorld().getObjects().stream()
 		//Gets all items
 		.filter(i->i instanceof EntityItem)
 		.map(i->(EntityItem)i)
@@ -222,7 +222,7 @@ public class EntityPlayer extends PSEntityLiving{
 		this.itemHolding=entitm.getItem();
 		
 		//Removes the item from the world
-		this.game.getWorld().kill(entitm);
+		this.state.getWorld().kill(entitm);
 	}
 	
 	/*
@@ -263,7 +263,7 @@ public class EntityPlayer extends PSEntityLiving{
 	 * */
 	private Optional<PSEntityLiving> getEntityToAttack(){
 		//Gets all objects
-		return this.game.getWorld().getObjects().stream()
+		return this.state.getWorld().getObjects().stream()
 				//Filters any entitys
 				.filter(i->i instanceof PSEntityLiving)
 				.map(i->(PSEntityLiving)i)

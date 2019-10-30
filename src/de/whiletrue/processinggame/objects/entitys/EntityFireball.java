@@ -27,13 +27,13 @@ public class EntityFireball extends PSEntity{
 	public void handleTick() {
 		//Checks if the fireball has lived long enought
 		if(++this.lifespan>300)
-			this.game.getWorld().kill(this);
+			this.state.getWorld().kill(this);
 		
 		//Calles the callback
 		super.handleTick();
 
 		//Gets the entity that got hit
-		Optional<PSEntityLiving> hit = this.game.getWorld().getObjects().stream()
+		Optional<PSEntityLiving> hit = this.state.getWorld().getObjects().stream()
 		.filter(i->i instanceof PSEntityLiving)
 		.map(i->(PSEntityLiving)i)
 		.filter(i->i.isEntityColliding(this))
@@ -45,7 +45,7 @@ public class EntityFireball extends PSEntity{
 		
 		//Damages the entity and despawnes
 		hit.get().damage(20,0,0);
-		this.game.getWorld().kill(this);
+		this.state.getWorld().kill(this);
 	}
 	
 }

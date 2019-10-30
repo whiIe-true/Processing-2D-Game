@@ -9,7 +9,7 @@ public class EntitySlime extends PSEntityLiving{
 	private EntityPlayer player;
 	
 	public EntitySlime(int x, int y) {
-		this.player = this.game.getPlayer();
+		this.player = state.getPlayer();
 		
 		//Loads the hitbox
 		this.hitbox = new Hitbox(16, 16, 2.5);
@@ -85,14 +85,14 @@ public class EntitySlime extends PSEntityLiving{
 		if(this.physics.isOnground()) {
 			
 			//Gets the direction the slime should jump
-			int dir = (this.game.getPlayer().getPhysics().getX()-this.physics.getX())>1?1:-1;
+			int dir = (this.state.getPlayer().getPhysics().getX()-this.physics.getX())>1?1:-1;
 			
 			//Lets the slime jump towards the player
 			this.physics.pushX(dir*this.getStats().getSpeed());
 			this.physics.pushY(-this.getStats().getJumpHeight());
 		}
 		//Sets the direction facing
-		this.animations.setReverse(this.game.getPlayer().getPhysics().getX()>this.physics.getX());
+		this.animations.setReverse(this.state.getPlayer().getPhysics().getX()>this.physics.getX());
 		
 		//Calls the fallback
 		super.handleTick();

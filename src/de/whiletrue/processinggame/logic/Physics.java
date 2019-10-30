@@ -3,7 +3,8 @@ package de.whiletrue.processinggame.logic;
 import java.util.Optional;
 import java.util.Random;
 
-import de.whiletrue.processinggame.Game;
+import de.whiletrue.processinggame.game.Game;
+import de.whiletrue.processinggame.game.ingame.StateIngame;
 import de.whiletrue.processinggame.objects.objects.ObjectWall;
 
 public class Physics {
@@ -13,7 +14,7 @@ public class Physics {
 	private boolean onground,gravity = true,movable=true;
 	
 	private Hitbox hitbox;
-	private Game game;
+	private StateIngame state;
 	
 	private Random random = new Random();
 	
@@ -21,7 +22,7 @@ public class Physics {
 	 * Mainly the constructor  
 	 */
 	public final void init(Hitbox hitbox,int x,int y,double pushX,double pushY) {
-		this.game = Game.getInstance();
+		this.state = (StateIngame) Game.getInstance().getState();
 		this.x = x;
 		this.y = y;
 		this.pushX=pushX;
@@ -67,7 +68,7 @@ public class Physics {
 	 * */
 	private void handleMotionY() {
 		//Checks if the player is colliding with any object
-		Optional<ObjectWall> obj = this.game.getWorld().getObjects().stream()
+		Optional<ObjectWall> obj = this.state.getWorld().getObjects().stream()
 		.filter(i->i instanceof ObjectWall)
 		.map(i->(ObjectWall)i)
 		.filter(i->i.getY()-2<this.y)
