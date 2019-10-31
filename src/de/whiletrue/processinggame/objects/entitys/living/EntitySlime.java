@@ -9,10 +9,10 @@ public class EntitySlime extends PSEntityLiving{
 	private EntityPlayer player;
 	
 	public EntitySlime(int x, int y) {
-		this.player = state.getPlayer();
+		this.player = this.state.getPlayer();
 		
 		//Loads the hitbox
-		this.hitbox = new Hitbox(16, 16, 2.5);
+		this.hitbox = new Hitbox(12, 16, 2.5);
 		
 		//Loads the physics
 		this.physics.init(this.hitbox,x, y,.05,.2);

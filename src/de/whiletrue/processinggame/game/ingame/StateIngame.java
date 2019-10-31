@@ -1,6 +1,7 @@
 package de.whiletrue.processinggame.game.ingame;
 
 import java.awt.Color;
+import java.io.File;
 
 import de.whiletrue.processinggame.game.GameState;
 import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
@@ -40,7 +41,7 @@ public class StateIngame extends GameState{
 		this.gameoverlay = new Overlay();
 		
 		//Creates the world
-		this.world = new World();
+		this.world = WorldLoader.getInstance().loadWorld(new File("world.json"));
 	}
 	
 	@Override

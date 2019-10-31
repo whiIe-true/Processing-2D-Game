@@ -2,8 +2,11 @@ package de.whiletrue.processinggame.utils;
 
 public class Items {
 
+	//Method to registers static items
+	public static void init() {};
+	
 	public static Item key = new Item(0,"Key","rsc/items/key.png") {};
-	public static Item ring_of_jumping = new Item(1,"Ring of flying","rsc/items/ring_of_jumping.png") {};
+	public static Item ring_of_jumping = new Item(1,"Ring of jumping","rsc/items/ring_of_jumping.png") {};
 	public static Item egg = new Item(2,"Egg","rsc/items/egg.png") {};
 	public static Item heal_potion = new Item(3,"Heal Potion","rsc/items/heal_potion.png") {};
 	public static Item sword = new Item(4,"Sword","rsc/items/sword.png") {};

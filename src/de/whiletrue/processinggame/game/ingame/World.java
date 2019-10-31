@@ -8,11 +8,7 @@ import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.objects.PSEntityLiving;
 import de.whiletrue.processinggame.objects.PSObject;
-import de.whiletrue.processinggame.objects.entitys.EntityChest;
-import de.whiletrue.processinggame.objects.entitys.EntityItem;
 import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
-import de.whiletrue.processinggame.objects.entitys.living.EntitySlime;
-import de.whiletrue.processinggame.objects.objects.ObjectWall;
 import de.whiletrue.processinggame.utils.Items;
 
 public class World {
@@ -29,32 +25,8 @@ public class World {
 		//Gets some references
 		this.player = ((StateIngame)Game.getInstance().getState()).getPlayer();
 		
-		//Adds the objects
-		this.spawn(new ObjectWall(-250, 0, 500));
-		this.spawn(new ObjectWall(250, -350, 50));
-		this.spawn(new ObjectWall(750, 600, 20));
-		this.spawn(new ObjectWall(-100, 800, 200));
-		this.spawn(new ObjectWall(0, 400, 400));
-		this.spawn(new ObjectWall(400, 600, 500));
-		this.spawn(new ObjectWall(1300, 500, 100));
-		this.spawn(new ObjectWall(1600, 700, 150));
-		this.spawn(new ObjectWall(2000, 250, 200));
-		this.spawn(new ObjectWall(1050, 0, 150));
-		this.spawn(new ObjectWall(1800, 200, 50));
-		this.spawn(new ObjectWall(-200, 300, 400));
-		
-		//Adds the entitys
-		this.spawn(new EntitySlime(200, 380));
-		this.spawn(new EntityChest(-100, 300, Items.sword));
-		
-		//Adds the items
-		EntityItem key = new EntityItem(Items.key, 260, -350);
-		key.getPhysics().setMotionX(0);
-		this.spawn(key);
-		this.spawn(new EntityItem(Items.ring_of_jumping, 400, 200));
-		EntityItem healpotion = new EntityItem(Items.heal_potion, 1680, 680);
-		healpotion.getPhysics().setMotionX(0);
-		this.spawn(healpotion);
+		//Registers the items
+		Items.init();
 	}
 	
 	public void handleRender(int mouseX,int mouseY,boolean mousePressed) {
@@ -113,5 +85,12 @@ public class World {
 	 */
 	public final List<PSObject> getObjects() {
 		return this.objects;
+	}
+	
+	/*
+	 * @returns the player
+	 * */
+	public EntityPlayer getPlayer() {
+		return this.player;
 	}
 }

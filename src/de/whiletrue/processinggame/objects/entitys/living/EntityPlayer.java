@@ -26,7 +26,7 @@ public class EntityPlayer extends PSEntityLiving{
 		this.spawnY = y;
 		
 		//Loades the hitbox
-		this.hitbox = new Hitbox(25, 30, 2);
+		this.hitbox = new Hitbox(20, 30, 2);
 		
 		//Loads the physics
 		this.physics.init(this.hitbox,x, y,.2,.2);

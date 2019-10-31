@@ -1,6 +1,7 @@
 package de.whiletrue.processinggame.utils;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import de.whiletrue.processinggame.rendering.animations.Animation;
@@ -23,6 +24,10 @@ public abstract class Item {
 		registeredItems.add(this);
 	}
 
+	public static Optional<Item> getItemByID(int id){
+		return registeredItems.stream().filter(i->i.getId()==id).findAny();
+	}
+	
 	/**
 	 * @return the name
 	 */

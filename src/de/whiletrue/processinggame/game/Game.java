@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import de.whiletrue.processinggame.game.ingame.WorldLoader;
 import de.whiletrue.processinggame.game.startmenu.StateStartMenu;
 import de.whiletrue.processinggame.rendering.Fonts;
 import de.whiletrue.processinggame.rendering.Renderer;
@@ -49,6 +50,9 @@ public class Game {
 		
 		//Creates the renderer
 		new Renderer(this.window);
+		
+		//Creates the worldloader
+		new WorldLoader();
 		
 		//Starts the startmenu
 		this.changeState(new StateStartMenu());

@@ -17,7 +17,8 @@ public class GuiMainmenu extends DefaultGui{
 		int w = this.renderer.window.width,h = this.renderer.window.height;
 		
 		CompoundButton startgame = new CompoundButton(w/2-300, h/2-100, 600, 120, btn->{
-			this.game.changeState(new StateIngame());
+			if(btn!=-1)
+				this.game.changeState(new StateIngame());
 			return "Start Game";
 		});
 		return new CompoundButton[] {startgame};
