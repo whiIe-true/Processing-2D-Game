@@ -1,8 +1,10 @@
 package de.whiletrue.processinggame.game.ingame.guis;
 
-import java.util.Optional;
+import java.io.File;
+import java.util.Arrays;
 
 import de.whiletrue.processinggame.game.ingame.StateIngame;
+import de.whiletrue.processinggame.game.ingame.WorldLoader;
 import de.whiletrue.processinggame.game.startmenu.StateStartMenu;
 import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.objects.entitys.EntityChest;
@@ -13,7 +15,6 @@ import de.whiletrue.processinggame.userinterface.GuiComponent;
 import de.whiletrue.processinggame.userinterface.components.CompoundButton;
 import de.whiletrue.processinggame.userinterface.components.CompoundCheckbox;
 import de.whiletrue.processinggame.userinterface.components.CompoundList;
-import de.whiletrue.processinggame.utils.Item;
 import de.whiletrue.processinggame.utils.Items;
 
 public class GuiPause extends DefaultGui{
@@ -50,35 +51,46 @@ public class GuiPause extends DefaultGui{
 		});
 		
 		CompoundList spawnList = new CompoundList(w/2-150, h/8+10+(20+40)*0, 300, 40,false,"Spawn",(id,btn)->{
-			PSEntity spawn = null;
+			Object[] parameters = null;
+			Class<? extends PSEntity> entity = null;
 			//Shorts players x and y
 			int x = this.state.getPlayer().getPhysics().getX(),y = this.state.getPlayer().getPhysics().getY();
 			
+			//Switches what entity should be spawned
 			switch (id) {
 			case 0:
-				spawn = new EntitySlime(x, y-100);
+				entity = EntitySlime.class;
+				parameters = new Object[] {"x",x,"y",y,"health",100,"dead",false};
 				break;
 			case 1:
-				spawn = new EntityChest(x, y, Items.egg);
+				entity = EntityChest.class;
+				parameters = new Object[] {"x",x,"y",y,"open",false,"item",4};
 				break;
 			}
-			//Checks if a entity is given
-			if(spawn!=null)
-				//Spawns that entity
-				this.state.getWorld().spawn(spawn);
+			//Checks if everything needed is given
+			if(entity==null||parameters==null)
+				return;
+			//Spawns that entity
+			this.state.getWorld().spawnEntity(entity, parameters);
 		},"Slime","Chest");
 		
 		CompoundList spawnItems = new CompoundList(w/2-150, h/8+10+(20+40)*1, 300, 40,false,"Items",(id,btn)->{
+			//Increases the id, because the first item is not listed
+			id++;
+			
 			//Shorts players x and y
 			int x = this.state.getPlayer().getPhysics().getX(),y = this.state.getPlayer().getPhysics().getY();
 			
 			//Gets the item with the matching id
-			Optional<Item> itm = Item.getRegisteredItems().stream().filter(i->i.getId()==id).findFirst();
-			//Checks if that item exists
-			if(!itm.isPresent())
+			Items itm = Items.getItemByID(id);
+			
+			//Checks if the item is invalid
+			if(itm.equals(Items.NONE))
 				return;
-			this.state.getWorld().spawn(new EntityItem(itm.get(), x, y));
-		},Item.getRegisteredItems().stream().sorted((i1,i2)->i1.getId()>i2.getId()?1:-1).map(i->i.getName()).toArray(String[]::new));
+			
+			//Spawns the entity
+			this.state.getWorld().spawnEntity(EntityItem.class, "x",x,"y",y,"item",itm);
+		},Arrays.stream(Items.values()).filter(i->i.getId()!=0).sorted((i1,i2)->i1.getId()>i2.getId()?1:-1).map(i->i.getName()).toArray(String[]::new));
 		
 		CompoundButton spawntp = new CompoundButton(w/2-100, h/8+10+(20+40)*3,200,40, btnid->{
 			if(btnid!=-1) {
@@ -88,7 +100,16 @@ public class GuiPause extends DefaultGui{
 			return "Tp Spawn";
 		});
 		
-		return new GuiComponent[] {endgame,showHitboxes,spawnList,spawntp,spawnItems,close};
+		CompoundButton save = new CompoundButton(w/2-100, h/8+10+(20+40)*4,200,40, btnid->{
+			if(btnid!=-1) {
+				//Saves the game to the world.json file
+				File saveFile = new File("world.json");
+				WorldLoader.getInstance().saveWorld(this.state.getWorld(), saveFile);
+			}
+			return "Save World";
+		});
+		
+		return new GuiComponent[] {endgame,showHitboxes,spawnList,spawntp,spawnItems,close,save};
 	}
 	
 	@Override

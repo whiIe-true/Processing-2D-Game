@@ -10,17 +10,32 @@ public class EntityFireball extends PSEntity{
 
 	private int lifespan;
 	
-	public EntityFireball(int x,int y,int motionX) {
-		//Loads the items texture
+	@Override
+	public void init(LoadFrame loadframe) {
+		//Setslifespan
+		this.lifespan = loadframe.getInt("lifespan");
+		
+		//Loads the texture
 		this.animations.init("idle");
 		this.animations.loadAnimations("idle", "rsc/enviroment/fireball.png", 5);
-		//Loads the items hitbox
+		//Loads the hitbox
 		this.hitbox = new Hitbox(80, 80, .8);
 		
 		//Loads the items physics
-		this.physics.init(this.hitbox, x, y, 0, 0);
-		this.physics.setMotionX(motionX);
+		this.physics.init(this.hitbox, 0, 0);
 		this.physics.setGravity(false);
+		loadframe.loadPhysics(this.physics);
+	}
+	
+	@Override
+	public LoadFrame save() {
+		LoadFrame holder = new LoadFrame();
+		
+		//Sets the values
+		holder.setInt("lifespan", this.lifespan);
+		holder.savePhysics(this.physics);
+		
+		return holder;
 	}
 	
 	@Override
@@ -47,5 +62,4 @@ public class EntityFireball extends PSEntity{
 		hit.get().damage(20,0,0);
 		this.state.getWorld().kill(this);
 	}
-	
 }

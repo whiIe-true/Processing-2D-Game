@@ -21,6 +21,23 @@ public abstract class PSEntityLiving extends PSEntity{
 	
 	public abstract BaseStats initBaseStats();
 	
+	@Override
+	public void init(LoadFrame loadframe) {
+		this.nodamageTicks = loadframe.getInt("nodamageTicks");
+		this.setHealth(loadframe.getInt("health"));
+		this.dead = loadframe.getBool("dead");
+		super.init(loadframe);
+	}
+	
+	@Override
+	public LoadFrame save() {
+		LoadFrame lf = super.save();
+		lf.setInt("nodamageTicks", this.nodamageTicks);
+		lf.setInt("health", this.health);
+		lf.setBool("dead", this.dead);
+		return lf;
+	}
+	
 	
 	@Override
 	public void handleTick() {
@@ -73,7 +90,7 @@ public abstract class PSEntityLiving extends PSEntity{
 	}
 
 	/**
-	 * @param dead the dead to set
+	 * Kills an entity
 	 */
 	public void kill() {
 		this.dead = true;
@@ -116,6 +133,17 @@ public abstract class PSEntityLiving extends PSEntity{
 		}
 	}
 
+	/*
+	 * Sets the health
+	 * */
+	public void setHealth(int health) {
+		this.health=health;
+		if(this.health<=0)
+			this.dead=true;
+		if(this.health>this.stats.getMaxHealth())
+			this.health = this.stats.getMaxHealth();
+	}
+	
 	/**
 	 * @return the health
 	 */

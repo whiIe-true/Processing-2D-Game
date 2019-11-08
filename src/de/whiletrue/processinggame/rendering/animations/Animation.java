@@ -41,6 +41,10 @@ public class Animation {
 	 * */
 	public void renderAt(int x,int y,double scale) {
 		
+		//Checks if any animations are loaded
+		if(this.animations.size()<=0)
+			return;
+		
 		//Updates the scale
 		this.getCurrentFrame().updateScale(scale);
 		

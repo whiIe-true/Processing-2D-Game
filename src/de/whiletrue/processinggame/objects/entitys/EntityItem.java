@@ -3,28 +3,45 @@ package de.whiletrue.processinggame.objects.entitys;
 import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.logic.Hitbox;
 import de.whiletrue.processinggame.objects.PSEntity;
-import de.whiletrue.processinggame.utils.Item;
+import de.whiletrue.processinggame.utils.Items;
 
 public class EntityItem extends PSEntity{
 
-	private Item item;
+	private Items item;
 	
 	private double hoverTicks;
 	private boolean hoverDirection;
 	private int pickupdelay;
 	
-	public EntityItem(Item item,int x,int y) {
-		this.item = item;
+	@Override
+	public void init(LoadFrame loadframe) {
+		//Gets item
+		this.setItem(loadframe.getItem("item"));
+		//Gets the ticks
+		this.pickupdelay = loadframe.getInt("pickupticks");
 		
-		//Loads the items texture
-		this.animations = item.getAnimation();
+		//Loads the animations
+		this.animations = this.item.getAnimation();
 		
 		//Loads the items hitbox
 		this.hitbox = new Hitbox(20, 20, 2);
 		
 		//Loads the items physics
-		this.physics.init(this.hitbox, x, y, .1, .2);
-		this.physics.randomMotion(10);
+		this.physics.init(this.hitbox, .1, .2);
+		loadframe.loadPhysics(this.physics);
+	}
+	
+	@Override
+	public LoadFrame save() {
+		//Creates the holder
+		LoadFrame holder = new LoadFrame();
+		
+		//Sets the values
+		holder.savePhysics(this.physics);
+		holder.setInt("pickupticks", this.pickupdelay);
+		holder.setItem("item", this.item);
+		
+		return holder;
 	}
 	
 	@Override
@@ -77,14 +94,16 @@ public class EntityItem extends PSEntity{
 	/**
 	 * @return the item
 	 */
-	public final Item getItem() {
+	public final Items getItem() {
 		return this.item;
 	}
 
 	/**
 	 * @param item the item to set
 	 */
-	public final void setItem(Item item) {
+	public final void setItem(Items item) {
+		if(item==null)
+			item=Items.NONE;
 		this.item = item;
 	}
 

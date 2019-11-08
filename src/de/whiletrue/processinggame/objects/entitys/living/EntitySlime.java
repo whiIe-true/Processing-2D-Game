@@ -8,20 +8,33 @@ public class EntitySlime extends PSEntityLiving{
 
 	private EntityPlayer player;
 	
-	public EntitySlime(int x, int y) {
+	@Override
+	public void init(LoadFrame loadframe) {
+		//References some stuff
 		this.player = this.state.getPlayer();
 		
 		//Loads the hitbox
 		this.hitbox = new Hitbox(12, 16, 2.5);
 		
 		//Loads the physics
-		this.physics.init(this.hitbox,x, y,.05,.2);
+		this.physics.init(this.hitbox,.05,.2);
 		this.physics.randomMotion(4);
+		loadframe.loadPhysics(this.physics);
 		
 		//Load the skin
 		this.animations.init("idle");
 		this.animations.loadAnimations("idle", "rsc/slime/idle.png",20);
 		this.animations.loadAnimations("falling", "rsc/slime/falling.png",20);
+		
+		//Inits the rest for the living entitys
+		super.init(loadframe);
+	}
+	
+	@Override
+	public LoadFrame save() {
+		LoadFrame lf = super.save();
+		lf.savePhysics(this.physics);
+		return lf;
 	}
 	
 	@Override

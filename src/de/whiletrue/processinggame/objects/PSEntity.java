@@ -15,6 +15,17 @@ public abstract class PSEntity extends PSObject{
 		this.animations = new Animation();
 		this.physics = new Physics();
 	}
+	
+	@Override
+	public void init(LoadFrame loadframe) {
+		loadframe.loadPhysics(this.physics);
+	}
+	@Override
+	public LoadFrame save() {
+		LoadFrame lf = new LoadFrame();
+		lf.savePhysics(this.physics);
+		return lf;
+	}
 
 	@Override
 	public void handleRender(int mouseX, int mouseY, boolean mousePressed) {

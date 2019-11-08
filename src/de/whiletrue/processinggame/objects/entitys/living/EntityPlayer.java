@@ -2,40 +2,73 @@ package de.whiletrue.processinggame.objects.entitys.living;
 
 import java.util.Optional;
 
+import de.whiletrue.processinggame.game.Game;
+import de.whiletrue.processinggame.game.ingame.StateIngame;
 import de.whiletrue.processinggame.logic.Hitbox;
+import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.objects.PSEntityLiving;
 import de.whiletrue.processinggame.objects.entitys.BaseStats;
 import de.whiletrue.processinggame.objects.entitys.EntityItem;
 import de.whiletrue.processinggame.player.Camera;
-import de.whiletrue.processinggame.utils.Item;
 import de.whiletrue.processinggame.utils.Items;
 
 public class EntityPlayer extends PSEntityLiving{
 	
 	private Camera camera;
 
-	private Item itemHolding;
+	private Items itemHolding;
 	private int dropTicks;
 
 	private int swingticks;
 	private int spawnX,spawnY;
 	
-	public EntityPlayer(Camera camera,int x,int y) {
-		this.camera = camera;
-		this.spawnX = x;
-		this.spawnY = y;
+	//Creates a new entityplayer
+	public EntityPlayer() {
+		//Inits with a empty loadframe
+		this.init(new LoadFrame());
+	}
+	
+	@Override
+	public void init(LoadFrame loadframe) {
+		//Sets some references
+		this.camera = ((StateIngame) Game.getInstance().getState()).getCamera();
+		
+		//Gets spawnx and spawny
+		this.spawnX = loadframe.getInt("spawnX");
+		this.spawnY = loadframe.getInt("spawny");
+		this.swingticks = loadframe.getInt("swingticks");
+		this.dropTicks = loadframe.getInt("dropticks");
+		this.setItemHolding(loadframe.getItem("item"));
+		//Updates the loaded size
+		if(this.isHoldingItem())	
+			this.itemHolding.getAnimation().getCurrentFrame().updateScale(2);
 		
 		//Loades the hitbox
 		this.hitbox = new Hitbox(20, 30, 2);
 		
 		//Loads the physics
-		this.physics.init(this.hitbox,x, y,.2,.2);
+		this.physics.init(this.hitbox,.2,.2);
 		
 		//Loads the skin
 		this.animations.init("idle");
 		this.animations.loadAnimations("idle", "rsc/player/idle.png",15);
 		this.animations.loadAnimations("walk", "rsc/player/walk.png",5);
 		this.animations.loadAnimations("attack", "rsc/player/attack.png",3);
+		
+		//Loads the other attributes
+		super.init(loadframe);
+	}
+	
+	@Override
+	public LoadFrame save() {
+		LoadFrame holder = super.save();
+		holder.setInt("spawnX", this.spawnX);
+		holder.setInt("spawnY", this.spawnY);
+		holder.setInt("swingticks", this.swingticks);
+		holder.setInt("dropticks", this.dropTicks);
+		holder.savePhysics(this.getPhysics());
+		holder.setItem("item", this.getItemHolding());
+		return holder;
 	}
 	
 	@Override
@@ -45,7 +78,7 @@ public class EntityPlayer extends PSEntityLiving{
 			@Override
 			protected int speed(int baseSpeed) {
 				//Increases the speed by 20% when wearing the boots
-				if(itemHolding==Items.boots)
+				if(itemHolding.equals(Items.BOOTS))
 					baseSpeed*=1.2;
 				return baseSpeed;
 			}
@@ -53,7 +86,7 @@ public class EntityPlayer extends PSEntityLiving{
 			@Override
 			protected int jumpheight(int baseJumpheight) {
 				//Lets the player jump 20% higher
-				if(itemHolding==Items.ring_of_jumping)
+				if(itemHolding.equals(Items.RING_OF_JUMPING))
 					baseJumpheight*=1.2;
 				return baseJumpheight;
 			}
@@ -61,7 +94,7 @@ public class EntityPlayer extends PSEntityLiving{
 			@Override
 			protected int attackDamage(int baseDamage) {
 				//Increases the attack damage by 30% when sword equiped
-				if(itemHolding==Items.sword)
+				if(itemHolding.equals(Items.SWORD))
 					baseDamage*=1.3;
 				return baseDamage;
 			}
@@ -158,24 +191,25 @@ public class EntityPlayer extends PSEntityLiving{
 			return;
 		
 		//Removes the current item if the player is carrying any
-		if(this.itemHolding==null)
+		if(!this.isHoldingItem())
 			return;
 		
-		//Creates the new entity
-		EntityItem thro = new EntityItem(this.itemHolding, this.physics.getX(), this.physics.getY());
-		{
-			//Sets a new pickup delay
-			thro.setPickUpDelay();
-			//Adds the throw motion
-			thro.getPhysics().setMotionX(5*(this.animations.isReverse()?-1:1));
-			thro.getPhysics().setMotionY(-2);
-		}
+		//Craetes the entity
+		Optional<PSEntity> optEnt = this.state.getWorld().spawnEntity(EntityItem.class, "x",this.physics.getX(),"y",this.physics.getY(),"item",this.itemHolding);
+		//Checks if the item exists
+		if(!optEnt.isPresent())
+			return;
 		
-		//Adds the item to the world
-		this.state.getWorld().spawn(thro);
+		EntityItem thro = (EntityItem)optEnt.get();
+		
+		//Sets a new pickup delay
+		thro.setPickUpDelay();
+		//Adds the throw motion
+		thro.getPhysics().setMotionX(5*(this.animations.isReverse()?-1:1));
+		thro.getPhysics().setMotionY(-2);
 		
 		//Removes the item
-		this.itemHolding=null;
+		this.setItemHolding(null);
 		
 		//Resets the drop ticks
 		this.dropTicks=10;
@@ -198,7 +232,7 @@ public class EntityPlayer extends PSEntityLiving{
 			this.dropTicks--;
 		
 		//Checks if the player is holding any item
-		if(this.itemHolding!=null)
+		if(this.isHoldingItem())
 			return;
 		
 		//Iterates over all items to find a item that the player can pickup
@@ -219,7 +253,7 @@ public class EntityPlayer extends PSEntityLiving{
 		EntityItem entitm = pickup.get();
 		
 		//Sets the new item
-		this.itemHolding=entitm.getItem();
+		this.setItemHolding(entitm.getItem());
 		
 		//Removes the item from the world
 		this.state.getWorld().kill(entitm);
@@ -291,14 +325,23 @@ public class EntityPlayer extends PSEntityLiving{
 	/**
 	 * @return the itemHolding
 	 */
-	public final Item getItemHolding() {
+	public final Items getItemHolding() {
 		return this.itemHolding;
 	}
 
 	/**
 	 * @param itemHolding the itemHolding to set
 	 */
-	public final void setItemHolding(Item itemHolding) {
+	public final void setItemHolding(Items itemHolding) {
+		if(itemHolding==null)
+			itemHolding=Items.NONE;
 		this.itemHolding = itemHolding;
+	}
+	
+	/**
+	 * @returns if the player is holding an item or not
+	 * */
+	public final boolean isHoldingItem() {
+		return !this.itemHolding.equals(Items.NONE);
 	}
 }

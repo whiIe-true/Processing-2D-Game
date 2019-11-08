@@ -21,10 +21,8 @@ public class Physics {
 	/*
 	 * Mainly the constructor  
 	 */
-	public final void init(Hitbox hitbox,int x,int y,double pushX,double pushY) {
+	public final void init(Hitbox hitbox,double pushX,double pushY) {
 		this.state = (StateIngame) Game.getInstance().getState();
-		this.x = x;
-		this.y = y;
 		this.pushX=pushX;
 		this.pushY=pushY;
 		this.hitbox = hitbox;

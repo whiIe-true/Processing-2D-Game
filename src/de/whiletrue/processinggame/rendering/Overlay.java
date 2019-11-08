@@ -6,7 +6,7 @@ import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.game.ingame.StateIngame;
 import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.rendering.animations.AnimationFrame;
-import de.whiletrue.processinggame.utils.Item;
+import de.whiletrue.processinggame.utils.Items;
 import processing.core.PImage;
 
 public class Overlay {
@@ -37,10 +37,10 @@ public class Overlay {
 				//Render the background
 				this.renderer.renderImage(this.itemframe.getImage(), 10, 10);
 				
-				Item holding = this.player.getItemHolding();
+				Items holding = this.player.getItemHolding();
 				
 				//Checks if the player holds an item
-				if(holding==null)
+				if(holding.equals(Items.NONE))
 					break itemframe;
 				
 				PImage itm = holding.getAnimation().getCurrentFrame().getImage();

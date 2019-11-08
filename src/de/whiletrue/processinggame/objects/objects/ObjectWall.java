@@ -8,12 +8,25 @@ public class ObjectWall extends PSObject{
 	
 	private int x,y,width;
 	
-	public ObjectWall(int x,int y,int width) {
-		this.x = x;
-		this.y = y;
-		this.width = width;
+	@Override
+	public void init(LoadFrame loadframe) {
+		this.x = loadframe.getInt("x");
+		this.y = loadframe.getInt("y");
+		this.width = loadframe.getInt("width");
 	}
-
+	
+	@Override
+	public LoadFrame save() {
+		LoadFrame holder = new LoadFrame();
+		
+		//Sets the values
+		holder.setInt("x", this.x);
+		holder.setInt("y", this.y);
+		holder.setInt("width", this.width);
+		
+		return holder;
+	}
+	
 	@Override
 	public void handleRender(int mouseX, int mouseY, boolean mousePressed) {
 		//Opens the matrix

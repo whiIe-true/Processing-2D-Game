@@ -6,7 +6,6 @@ import de.whiletrue.processinggame.game.ingame.guis.GuiDeathscreen;
 import de.whiletrue.processinggame.game.ingame.guis.GuiPause;
 import de.whiletrue.processinggame.objects.entitys.EntityFireball;
 import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
-import de.whiletrue.processinggame.utils.Item;
 import de.whiletrue.processinggame.utils.Items;
 import de.whiletrue.processinggame.utils.KeyHandler;
 import processing.core.PApplet;
@@ -111,14 +110,17 @@ public class PlayerController {
 	/*
 	 * Handles everytime the useitem key is pressed
 	 * */
-	public void handleUseItem(Item item) {
+	public void handleUseItem(Items item) {
+		
+		//Shorts x and y potition of the player
+		int px = this.player.getPhysics().getX(),py = this.player.getPhysics().getY();
 		
 		//Checks if the item exitsts
 		if(item==null)
 			return;
 		
 		//Heal potion
-		if(item==Items.heal_potion) {
+		if(item==Items.HEAL_POTION) {
 			//Checks if the player still has full hearts
 			if(this.player.getHealthLeft()>=1)
 				return;
@@ -128,15 +130,14 @@ public class PlayerController {
 			this.player.setItemHolding(null);
 		}
 		
-		if(item==Items.fireball_wand) {
+		if(item==Items.FIREBALL_WAND) {
 			//Checks if the fireballticks are done
 			if(this.fireballTicks>0)
 				return;
 			//Resets the ticks
 			this.fireballTicks=40;
 			//Spawn the entity
-			EntityFireball spawn = new EntityFireball(this.player.getPhysics().getX(),this.player.getPhysics().getY(),this.player.getAnimations().isReverse()?-2:2);
-			this.state.getWorld().spawn(spawn);
+			this.state.getWorld().spawnEntity(EntityFireball.class, "x",px,"y",py,"motionx",this.player.getAnimations().isReverse()?-2:2);
 		}
 	}
 	

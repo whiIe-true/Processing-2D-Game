@@ -1,24 +1,30 @@
 package de.whiletrue.processinggame.objects.entitys;
 
+import java.util.Optional;
+
 import de.whiletrue.processinggame.logic.Hitbox;
 import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
-import de.whiletrue.processinggame.utils.Item;
 import de.whiletrue.processinggame.utils.Items;
 
 public class EntityChest extends PSEntity{
 
-	private Item inside;
+	private Items inside;
 	private boolean open;
 	
 	private EntityPlayer player;
 	
-	public EntityChest(int x,int y,Item inside) {
-		this.inside = inside;
+	@Override
+	public void init(LoadFrame loadframe) {
+		//Gets item, open
+		this.inside = loadframe.getItem("item");
+		this.open = loadframe.getBool("open");
+		
+		//Refrences some stuff
 		this.player = this.state.getPlayer();
 		
 		//Loads the animations
-		this.animations.init("closed");
+		this.animations.init(this.open?"open":"closed");
 		this.animations.loadAnimations("closed", "rsc/enviroment/chest/closed.png", -1);
 		this.animations.loadAnimations("open", "rsc/enviroment/chest/open.png", -1);
 	
@@ -26,10 +32,21 @@ public class EntityChest extends PSEntity{
 		this.hitbox = new Hitbox(16, 15, 2);
 		
 		//Sets the chests physics
-		this.physics.init(this.hitbox, x, y, 0, 0);
+		this.physics.init(this.hitbox, 0, 0);
 		this.physics.setGravity(false);
 		this.physics.setMovable(false);
+		loadframe.loadPhysics(this.physics);
 	}
+	
+	@Override
+	public LoadFrame save() {
+		LoadFrame holder = new LoadFrame();
+		holder.setItem("item", this.inside);
+		holder.setBool("open", this.open);
+		holder.savePhysics(this.physics);
+		return holder;
+	}
+	
 	
 	@Override
 	public void handleTick() {
@@ -38,7 +55,7 @@ public class EntityChest extends PSEntity{
 			return;
 
 		//Checks if the player has the key
-		if(this.player.getItemHolding()!=Items.key)
+		if(this.player.getItemHolding()!=Items.KEY)
 			return;
 		
 		//Checks if the player is colliding with the chest
@@ -52,13 +69,16 @@ public class EntityChest extends PSEntity{
 		this.animations.setIdleAnimation("open");
 		
 		//Drops the item
-		EntityItem drop = new EntityItem(this.inside, this.getPhysics().getX(), this.physics.getY());
+		Optional<PSEntity> optDrop = this.state.getWorld().spawnEntity(EntityItem.class, "x",this.physics.getX(),"y",this.physics.getY(),"item",this.inside);
+		//Checks if the item can be dropped
+		if(!optDrop.isPresent())
+			return;
+		
+		//Gets the real entity
+		EntityItem drop = (EntityItem) optDrop.get();
+		
 		drop.setPickUpDelay();
 		drop.getPhysics().setMotionY(-2);
 		drop.getPhysics().setMotionX(0);
-		
-		this.state.getWorld().spawn(drop);
-		
 	}
-	
 }

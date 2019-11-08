@@ -32,7 +32,7 @@ public class StateIngame extends GameState{
 		this.camera = new Camera();
 		
 		//Creates the player object
-		this.player = new EntityPlayer(this.camera,0,0);
+		this.player = new EntityPlayer();
 		
 		//Creates the player controller
 		this.playercontroller = new PlayerController();
@@ -113,6 +113,13 @@ public class StateIngame extends GameState{
 	 */
 	public final World getWorld() {
 		return this.world;
+	}
+	
+	/**
+	 * @return the camera
+	 */
+	public Camera getCamera() {
+		return this.camera;
 	}
 
 }

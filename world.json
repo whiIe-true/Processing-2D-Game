@@ -1,104 +1,130 @@
 [
-	{
-		"action":"es",
-		"type":"w",
-		"x":-250,
-		"y":0,
-		"width":500
-	},{
-		"action":"es",
-		"type":"w",
-		"x":250,
-		"y":-350,
-		"width":50
-	},{
-		"action":"es",
-		"type":"w",
-		"x":750,
-		"y":600,
-		"width":20
-	},{
-		"action":"es",
-		"type":"w",
-		"x":-100,
-		"y":800,
-		"width":200
-	},{
-		"action":"es",
-		"type":"w",
-		"x":0,
-		"y":400,
-		"width":400
-	},{
-		"action":"es",
-		"type":"w",
-		"x":400,
-		"y":600,
-		"width":500
-	},{
-		"action":"es",
-		"type":"w",
-		"x":1300,
-		"y":500,
-		"width":100
-	},{
-		"action":"es",
-		"type":"w",
-		"x":1600,
-		"y":700,
-		"width":150
-	},{
-		"action":"es",
-		"type":"w",
-		"x":2000,
-		"y":200,
-		"width":250
-	},{
-		"action":"es",
-		"type":"w",
-		"x":1050,
-		"y":0,
-		"width":150
-	},{
-		"action":"es",
-		"type":"w",
-		"x":1800,
-		"y":200,
-		"width":50
-	},{
-		"action":"es",
-		"type":"w",
-		"x":-200,
-		"y":300,
-		"width":400
-	},{
-		"action":"es",
-		"type":"s",
-		"x":200,
-		"y":380
-	},{
-		"action":"es",
-		"type":"c",
-		"x":-100,
-		"y":300,
-		"itemid":6
-	},{
-		"action":"es",
-		"type":"i",
-		"x":260,
-		"y":0,
-		"itemid":0
-	},{
-		"action":"es",
-		"type":"i",
-		"x":400,
-		"y":200,
-		"itemid":1
-	},{
-		"action":"es",
-		"type":"i",
-		"x":1680,
-		"y":680,
-		"itemid":3
-	},
+  {
+    "data": {
+      "data": {
+        "x": 100,
+        "width": 200,
+        "y": 100
+      },
+      "type": "wall"
+    },
+    "action": "so"
+  },
+  {
+    "data": {
+      "data": {
+        "item": 4,
+        "motiony": 0,
+        "motionx": 0,
+        "x": 160,
+        "y": -130,
+        "open": false
+      },
+      "type": "chest"
+    },
+    "action": "so"
+  },
+  {
+    "data": {
+      "data": {
+        "item": 4,
+        "motiony": 0,
+        "motionx": 0,
+        "x": 260,
+        "y": -49,
+        "open": true
+      },
+      "type": "chest"
+    },
+    "action": "so"
+  },
+  {
+    "data": {
+      "data": {
+        "item": 5,
+        "pickupticks": 0,
+        "motiony": 0,
+        "motionx": 0,
+        "x": 101,
+        "y": 99
+      },
+      "type": "item"
+    },
+    "action": "so"
+  },
+  {
+    "data": {
+      "data": {
+        "item": 6,
+        "pickupticks": 0,
+        "motiony": 0,
+        "motionx": 0,
+        "x": 101,
+        "y": 100
+      },
+      "type": "item"
+    },
+    "action": "so"
+  },
+  {
+    "data": {
+      "data": {
+        "motiony": -0.7999999999999987,
+        "motionx": -1.1999999999999993,
+        "x": 134,
+        "nodamageTicks": 0,
+        "y": 59,
+        "health": 100,
+        "dead": false
+      },
+      "type": "slime"
+    },
+    "action": "so"
+  },
+  {
+    "data": {
+      "data": {
+        "motiony": -1.5999999999999985,
+        "motionx": 1.3999999999999995,
+        "x": 157,
+        "nodamageTicks": 0,
+        "y": 65,
+        "health": 74,
+        "dead": false
+      },
+      "type": "slime"
+    },
+    "action": "so"
+  },
+  {
+    "data": {
+      "data": {
+        "item": 4,
+        "pickupticks": 0,
+        "motiony": 0,
+        "motionx": 0,
+        "x": 201,
+        "y": 100
+      },
+      "type": "item"
+    },
+    "action": "so"
+  },
+  {
+    "data": {
+      "dropticks": 0,
+      "item": 4,
+      "swingticks": -1,
+      "motiony": -1.200000000000002,
+      "motionx": 0,
+      "x": 195,
+      "nodamageTicks": 22,
+      "spawnX": 150,
+      "y": -130,
+      "health": 100,
+      "dead": false,
+      "spawnY": 0
+    },
+    "action": "sp"
+  }
 ]
