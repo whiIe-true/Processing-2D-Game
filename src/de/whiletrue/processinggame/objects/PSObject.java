@@ -4,6 +4,7 @@ import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.game.ingame.StateIngame;
 import de.whiletrue.processinggame.logic.Physics;
 import de.whiletrue.processinggame.rendering.Renderer;
+import de.whiletrue.processinggame.rendering.animations.Animation;
 import de.whiletrue.processinggame.utils.Items;
 import processing.data.JSONObject;
 
@@ -65,7 +66,13 @@ public abstract class PSObject{
 			physics.setMotionX(this.getDouble("motionx"));
 			physics.setMotionY(this.getDouble("motiony"));
 		}
-		
+		public void loadAnimations(Animation animations) {
+			animations.setReverse(this.getBool("direction"));
+		}	
+	
+		public void saveAnimations(Animation animations) {
+			this.frame.setBoolean("direction", animations.isReverse());
+		}
 		public void savePhysics(Physics physics) {
 			this.frame.setInt("x", physics.getX());
 			this.frame.setInt("y", physics.getY());

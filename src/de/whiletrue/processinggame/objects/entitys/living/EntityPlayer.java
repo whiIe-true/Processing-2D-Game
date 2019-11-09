@@ -61,12 +61,12 @@ public class EntityPlayer extends PSEntityLiving{
 	
 	@Override
 	public LoadFrame save() {
+		//Saves all important information
 		LoadFrame holder = super.save();
 		holder.setInt("spawnX", this.spawnX);
 		holder.setInt("spawnY", this.spawnY);
 		holder.setInt("swingticks", this.swingticks);
 		holder.setInt("dropticks", this.dropTicks);
-		holder.savePhysics(this.getPhysics());
 		holder.setItem("item", this.getItemHolding());
 		return holder;
 	}

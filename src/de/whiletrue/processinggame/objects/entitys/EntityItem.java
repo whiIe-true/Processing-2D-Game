@@ -28,16 +28,16 @@ public class EntityItem extends PSEntity{
 		
 		//Loads the items physics
 		this.physics.init(this.hitbox, .1, .2);
-		loadframe.loadPhysics(this.physics);
+		
+		super.init(loadframe);
 	}
 	
 	@Override
 	public LoadFrame save() {
 		//Creates the holder
-		LoadFrame holder = new LoadFrame();
+		LoadFrame holder = super.save();
 		
 		//Sets the values
-		holder.savePhysics(this.physics);
 		holder.setInt("pickupticks", this.pickupdelay);
 		holder.setItem("item", this.item);
 		

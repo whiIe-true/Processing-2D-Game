@@ -35,15 +35,15 @@ public class EntityChest extends PSEntity{
 		this.physics.init(this.hitbox, 0, 0);
 		this.physics.setGravity(false);
 		this.physics.setMovable(false);
-		loadframe.loadPhysics(this.physics);
+		
+		super.init(loadframe);
 	}
 	
 	@Override
 	public LoadFrame save() {
-		LoadFrame holder = new LoadFrame();
+		LoadFrame holder = super.save();
 		holder.setItem("item", this.inside);
 		holder.setBool("open", this.open);
-		holder.savePhysics(this.physics);
 		return holder;
 	}
 	

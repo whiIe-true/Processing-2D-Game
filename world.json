@@ -3,7 +3,7 @@
     "data": {
       "data": {
         "x": 100,
-        "width": 200,
+        "width": 500,
         "y": 100
       },
       "type": "wall"
@@ -18,7 +18,8 @@
         "motionx": 0,
         "x": 160,
         "y": -130,
-        "open": false
+        "open": false,
+        "direction": true
       },
       "type": "chest"
     },
@@ -32,7 +33,8 @@
         "motionx": 0,
         "x": 260,
         "y": -49,
-        "open": true
+        "open": true,
+        "direction": true
       },
       "type": "chest"
     },
@@ -46,7 +48,8 @@
         "motiony": 0,
         "motionx": 0,
         "x": 101,
-        "y": 99
+        "y": 99,
+        "direction": true
       },
       "type": "item"
     },
@@ -60,9 +63,26 @@
         "motiony": 0,
         "motionx": 0,
         "x": 101,
-        "y": 100
+        "y": 100,
+        "direction": false
       },
       "type": "item"
+    },
+    "action": "so"
+  },
+  {
+    "data": {
+      "data": {
+        "motiony": -1.1999999999999986,
+        "motionx": 1.2999999999999994,
+        "x": 230,
+        "nodamageTicks": 0,
+        "y": 61,
+        "health": 100,
+        "dead": false,
+        "direction": true
+      },
+      "type": "slime"
     },
     "action": "so"
   },
@@ -71,11 +91,12 @@
       "data": {
         "motiony": -0.7999999999999987,
         "motionx": -1.1999999999999993,
-        "x": 134,
+        "x": 397,
         "nodamageTicks": 0,
         "y": 59,
         "health": 100,
-        "dead": false
+        "dead": false,
+        "direction": false
       },
       "type": "slime"
     },
@@ -84,29 +105,16 @@
   {
     "data": {
       "data": {
-        "motiony": -1.5999999999999985,
-        "motionx": 1.3999999999999995,
-        "x": 157,
+        "motiony": -0.7999999999999987,
+        "motionx": -1.1999999999999993,
+        "x": 397,
         "nodamageTicks": 0,
-        "y": 65,
-        "health": 74,
-        "dead": false
+        "y": 59,
+        "health": 100,
+        "dead": false,
+        "direction": false
       },
       "type": "slime"
-    },
-    "action": "so"
-  },
-  {
-    "data": {
-      "data": {
-        "item": 4,
-        "pickupticks": 0,
-        "motiony": 0,
-        "motionx": 0,
-        "x": 201,
-        "y": 100
-      },
-      "type": "item"
     },
     "action": "so"
   },
@@ -114,16 +122,17 @@
     "data": {
       "dropticks": 0,
       "item": 4,
-      "swingticks": -1,
-      "motiony": -1.200000000000002,
+      "motiony": -6.000000000000005,
       "motionx": 0,
-      "x": 195,
-      "nodamageTicks": 22,
       "spawnX": 150,
-      "y": -130,
-      "health": 100,
+      "health": 60,
       "dead": false,
-      "spawnY": 0
+      "spawnY": 0,
+      "swingticks": -1,
+      "x": 328,
+      "nodamageTicks": 0,
+      "y": -55,
+      "direction": true
     },
     "action": "sp"
   }

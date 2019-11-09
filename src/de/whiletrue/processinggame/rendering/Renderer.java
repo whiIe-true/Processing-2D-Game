@@ -138,18 +138,18 @@ public class Renderer {
 	}
 	
 	/*
-	 * Renders a cirle
+	 * Renders a circle
 	 * */
-	public void renderCirle(float x,float y,float radius,int color) {
+	public void renderCircle(float x,float y,float radius,int color) {
 		this.window.noStroke();
 		this.window.fill(color);
 		this.window.circle(x, y, radius);
 	}
 	
 	/*
-	 * Renders a cirle
+	 * Renders a circle
 	 * */
-	public void renderCirleWithStroke(float x,float y,float radius,int color,int strokeColor,float strokesize) {
+	public void renderCircleWithStroke(float x,float y,float radius,int color,int strokeColor,float strokesize) {
 		this.window.stroke(strokeColor);
 		this.window.strokeWeight(strokesize);
 		this.window.fill(color);

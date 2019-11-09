@@ -19,11 +19,13 @@ public abstract class PSEntity extends PSObject{
 	@Override
 	public void init(LoadFrame loadframe) {
 		loadframe.loadPhysics(this.physics);
+		loadframe.loadAnimations(this.animations);
 	}
 	@Override
 	public LoadFrame save() {
 		LoadFrame lf = new LoadFrame();
 		lf.savePhysics(this.physics);
+		lf.saveAnimations(this.animations);
 		return lf;
 	}
 
@@ -77,7 +79,7 @@ public abstract class PSEntity extends PSObject{
 	 * @return the animations
 	 */
 	public final Animation getAnimations() {
-		return animations;
+		return this.animations;
 	}
 
 }

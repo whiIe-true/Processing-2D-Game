@@ -6,6 +6,7 @@ import de.whiletrue.processinggame.objects.entitys.BaseStats;
 
 public class EntitySlime extends PSEntityLiving{
 
+	//Reference to the player object
 	private EntityPlayer player;
 	
 	@Override
@@ -28,13 +29,6 @@ public class EntitySlime extends PSEntityLiving{
 		
 		//Inits the rest for the living entitys
 		super.init(loadframe);
-	}
-	
-	@Override
-	public LoadFrame save() {
-		LoadFrame lf = super.save();
-		lf.savePhysics(this.physics);
-		return lf;
 	}
 	
 	@Override

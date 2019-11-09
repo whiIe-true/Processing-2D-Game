@@ -24,16 +24,16 @@ public class EntityFireball extends PSEntity{
 		//Loads the items physics
 		this.physics.init(this.hitbox, 0, 0);
 		this.physics.setGravity(false);
-		loadframe.loadPhysics(this.physics);
+		
+		super.init(loadframe);
 	}
 	
 	@Override
 	public LoadFrame save() {
-		LoadFrame holder = new LoadFrame();
+		LoadFrame holder = super.save();
 		
 		//Sets the values
 		holder.setInt("lifespan", this.lifespan);
-		holder.savePhysics(this.physics);
 		
 		return holder;
 	}
