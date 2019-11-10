@@ -9,23 +9,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import de.whiletrue.processinggame.entitys.PSEntity;
+import de.whiletrue.processinggame.entitys.PSEntity.LoadFrame;
+import de.whiletrue.processinggame.entitys.living.EntitySlime;
+import de.whiletrue.processinggame.entitys.notliving.EntityChest;
+import de.whiletrue.processinggame.entitys.notliving.EntityFireball;
+import de.whiletrue.processinggame.entitys.notliving.EntityItem;
+import de.whiletrue.processinggame.entitys.notliving.EntityWall;
 import de.whiletrue.processinggame.game.Game;
-import de.whiletrue.processinggame.objects.PSObject;
-import de.whiletrue.processinggame.objects.PSObject.LoadFrame;
-import de.whiletrue.processinggame.objects.entitys.EntityChest;
-import de.whiletrue.processinggame.objects.entitys.EntityFireball;
-import de.whiletrue.processinggame.objects.entitys.EntityItem;
-import de.whiletrue.processinggame.objects.entitys.living.EntitySlime;
-import de.whiletrue.processinggame.objects.objects.ObjectWall;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
 
 public class WorldLoader {
 	
 	private static WorldLoader instance;
-	private static Map<String, Class<? extends PSObject>> loadNames = new HashMap<String, Class<? extends PSObject>>();
+	private static Map<String, Class<? extends PSEntity>> loadNames = new HashMap<String, Class<? extends PSEntity>>();
 	static{
-		loadNames.put("wall", ObjectWall.class);
+		loadNames.put("wall", EntityWall.class);
 		loadNames.put("slime", EntitySlime.class);
 		loadNames.put("chest", EntityChest.class);
 		loadNames.put("fireball", EntityFireball.class);
@@ -39,7 +39,7 @@ public class WorldLoader {
 	public void saveWorld(World world,File outputFile) {
 		JSONArray actions = new JSONArray();
 		//Iterates over all existing objects
-		for(PSObject obj : world.getObjects()) {
+		for(PSEntity obj : world.getObjects()) {
 			JSONObject json = new JSONObject();
 			//Sets the action to spawn a object (so)
 			json.setString("action", "so");
@@ -104,7 +104,7 @@ public class WorldLoader {
 			//SpawnObject
 			case "so":
 				//Gets the object that should spawn
-				Optional<PSObject> tospawn = this.spawnObject(json.getJSONObject("data"));
+				Optional<PSEntity> tospawn = this.spawnObject(json.getJSONObject("data"));
 				//Checks if the object can spawn
 				if(!tospawn.isPresent())
 					continue loop;
@@ -133,7 +133,7 @@ public class WorldLoader {
 	/*
 	 * Spawns an object
 	 * */
-	private Optional<PSObject> spawnObject(JSONObject data) {
+	private Optional<PSEntity> spawnObject(JSONObject data) {
 		
 		//Checks if the given type is present
 		if(!data.hasKey("type")||!(data.get("type") instanceof String))
@@ -146,7 +146,7 @@ public class WorldLoader {
 		//Creates the object
 		try {
 			//Generates the object
-			PSObject obj = loadNames.get(data.getString("type")).newInstance();
+			PSEntity obj = loadNames.get(data.getString("type")).newInstance();
 			//Inits the object
 			obj.init(new LoadFrame(data.getJSONObject("data")));
 			//Returns the loaded object
@@ -195,7 +195,7 @@ public class WorldLoader {
 		}
 	}
 	
-	public static String getNameByClass(Class<? extends PSObject> clazz) {
+	public static String getNameByClass(Class<? extends PSEntity> clazz) {
 		Optional<String> out = loadNames.entrySet().stream().filter(i->i.getValue().equals(clazz)).map(i->i.getKey()).findAny();
 		return out.isPresent()?out.get():null;
 	}

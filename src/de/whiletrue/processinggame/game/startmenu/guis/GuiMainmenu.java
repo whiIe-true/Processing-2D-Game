@@ -2,6 +2,7 @@ package de.whiletrue.processinggame.game.startmenu.guis;
 
 import de.whiletrue.processinggame.game.ingame.StateIngame;
 import de.whiletrue.processinggame.game.startmenu.ParticleEngine;
+import de.whiletrue.processinggame.game.worldbuilder.StateWorldbuilder;
 import de.whiletrue.processinggame.userinterface.DefaultGui;
 import de.whiletrue.processinggame.userinterface.GuiComponent;
 import de.whiletrue.processinggame.userinterface.components.CompoundButton;
@@ -26,7 +27,13 @@ public class GuiMainmenu extends DefaultGui{
 			return "Start Game";
 		});
 		
-		return new CompoundButton[] {startgame};
+		CompoundButton worldbuilder = new CompoundButton(w/2-300, h/2, 600, 50, btn->{
+			if(btn!=-1)
+				this.game.changeState(new StateWorldbuilder());
+			return "Worldbuilder";
+		});
+		
+		return new CompoundButton[] {startgame, worldbuilder};
 	}
 
 	@Override

@@ -1,10 +1,10 @@
-package de.whiletrue.processinggame.objects.entitys;
+package de.whiletrue.processinggame.entitys.notliving;
 
 import java.util.Optional;
 
+import de.whiletrue.processinggame.entitys.PSEntity;
+import de.whiletrue.processinggame.entitys.PSEntityLiving;
 import de.whiletrue.processinggame.logic.Hitbox;
-import de.whiletrue.processinggame.objects.PSEntity;
-import de.whiletrue.processinggame.objects.PSEntityLiving;
 
 public class EntityFireball extends PSEntity{
 

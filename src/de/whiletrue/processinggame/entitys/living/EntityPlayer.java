@@ -1,14 +1,14 @@
-package de.whiletrue.processinggame.objects.entitys.living;
+package de.whiletrue.processinggame.entitys.living;
 
 import java.util.Optional;
 
+import de.whiletrue.processinggame.entitys.BaseStats;
+import de.whiletrue.processinggame.entitys.PSEntity;
+import de.whiletrue.processinggame.entitys.PSEntityLiving;
+import de.whiletrue.processinggame.entitys.notliving.EntityItem;
 import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.game.ingame.StateIngame;
 import de.whiletrue.processinggame.logic.Hitbox;
-import de.whiletrue.processinggame.objects.PSEntity;
-import de.whiletrue.processinggame.objects.PSEntityLiving;
-import de.whiletrue.processinggame.objects.entitys.BaseStats;
-import de.whiletrue.processinggame.objects.entitys.EntityItem;
 import de.whiletrue.processinggame.player.Camera;
 import de.whiletrue.processinggame.utils.Items;
 

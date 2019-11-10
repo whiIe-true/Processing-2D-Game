@@ -29,5 +29,21 @@ public class Camera {
 		this.y = y;
 	}
 	
+	/*
+	 * Updates the camera by adding the values
+	 * */
+	public void addUpdate(int x,int y) {
+		this.x+=x;
+		this.y+=y;
+	}
+	
+	/**
+	 * Gets the camera position
+	 * @returns int[] {x,y}
+	 * */
+	public int[] getPosition() {
+		return new int[] {this.x,this.y};
+	}
+	
 }
 

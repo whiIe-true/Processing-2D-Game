@@ -70,6 +70,8 @@ public class Game {
 		this.gamesettings.setDefault("key_jump", 32);
 		this.gamesettings.setDefault("key_attack", 87);
 		this.gamesettings.setDefault("key_item", 16);
+		this.gamesettings.setDefault("key_fly_up", 87);
+		this.gamesettings.setDefault("key_fly_down", 83);
 		
 		//Loads the settings
 		this.gamesettings.loadSettings();

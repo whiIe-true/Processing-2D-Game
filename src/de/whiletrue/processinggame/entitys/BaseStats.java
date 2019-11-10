@@ -1,4 +1,4 @@
-package de.whiletrue.processinggame.objects.entitys;
+package de.whiletrue.processinggame.entitys;
 
 public abstract class BaseStats {
 

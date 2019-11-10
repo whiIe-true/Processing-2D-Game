@@ -73,11 +73,11 @@
   {
     "data": {
       "data": {
-        "motiony": -1.1999999999999986,
-        "motionx": 1.2999999999999994,
-        "x": 230,
+        "motiony": 3.4000000000000026,
+        "motionx": 0.1499999999999988,
+        "x": 236,
         "nodamageTicks": 0,
-        "y": 61,
+        "y": 80,
         "health": 100,
         "dead": false,
         "direction": true
@@ -89,11 +89,11 @@
   {
     "data": {
       "data": {
-        "motiony": -0.7999999999999987,
-        "motionx": -1.1999999999999993,
-        "x": 397,
+        "motiony": 3.800000000000003,
+        "motionx": 0,
+        "x": 372,
         "nodamageTicks": 0,
-        "y": 59,
+        "y": 86,
         "health": 100,
         "dead": false,
         "direction": false
@@ -105,11 +105,11 @@
   {
     "data": {
       "data": {
-        "motiony": -0.7999999999999987,
-        "motionx": -1.1999999999999993,
-        "x": 397,
+        "motiony": 3.800000000000003,
+        "motionx": 0,
+        "x": 372,
         "nodamageTicks": 0,
-        "y": 59,
+        "y": 86,
         "health": 100,
         "dead": false,
         "direction": false
@@ -122,7 +122,7 @@
     "data": {
       "dropticks": 0,
       "item": 4,
-      "motiony": -6.000000000000005,
+      "motiony": -1.400000000000002,
       "motionx": 0,
       "spawnX": 150,
       "health": 60,
@@ -131,7 +131,7 @@
       "swingticks": -1,
       "x": 328,
       "nodamageTicks": 0,
-      "y": -55,
+      "y": -128,
       "direction": true
     },
     "action": "sp"

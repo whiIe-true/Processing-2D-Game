@@ -3,8 +3,8 @@ package de.whiletrue.processinggame.game.ingame;
 import java.awt.Color;
 import java.io.File;
 
+import de.whiletrue.processinggame.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.game.GameState;
-import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.player.Camera;
 import de.whiletrue.processinggame.player.PlayerController;
 import de.whiletrue.processinggame.rendering.Overlay;

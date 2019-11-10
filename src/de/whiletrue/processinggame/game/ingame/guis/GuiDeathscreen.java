@@ -2,8 +2,8 @@ package de.whiletrue.processinggame.game.ingame.guis;
 
 import java.awt.Color;
 
+import de.whiletrue.processinggame.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.game.ingame.StateIngame;
-import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.userinterface.DefaultGui;
 import de.whiletrue.processinggame.userinterface.GuiComponent;
 import de.whiletrue.processinggame.userinterface.components.CompoundButton;

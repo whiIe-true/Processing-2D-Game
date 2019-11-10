@@ -1,8 +1,8 @@
-package de.whiletrue.processinggame.objects.entitys;
+package de.whiletrue.processinggame.entitys.notliving;
 
+import de.whiletrue.processinggame.entitys.PSEntity;
 import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.logic.Hitbox;
-import de.whiletrue.processinggame.objects.PSEntity;
 import de.whiletrue.processinggame.utils.Items;
 
 public class EntityItem extends PSEntity{

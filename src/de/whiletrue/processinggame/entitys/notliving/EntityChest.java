@@ -1,10 +1,10 @@
-package de.whiletrue.processinggame.objects.entitys;
+package de.whiletrue.processinggame.entitys.notliving;
 
 import java.util.Optional;
 
+import de.whiletrue.processinggame.entitys.PSEntity;
+import de.whiletrue.processinggame.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.logic.Hitbox;
-import de.whiletrue.processinggame.objects.PSEntity;
-import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.utils.Items;
 
 public class EntityChest extends PSEntity{
@@ -12,6 +12,7 @@ public class EntityChest extends PSEntity{
 	private Items inside;
 	private boolean open;
 	
+	//Reference to the player
 	private EntityPlayer player;
 	
 	@Override

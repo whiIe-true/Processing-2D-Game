@@ -3,9 +3,9 @@ package de.whiletrue.processinggame.logic;
 import java.util.Optional;
 import java.util.Random;
 
+import de.whiletrue.processinggame.entitys.notliving.EntityWall;
 import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.game.ingame.StateIngame;
-import de.whiletrue.processinggame.objects.objects.ObjectWall;
 
 public class Physics {
 	
@@ -66,13 +66,10 @@ public class Physics {
 	 * */
 	private void handleMotionY() {
 		//Checks if the player is colliding with any object
-		Optional<ObjectWall> obj = this.state.getWorld().getObjects().stream()
-		.filter(i->i instanceof ObjectWall)
-		.map(i->(ObjectWall)i)
-		.filter(i->i.getY()-2<this.y)
-		.filter(i->i.getY()+20>this.y)
-		.filter(i->i.getX()<this.x+this.hitbox.getFixedX()/2)
-		.filter(i->i.getX()+i.getWidth()>this.x-this.hitbox.getFixedX()/2)
+		Optional<EntityWall> obj = this.state.getWorld().getObjects().stream()
+		.filter(i->i instanceof EntityWall)
+		.map(i->(EntityWall)i)
+		.filter(i->i.isEntityColliding(this))
 		.findAny();
 		
 		//Checks if the player is in or on the platform
@@ -122,6 +119,13 @@ public class Physics {
 	public void randomMotion(int strenght) {
 		this.motionX+=this.random.nextInt(strenght)-strenght/2;
 		this.motionY+=this.random.nextInt(strenght)-strenght/2;
+	}
+	
+	/**
+	 * @returns the hitbox
+	 * */
+	public Hitbox getHitbox() {
+		return this.hitbox;
 	}
 	
 	/**

@@ -2,9 +2,9 @@ package de.whiletrue.processinggame.rendering;
 
 import java.awt.Color;
 
+import de.whiletrue.processinggame.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.game.ingame.StateIngame;
-import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.rendering.animations.AnimationFrame;
 import de.whiletrue.processinggame.utils.Items;
 import processing.core.PImage;

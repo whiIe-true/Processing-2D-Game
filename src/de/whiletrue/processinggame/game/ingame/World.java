@@ -5,13 +5,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import de.whiletrue.processinggame.entitys.PSEntity;
+import de.whiletrue.processinggame.entitys.PSEntityLiving;
+import de.whiletrue.processinggame.entitys.PSEntity.LoadFrame;
+import de.whiletrue.processinggame.entitys.living.EntityPlayer;
+import de.whiletrue.processinggame.entitys.notliving.EntityItem;
 import de.whiletrue.processinggame.game.Game;
-import de.whiletrue.processinggame.objects.PSEntity;
-import de.whiletrue.processinggame.objects.PSEntityLiving;
-import de.whiletrue.processinggame.objects.PSObject;
-import de.whiletrue.processinggame.objects.PSObject.LoadFrame;
-import de.whiletrue.processinggame.objects.entitys.EntityItem;
-import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.utils.Items;
 
 public class World {
@@ -20,9 +19,9 @@ public class World {
 	
 	private EntityPlayer player;
 	
-	private List<PSObject> objects = new ArrayList<PSObject>(),
-			soonAdd = new ArrayList<PSObject>(),
-			soonRemove = new ArrayList<PSObject>();
+	private List<PSEntity> objects = new ArrayList<PSEntity>(),
+			soonAdd = new ArrayList<PSEntity>(),
+			soonRemove = new ArrayList<PSEntity>();
 	
 	public World() {
 		//Gets some references
@@ -71,7 +70,7 @@ public class World {
 	/*
 	 * Spawns an object in the world
 	 * */
-	public void spawn(PSObject object) {
+	public void spawn(PSEntity object) {
 		this.soonAdd.add(object);
 	}
 	
@@ -135,14 +134,14 @@ public class World {
 	/*
 	 * Removes an object from the world
 	 * */
-	public void kill(PSObject object) {
+	public void kill(PSEntity object) {
 		this.soonRemove.add(object);
 	}
 	
 	/**
 	 * @return the objects
 	 */
-	public final List<PSObject> getObjects() {
+	public final List<PSEntity> getObjects() {
 		return this.objects;
 	}
 	

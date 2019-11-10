@@ -1,9 +1,8 @@
-package de.whiletrue.processinggame.objects;
+package de.whiletrue.processinggame.entitys;
 
 import java.awt.Color;
 
-import de.whiletrue.processinggame.objects.entitys.BaseStats;
-import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
+import de.whiletrue.processinggame.entitys.living.EntityPlayer;
 
 public abstract class PSEntityLiving extends PSEntity{
 

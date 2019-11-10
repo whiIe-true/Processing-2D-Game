@@ -1,33 +1,111 @@
-package de.whiletrue.processinggame.objects;
+package de.whiletrue.processinggame.entitys;
 
 import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.game.ingame.StateIngame;
+import de.whiletrue.processinggame.logic.Hitbox;
 import de.whiletrue.processinggame.logic.Physics;
 import de.whiletrue.processinggame.rendering.Renderer;
 import de.whiletrue.processinggame.rendering.animations.Animation;
 import de.whiletrue.processinggame.utils.Items;
 import processing.data.JSONObject;
 
-public abstract class PSObject{
-	
+public abstract class PSEntity{
+
 	protected StateIngame state;
 	protected Renderer renderer;
 	
-	public PSObject() {
+	protected Animation animations;
+	protected Physics physics;
+	protected Hitbox hitbox;
+	
+	
+	public PSEntity() {
 		//References some stuff
 		this.state = (StateIngame) Game.getInstance().getState();
 		this.renderer = Renderer.getInstance();
+		
+		//Creates the animations and physics
+		this.animations = new Animation();
+		this.physics = new Physics();
 	}
 	
-	public abstract void init(LoadFrame loadframe);
-	public abstract LoadFrame save();
+	/*
+	 * Function that loads the entity and should be used
+	 * */
+	public void init(LoadFrame loadframe) {
+		loadframe.loadPhysics(this.physics);
+		loadframe.loadAnimations(this.animations);
+	}
 	
-	public void handleTick() {}
-	
-	public void handleRender(int mouseX,int mouseY,boolean mousePressed) {}	
+	/*
+	 * Function that saves the entity and should be used
+	 * */
+	public LoadFrame save() {
+		LoadFrame lf = new LoadFrame();
+		lf.savePhysics(this.physics);
+		lf.saveAnimations(this.animations);
+		return lf;
+	}
 
-	public static class LoadFrame{
+	/*
+	 * Function that renders the entity and should be used
+	 * */
+	public void handleRender(int mouseX, int mouseY, boolean mousePressed) {
+		//Gets the entity cords
+		int x = this.physics.getX(),y = this.physics.getY();
+		
+		//Renders the skin
+		this.animations.renderAt(x, y,this.hitbox.getScale());
+		//Checks if debugrendering is enabled
+		if(Game.getInstance().getSettings().getBool("showHitboxes"))
+			this.hitbox.renderHitbox(x, y);
+	}
 	
+	/*
+	 * Function that handles every tick and should be used
+	 * */
+	public void handleTick() {
+		this.physics.handleTick();
+		this.animations.onTick();
+	}
+
+	/*
+	 * Returns if the entity is colliding with another entity
+	 * */
+	public boolean isEntityColliding(PSEntity entity) {
+		return this.hitbox.areBoxesColliding(this.physics.getX(), this.physics.getY(), entity.physics.getX(), entity.physics.getY(), entity.hitbox);
+	}
+	
+	/*
+	 * Returns the distance between two entitys
+	 * */
+	public double distanceTo(PSEntity entity) {
+		return Math.sqrt(Math.pow(this.physics.getX()-entity.physics.getX(), 2)+Math.pow(this.physics.getY()-entity.physics.getY(), 2));
+	}
+	
+	/**
+	 * @return the physics
+	 */
+	public final Physics getPhysics() {
+		return this.physics;
+	}
+	
+	/**
+	 * @returns the hitbox
+	 * */
+	public Hitbox getHitbox() {
+		return this.hitbox;
+	}
+
+	/**
+	 * @return the animations
+	 */
+	public final Animation getAnimations() {
+		return this.animations;
+	}
+	
+	public static class LoadFrame{
+		
 		private JSONObject frame;
 		
 		/*
@@ -99,4 +177,5 @@ public abstract class PSObject{
 			return this.frame;
 		}
 	}
+
 }

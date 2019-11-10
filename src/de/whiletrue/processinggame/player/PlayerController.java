@@ -1,11 +1,11 @@
 package de.whiletrue.processinggame.player;
 
+import de.whiletrue.processinggame.entitys.living.EntityPlayer;
+import de.whiletrue.processinggame.entitys.notliving.EntityFireball;
 import de.whiletrue.processinggame.game.Game;
 import de.whiletrue.processinggame.game.ingame.StateIngame;
 import de.whiletrue.processinggame.game.ingame.guis.GuiDeathscreen;
 import de.whiletrue.processinggame.game.ingame.guis.GuiPause;
-import de.whiletrue.processinggame.objects.entitys.EntityFireball;
-import de.whiletrue.processinggame.objects.entitys.living.EntityPlayer;
 import de.whiletrue.processinggame.utils.Items;
 import de.whiletrue.processinggame.utils.KeyHandler;
 import processing.core.PApplet;

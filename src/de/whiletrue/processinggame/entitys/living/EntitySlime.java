@@ -1,8 +1,8 @@
-package de.whiletrue.processinggame.objects.entitys.living;
+package de.whiletrue.processinggame.entitys.living;
 
+import de.whiletrue.processinggame.entitys.BaseStats;
+import de.whiletrue.processinggame.entitys.PSEntityLiving;
 import de.whiletrue.processinggame.logic.Hitbox;
-import de.whiletrue.processinggame.objects.PSEntityLiving;
-import de.whiletrue.processinggame.objects.entitys.BaseStats;
 
 public class EntitySlime extends PSEntityLiving{
 

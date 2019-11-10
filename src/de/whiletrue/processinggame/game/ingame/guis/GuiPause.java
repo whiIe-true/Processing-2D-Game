@@ -3,13 +3,13 @@ package de.whiletrue.processinggame.game.ingame.guis;
 import java.io.File;
 import java.util.Arrays;
 
+import de.whiletrue.processinggame.entitys.PSEntity;
+import de.whiletrue.processinggame.entitys.living.EntitySlime;
+import de.whiletrue.processinggame.entitys.notliving.EntityChest;
+import de.whiletrue.processinggame.entitys.notliving.EntityItem;
 import de.whiletrue.processinggame.game.ingame.StateIngame;
 import de.whiletrue.processinggame.game.ingame.WorldLoader;
 import de.whiletrue.processinggame.game.startmenu.StateStartMenu;
-import de.whiletrue.processinggame.objects.PSEntity;
-import de.whiletrue.processinggame.objects.entitys.EntityChest;
-import de.whiletrue.processinggame.objects.entitys.EntityItem;
-import de.whiletrue.processinggame.objects.entitys.living.EntitySlime;
 import de.whiletrue.processinggame.userinterface.DefaultGui;
 import de.whiletrue.processinggame.userinterface.GuiComponent;
 import de.whiletrue.processinggame.userinterface.components.CompoundButton;
